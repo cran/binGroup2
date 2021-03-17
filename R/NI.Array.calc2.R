@@ -15,18 +15,19 @@
 
 # Results for array testing without master pooling
 NI.Array.calc2 <- function(p.vec, Se, Sp, group.sz, 
-                           trace=TRUE, print.time=TRUE, ...){
+                           trace = TRUE, print.time = TRUE, ...) {
   
-  start.time<-proc.time()
+  start.time <- proc.time()
   
   I <- group.sz
   N <- I^2
   
   # calculate results for a single array size
-  # results <- ARRAY(p=p.vec, SE=Se, SP=Sp, n=i)
+  # results <- ARRAY(p = p.vec, SE = Se, SP = Sp, n = i)
   # USE BELOW UNTIL ARRAY ALLOWS FOR SE, SP TO VARY ACROSS STAGES
-  # results <- ARRAY(p=p.vec, SE=c(Se[1,1], Se[2,1]), SP=c(Sp[1,1], Sp[2,1]), n=I)
-  results <- ARRAY_nomaster(p=p.vec, SE=Se, SP=Sp, n=I)
+  # results <- ARRAY(p = p.vec, SE = c(Se[1,1], Se[2,1]), 
+  #                  SP = c(Sp[1,1], Sp[2,1]), n = I)
+  results <- ARRAY_nomaster(p = p.vec, SE = Se, SP = Sp, n = I)
   
   # save the results for each array size in a row of the results matrix
   results.AT <- c(I, N, results$ET_AT*N, results$ET_AT, 
@@ -34,9 +35,9 @@ NI.Array.calc2 <- function(p.vec, Se, Sp, group.sz,
                   results$PSP1_AT, results$PSP2_AT, results$PPV1_AT,
                   results$PPV2_AT, results$NPV1_AT, results$NPV2_AT)
   
-  acc.AT <- matrix(data=results.AT[5:12], nrow=2, ncol=4, byrow=FALSE, 
-                   dimnames=list("Disease" = 1:2, 
-                                 c("PSe", "PSp", "PPPV", "PNPV")))
+  acc.AT <- matrix(data = results.AT[5:12], nrow = 2, ncol = 4, byrow = FALSE, 
+                   dimnames = list("Disease" = 1:2, 
+                                   c("PSe", "PSp", "PPPV", "PNPV")))
   
   # Brianna 03.04.2020 
   # Added individual accuracy measures for consistency with other algorithms
@@ -66,23 +67,25 @@ NI.Array.calc2 <- function(p.vec, Se, Sp, group.sz,
   #                                      c("Row Testing", "Column Testing", 
   #                                        "Individual Testing")))
   
-  joint.p <- matrix(data=rep(p.vec, each=results.AT[2]), nrow=4, ncol=results.AT[2], 
-                    byrow=TRUE, dimnames=list(c("00", "10", "01", "11"), 
-                                              as.character(1:results.AT[2])))
+  joint.p <- matrix(data = rep(p.vec, each = results.AT[2]), 
+                    nrow = 4, ncol = results.AT[2], 
+                    byrow = TRUE, dimnames = list(c("00", "10", "01", "11"), 
+                                                  as.character(1:results.AT[2])))
   
   # print time elapsed, if print.time == TRUE
-  if(print.time){
+  if (print.time) {
     time.it(start.time)
   }
   
   # reorganize results
-  list("algorithm"="Non-informative array testing without master pooling",
-       "prob.vec"=p.vec, "Se"=Se.display, "Sp"=Sp.display,
-       "Config"=list("Array.dim"=results.AT[1], "Array.sz"=results.AT[2]),
-       "p.mat" = joint.p, "ET"=results.AT[3], "value"=results.AT[4],
-       "Accuracy"=list("Disease 1 Individual" = ind.acc1, 
-                       "Disease 2 Individual" = ind.acc2, 
-                       "Overall" = acc.AT))
+  list("algorithm" = "Non-informative array testing without master pooling",
+       "prob.vec" = p.vec, "Se" = Se.display, "Sp" = Sp.display,
+       "Config" = list("Array.dim" = results.AT[1], 
+                       "Array.sz" = results.AT[2]),
+       "p.mat" = joint.p, "ET" = results.AT[3], "value" = results.AT[4],
+       "Accuracy" = list("Disease 1 Individual" = ind.acc1, 
+                         "Disease 2 Individual" = ind.acc2, 
+                         "Overall" = acc.AT))
 }
 
 #

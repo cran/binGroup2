@@ -5,146 +5,173 @@
 # Brianna Hitt - 02.24.2020
 # Changed capitalization of methods to match propCI()
 
-nDesign <-
-  function(nmax, s, delta, p.hyp, conf.level = 0.95, power = 0.8, 
-           alternative = "two.sided", method = "CP", biasrest = 0.05)
-  {
-    
-    if (length(nmax) < 1 || length(nmax) > 2 || (min(nmax) <= 3 | abs(round(nmax) - nmax) > 1e-07))
-    {stop("the maximal number of groups n allowed in calculations must be one or two integer(s) greater than 1")}
-    if (length(s) != 1 || (s < 1 | abs(round(s) - s) > 1e-07))
-    {stop("group size s must be specified as a single integer>0")}
-    if (length(conf.level) != 1 || conf.level < 0 || conf.level > 1)
-    {stop("conf.level must be a positive number between 0 and 1")}
-    if (length(power) != 1 || power < 0 || power > 1)
-    {stop(" desired power must be a positive number between 0 and 1, f.e. 0.8 for rejecting H0 in 80% of the cases")}
-    
-    method <- match.arg(method, choices = c("CP", "Blaker", "AC", "score", "Wald", "soc"))
-    
-    alternative <- match.arg(alternative, choices = c("two.sided", "less", "greater"))
-    
-    if (length(p.hyp) != 1 || p.hyp > 1 || p.hyp < 0)
-    {stop("true proportion p.hyp must be specified as a single number between 0 and 1")}
-    
-    if (length(delta) != 1)
-    {stop("delta must be specified as a single number")}
-    if (alternative == "less")
-    {
-      if (p.hyp - delta < 0 || p.hyp - delta > 1 )
-      {stop("alternative=less: specify delta as a number between 0 and the threshold p.hyp")}
-    }
-    
-    if (alternative == "greater")
-    {
-      if (p.hyp + delta < 0 || p.hyp + delta > 1 )
-      {stop("alternative=greater: specify delta as a number between the threshold p.hyp and 1")}
-    }
-    
-    if (alternative == "two.sided")
-      
-    {
-      if (p.hyp + delta < 0 || p.hyp + delta > 1 || p.hyp - delta < 0 || p.hyp - delta > 1)
-      {stop("alternative=two.sided: specify delta as a number between the threshold p.hyp and 1")}
-    }
-    
-    if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0)
-    {stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")}
-    
-    # # # # # #
-    
-    
-    if (length(nmax) == 1)
-    {
-      nit <- 4:nmax
-      powerit <- numeric(length = length(nit))
-      biasit <- numeric(length = length(nit))
-      
-      for (i in 1:length(nit))
-      {
-        temp <- bgtPowerI(n = nit[i], s = s, delta = delta, p.hyp = p.hyp, conf.level = conf.level, alternative = alternative, method = method)
-        powerit[i] <- temp$power
-        biasit[i] <- temp$bias
-        if (temp$bias <= biasrest && temp$power >= power)
-        {
-          out <- list(nout = nit[i], powerout = powerit[i], biasout = temp$bias, power.reached = TRUE, bias.reached = FALSE, biasit = biasit,
-                    nit = nit, powerit = powerit, delta = delta, p.hyp = p.hyp, power = power, biasrest = biasrest, alternative = alternative, maxit = i)
-          class(out) <- "nDesign"
-          return(out)
-        }
-      }
-      
-      # # # bias decreases monotone with increasing n: if nmax has bias> biasrest: all designs have bias> biasrest
-      lastn <- length(nit)
-      if (biasit[lastn] > biasrest)
-      {
-        
-        out <- list(nout = nmax, powerout = powerit[lastn], biasout = biasit[lastn], power.reached = FALSE, bias.reached = TRUE,biasit = biasit,
-                  nit = nit, powerit = powerit,delta = delta,p.hyp = p.hyp, power = power, biasrest = biasrest, alternative = alternative, maxit = lastn)
-        class(out) <- "nDesign"
-        return(out)
-      }
-      
-      npowmax <- nit[which.max(powerit)]
-      powout <- powerit[which.max(powerit)]
-      biasout <- biasit[which.max(powerit)]
-      {
-        out <- list(nout = npowmax, powerout = powout, biasout = biasout, power.reached = FALSE, bias.reached = FALSE,biasit = biasit,
-                  nit = nit, powerit = powerit,delta = delta,p.hyp = p.hyp, power = power, biasrest = biasrest, alternative = alternative, maxit = length(nit))
-        class(out) <- "nDesign"
-        return(out)
-        
-      }
-      
-    }
-    
-    
-    
-    if (length(nmax) == 2) {
-      
-      nfrom <- min(nmax)
-      nto <- max(nmax)
-      if (nfrom < 4 && method == "soc") {stop("The 'soc' interval can have bounds NaN for n < 4")}
-      
-      nit <- nfrom:nto
-      powerit <- numeric(length = length(nit))
-      biasit <- numeric(length = length(nit))
-      
-      for (i in 1:length(nit))
-      {
-        temp <- bgtPowerI(n = nit[i], s = s, delta = delta, p.hyp = p.hyp, conf.level = conf.level, alternative = alternative, method = method)
-        powerit[i] <- temp$power
-        biasit[i] <- temp$bias
-        if (temp$bias <= biasrest && temp$power >= power)
-        {
-          out <- list(nout = nit[i], powerout = powerit[i], biasout = temp$bias, power.reached = TRUE, bias.reached = FALSE,biasit = biasit,
-                    nit = nit, powerit = powerit,delta = delta,p.hyp = p.hyp, power = power, biasrest = biasrest, alternative = alternative, maxit = i )
-          class(out) <- "nDesign"
-          return(out)
-        }
-      }
-      
-      # # # bias decreases monotone with increasing n: if nmax has bias> biasrest: all designs have bias> biasrest
-      lastn <- length(nit)
-      if (biasit[lastn] > biasrest)
-      {
-        out <- list(nout = max(nmax), powerout = powerit[lastn], biasout = biasit[lastn], power.reached = FALSE, 
-                    biasit = biasit, bias.reached = TRUE,nit = nit, powerit = powerit,delta = delta,p.hyp = p.hyp, 
-                    power = power, biasrest = biasrest, alternative = alternative, maxit = lastn)
-        class(out) <- "nDesign"
-        return(out)
-      }
-      
-      npowmax <- nit[which.max(powerit)]
-      powout <- powerit[which.max(powerit)]
-      biasout <- biasit[which.max(powerit)]
-      {
-        out <- list(nout = npowmax, powerout = powout, biasout = biasout, power.reached = FALSE, bias.reached = FALSE, biasit = biasit,
-                  nit = nit, powerit = powerit, delta = delta, p.hyp = p.hyp, power = power, biasrest = biasrest, alternative = alternative, maxit = length(nit))
-        class(out) <- "nDesign"
-        return(out)
-      }
+nDesign <- function(nmax, s, delta, p.hyp, conf.level = 0.95, power = 0.8, 
+                    alternative = "two.sided", method = "CP", biasrest = 0.05) {
+  
+  if (length(nmax) < 1 || length(nmax) > 2 || 
+      (min(nmax) <= 3 | abs(round(nmax) - nmax) > 1e-07)) {
+    stop("the maximal number of groups n allowed in calculations must be one or two integer(s) greater than 1")
+  }
+  if (length(s) != 1 || (s < 1 | abs(round(s) - s) > 1e-07)) {
+    stop("group size s must be specified as a single integer>0")
+  }
+  if (length(conf.level) != 1 || conf.level < 0 || conf.level > 1) {
+    stop("conf.level must be a positive number between 0 and 1")
+  }
+  if (length(power) != 1 || power < 0 || power > 1) {
+    stop(" desired power must be a positive number between 0 and 1, f.e. 0.8 for rejecting H0 in 80% of the cases")
+  }
+  
+  method <- match.arg(method, choices = c("CP", "Blaker", "AC", 
+                                          "score", "Wald", "soc"))
+  
+  alternative <- match.arg(alternative, choices = c("two.sided", "less", 
+                                                    "greater"))
+  
+  if (length(p.hyp) != 1 || p.hyp > 1 || p.hyp < 0) {
+    stop("true proportion p.hyp must be specified as a single number between 0 and 1")
+  }
+  
+  if (length(delta) != 1) {
+    stop("delta must be specified as a single number")
+  }
+  if (alternative == "less") {
+    if (p.hyp - delta < 0 || p.hyp - delta > 1 ) {
+      stop("alternative=less: specify delta as a number between 0 and the threshold p.hyp")
     }
   }
+  
+  if (alternative == "greater") {
+    if (p.hyp + delta < 0 || p.hyp + delta > 1 ) {
+      stop("alternative=greater: specify delta as a number between the threshold p.hyp and 1")
+    }
+  }
+  
+  if (alternative == "two.sided") {
+    if (p.hyp + delta < 0 || p.hyp + delta > 1 || 
+        p.hyp - delta < 0 || p.hyp - delta > 1) {
+      stop("alternative=two.sided: specify delta as a number between the threshold p.hyp and 1")
+    }
+  }
+  
+  if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0) {
+    stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")
+  }
+  
+  # # # # # #
+  
+  
+  if (length(nmax) == 1) {
+    nit <- 4:nmax
+    powerit <- numeric(length = length(nit))
+    biasit <- numeric(length = length(nit))
+    
+    for (i in 1:length(nit)) {
+      temp <- bgtPowerI(n = nit[i], s = s, delta = delta, p.hyp = p.hyp, 
+                        conf.level = conf.level, alternative = alternative, 
+                        method = method)
+      powerit[i] <- temp$power
+      biasit[i] <- temp$bias
+      if (temp$bias <= biasrest && temp$power >= power) {
+        out <- list(nout = nit[i], powerout = powerit[i], 
+                    biasout = temp$bias, power.reached = TRUE, 
+                    bias.reached = FALSE, biasit = biasit, nit = nit, 
+                    powerit = powerit, delta = delta, p.hyp = p.hyp, 
+                    power = power, biasrest = biasrest, 
+                    alternative = alternative, maxit = i)
+        class(out) <- "nDesign"
+        return(out)
+      }
+    }
+    
+    # bias decreases monotone with increasing n: if nmax has 
+    #   bias > biasrest: all designs have bias > biasrest
+    lastn <- length(nit)
+    if (biasit[lastn] > biasrest) {
+      out <- list(nout = nmax, powerout = powerit[lastn], 
+                  biasout = biasit[lastn], power.reached = FALSE, 
+                  bias.reached = TRUE,biasit = biasit, nit = nit, 
+                  powerit = powerit,delta = delta,p.hyp = p.hyp, 
+                  power = power, biasrest = biasrest, 
+                  alternative = alternative, maxit = lastn)
+      class(out) <- "nDesign"
+      return(out)
+    }
+    
+    npowmax <- nit[which.max(powerit)]
+    powout <- powerit[which.max(powerit)]
+    biasout <- biasit[which.max(powerit)]
+    {
+      out <- list(nout = npowmax, powerout = powout, biasout = biasout, 
+                  power.reached = FALSE, bias.reached = FALSE, 
+                  biasit = biasit, nit = nit, powerit = powerit, 
+                  delta = delta,p.hyp = p.hyp, power = power, 
+                  biasrest = biasrest, alternative = alternative, 
+                  maxit = length(nit))
+      class(out) <- "nDesign"
+      return(out)
+    }
+  }
+  
+  if (length(nmax) == 2) {
+    
+    nfrom <- min(nmax)
+    nto <- max(nmax)
+    if (nfrom < 4 && method == "soc") {
+      stop("The 'soc' interval can have bounds NaN for n < 4")
+    }
+    
+    nit <- nfrom:nto
+    powerit <- numeric(length = length(nit))
+    biasit <- numeric(length = length(nit))
+    
+    for (i in 1:length(nit)) {
+      temp <- bgtPowerI(n = nit[i], s = s, delta = delta, p.hyp = p.hyp, 
+                        conf.level = conf.level, alternative = alternative, 
+                        method = method)
+      powerit[i] <- temp$power
+      biasit[i] <- temp$bias
+      if (temp$bias <= biasrest && temp$power >= power) {
+        out <- list(nout = nit[i], powerout = powerit[i], 
+                    biasout = temp$bias, power.reached = TRUE, 
+                    bias.reached = FALSE, biasit = biasit, nit = nit, 
+                    powerit = powerit, delta = delta, p.hyp = p.hyp, 
+                    power = power, biasrest = biasrest, 
+                    alternative = alternative, maxit = i)
+        class(out) <- "nDesign"
+        return(out)
+      }
+    }
+    
+    # bias decreases monotone with increasing n: if nmax has 
+    #   bias > biasrest: all designs have bias > biasrest
+    lastn <- length(nit)
+    if (biasit[lastn] > biasrest) {
+      out <- list(nout = max(nmax), powerout = powerit[lastn], 
+                  biasout = biasit[lastn], power.reached = FALSE, 
+                  biasit = biasit, bias.reached = TRUE, nit = nit, 
+                  powerit = powerit,delta = delta,p.hyp = p.hyp, 
+                  power = power, biasrest = biasrest, 
+                  alternative = alternative, maxit = lastn)
+      class(out) <- "nDesign"
+      return(out)
+    }
+    
+    npowmax <- nit[which.max(powerit)]
+    powout <- powerit[which.max(powerit)]
+    biasout <- biasit[which.max(powerit)]
+    {
+      out <- list(nout = npowmax, powerout = powout, biasout = biasout, 
+                  power.reached = FALSE, bias.reached = FALSE, 
+                  biasit = biasit, nit = nit, powerit = powerit, 
+                  delta = delta, p.hyp = p.hyp, power = power, 
+                  biasrest = biasrest, alternative = alternative, 
+                  maxit = length(nit))
+      class(out) <- "nDesign"
+      return(out)
+    }
+  }
+}
 
 
 
@@ -153,103 +180,117 @@ nDesign <-
 # sDesign() function                                             #
 ##################################################################
 
-sDesign <-
-  function(n,smax,delta,p.hyp,conf.level=0.95, power=0.8, alternative="two.sided", method="CP", biasrest=0.05)
-    
-  {
-    
-    if (length(smax) != 1 || (smax < 3 | abs(round(smax) - smax) > 1e-07))
-    {stop("the maximal group size smax allowed in calculations must be a single integer greater than 0")}
-    if (length(n) != 1 || (n <= 1 | abs(round(n) - n) > 1e-07))
-    {stop("the number of groups n must be specified as a single integer>1")}
-    if (length(conf.level) != 1 || conf.level < 0 || conf.level > 1)
-    {stop("conf.level must be a positive number between 0 and 1")}
-    if (length(power) != 1 || power < 0 || power > 1)
-    {stop("desired power must be a positive number between 0 and 1, f.e. 0.8 for rejecting H0 in 80% of the cases")}
-    
-    method <- match.arg(method, choices = c("CP", "Blaker", "AC", "score", "Wald", "soc"))
-    
-    alternative <- match.arg(alternative, choices = c("two.sided", "less", "greater"))
-    
-    if (length(p.hyp) != 1 || p.hyp > 1 || p.hyp < 0)
-    {stop("threshold p.hyp must be specified as a single number between 0 and 1")}
-    
-    if (length(delta) != 1)
-    {stop("delta must be specified as a single number")}
-    if (alternative == "less")
-    {
-      if (p.hyp - delta < 0 || p.hyp - delta > 1)
-      {stop("alternative=less: specify delta as a number between 0 and the threshold p.hyp")}
-    }
-    
-    if (alternative == "greater")
-    {
-      if (p.hyp + delta < 0 || p.hyp + delta > 1)
-      {stop("alternative=greater: specify delta as a number between the threshold p.hyp and 1")}
-    }
-    
-    if (alternative == "two.sided")
-    {
-      if (p.hyp + delta < 0 || p.hyp + delta > 1 || p.hyp - delta < 0 || p.hyp - delta > 1)
-      {stop("alternative=two.sided: specify delta as a number between the threshold p.hyp and 1")}
-    }
-    
-    if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0)
-    {stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")}
-    
-    
-    # # # Iteration until smax, until either the desired power is reached or biasrestriction is violated
-    
-    
-    if (method == "soc" && n <= 3) {stop("number of groups n<=3 might cause problems in computation of 'soc' interval")}
-    
-    
-    sit <- 2:smax
-    powerit <- numeric(length = length(sit))
-    biasit <- numeric(length = length(sit))
-    
-    for (i in 1:length(sit))
-    {
-      
-      temp <- bgtPowerI(n = n, s = sit[i], delta = delta, p.hyp = p.hyp, conf.level = conf.level, alternative = alternative, method = method)
-      powerit[i] <- temp$power
-      biasit[i] <- temp$bias
-      
-      if (temp$bias <= biasrest && temp$power >= power)
-      {
-        out <- list(sout = sit[i], powerout = powerit[i], biasout = biasit[i],
-                    power.reached = TRUE, bias.reached = FALSE, powerit = powerit, biasit = biasit, sit = sit, maxit = i,
-                    alternative = alternative, p.hyp = p.hyp, delta = delta, biasrest = biasrest, power = power)
-        
-        class(out) <- "sDesign"
-        return(out)
-      }
-      
-      if (temp$bias > biasrest)
-      {
-        out <- list(sout = sit[which.max(powerit[1:(i - 1)])],
-                    powerout = powerit[which.max(powerit[1:(i - 1)])],
-                    biasout = biasit[which.max(powerit[1:(i - 1)])],
-                    power.reached = FALSE, bias.reached = TRUE,
-                    powerit = powerit,biasit = biasit,sit = sit, maxit = i,
-                    alternative = alternative, p.hyp = p.hyp, delta = delta, biasrest = biasrest, power = power)
-        
-        class(out) <- "sDesign"
-        return(out)
-      }
-    }
-    ## end of for statement
-    
-    out <- list(sout = sit[which.max(powerit)],
-                powerout = powerit[which.max(powerit)],
-                biasout = biasit[which.max(powerit)],
-                power.reached = FALSE, bias.reached = FALSE,
-                powerit = powerit, biasit = biasit,sit = sit,maxit = length(sit),
-                alternative = alternative, p.hyp = p.hyp, delta = delta, biasrest = biasrest, power = power )
-    
-    class(out) <- "sDesign"
-    return(out)
+sDesign <- function(n, smax, delta, p.hyp, conf.level = 0.95, power=0.8, 
+                    alternative = "two.sided", method = "CP", 
+                    biasrest = 0.05) {
+  
+  if (length(smax) != 1 || (smax < 3 | abs(round(smax) - smax) > 1e-07)) {
+    stop("the maximal group size smax allowed in calculations must be a single integer greater than 0")
   }
+  if (length(n) != 1 || (n <= 1 | abs(round(n) - n) > 1e-07)) {
+    stop("the number of groups n must be specified as a single integer>1")
+  }
+  if (length(conf.level) != 1 || conf.level < 0 || conf.level > 1) {
+    stop("conf.level must be a positive number between 0 and 1")
+  }
+  if (length(power) != 1 || power < 0 || power > 1) {
+    stop("desired power must be a positive number between 0 and 1, f.e. 0.8 for rejecting H0 in 80% of the cases")
+  }
+  
+  method <- match.arg(method, choices = c("CP", "Blaker", "AC", 
+                                          "score", "Wald", "soc"))
+  
+  alternative <- match.arg(alternative, choices = c("two.sided", "less", 
+                                                    "greater"))
+  
+  if (length(p.hyp) != 1 || p.hyp > 1 || p.hyp < 0) {
+    stop("threshold p.hyp must be specified as a single number between 0 and 1")
+  }
+  
+  if (length(delta) != 1) {
+    stop("delta must be specified as a single number")
+  }
+  if (alternative == "less") {
+    if (p.hyp - delta < 0 || p.hyp - delta > 1) {
+      stop("alternative=less: specify delta as a number between 0 and the threshold p.hyp")
+    }
+  }
+  
+  if (alternative == "greater") {
+    if (p.hyp + delta < 0 || p.hyp + delta > 1) {
+      stop("alternative=greater: specify delta as a number between the threshold p.hyp and 1")
+    }
+  }
+  
+  if (alternative == "two.sided") {
+    if (p.hyp + delta < 0 || p.hyp + delta > 1 || p.hyp - delta < 0 || p.hyp - delta > 1) {
+      stop("alternative=two.sided: specify delta as a number between the threshold p.hyp and 1")
+    }
+  }
+  
+  if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0) {
+    stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")
+  }
+  
+  
+  # Iteration until smax, until either the desired power is reached or 
+  #   biasrestriction is violated
+  
+  
+  if (method == "soc" && n <= 3) {
+    stop("number of groups n<=3 might cause problems in computation of 'soc' interval")
+  }
+  
+  sit <- 2:smax
+  powerit <- numeric(length = length(sit))
+  biasit <- numeric(length = length(sit))
+  
+  for (i in 1:length(sit)) {
+    
+    temp <- bgtPowerI(n = n, s = sit[i], delta = delta, p.hyp = p.hyp, 
+                      conf.level = conf.level, alternative = alternative, 
+                      method = method)
+    powerit[i] <- temp$power
+    biasit[i] <- temp$bias
+    
+    if (temp$bias <= biasrest && temp$power >= power) {
+      out <- list(sout = sit[i], powerout = powerit[i], biasout = biasit[i],
+                  power.reached = TRUE, bias.reached = FALSE, 
+                  powerit = powerit, biasit = biasit, sit = sit, maxit = i,
+                  alternative = alternative, p.hyp = p.hyp, delta = delta, 
+                  biasrest = biasrest, power = power)
+      
+      class(out) <- "sDesign"
+      return(out)
+    }
+    
+    if (temp$bias > biasrest) {
+      out <- list(sout = sit[which.max(powerit[1:(i - 1)])],
+                  powerout = powerit[which.max(powerit[1:(i - 1)])],
+                  biasout = biasit[which.max(powerit[1:(i - 1)])],
+                  power.reached = FALSE, bias.reached = TRUE,
+                  powerit = powerit,biasit = biasit,sit = sit, maxit = i,
+                  alternative = alternative, p.hyp = p.hyp, delta = delta, 
+                  biasrest = biasrest, power = power)
+      
+      class(out) <- "sDesign"
+      return(out)
+    }
+  }
+  ## end of for statement
+  
+  out <- list(sout = sit[which.max(powerit)],
+              powerout = powerit[which.max(powerit)],
+              biasout = biasit[which.max(powerit)],
+              power.reached = FALSE, bias.reached = FALSE,
+              powerit = powerit, biasit = biasit, sit = sit,
+              maxit = length(sit), alternative = alternative, 
+              p.hyp = p.hyp, delta = delta, biasrest = biasrest, 
+              power = power)
+  
+  class(out) <- "sDesign"
+  return(out)
+}
 
 
 
@@ -388,19 +429,19 @@ sDesign <-
 #' # The maximum group size because of limited
 #' #   sensitivity of the diagnostic test might be s=20 and we
 #' #   can only afford to perform maximally 100 tests:
-#' designPower(n=100, s=20, delta=0.002, p.hyp=0.005, fixed="s",
-#'              alternative="less", method="CP", power=0.8)
+#' designPower(n = 100, s = 20, delta = 0.002, p.hyp = 0.005, fixed = "s",
+#'              alternative = "less", method = "CP", power = 0.8)
 #'         
 #' # One might accept to detect delta=0.004,
 #' #   i.e. reject H0: p>=0.005 with power 80 percent 
 #' #   when the true proportion is 0.001:
-#' designPower(n=100, s=20, delta=0.004, p.hyp=0.005, fixed="s",
-#'              alternative="less", method="CP", power=0.8)
+#' designPower(n = 100, s = 20, delta = 0.004, p.hyp = 0.005, fixed = "s",
+#'              alternative = "less", method = "CP", power = 0.8)
 #'              
 #' # Power for a design with a fixed group size of s=1 
 #' #   (individual testing).
-#' designPower(n=500, s=1, delta=0.05, p.hyp=0.10, 
-#'             fixed="s", method="CP", power=0.80)
+#' designPower(n = 500, s = 1, delta = 0.05, p.hyp = 0.10, 
+#'             fixed = "s", method = "CP", power = 0.80)
 #'         
 #' # Assume that objective is to show that a proportion
 #' #   is smaller than 0.005 (i.e. 0.5%) with a 
@@ -411,28 +452,28 @@ sDesign <-
 #' # The maximum number of groups might be 30, where the 
 #' #   overall sensitivity is not limited until group 
 #' #   size s=100.
-#' designPower(s=100, n=30, delta=0.002, p.hyp=0.005, fixed="n",
-#'              alternative="less", method="CP", power=0.8)
+#' designPower(s = 100, n = 30, delta = 0.002, p.hyp = 0.005, fixed = "n",
+#'              alternative = "less", method = "CP", power = 0.8)
 #'         
 #' # One might accept to detect delta=0.004,
 #' #   i.e. reject H0: p>=0.005 with power 80 percent 
 #' #   when the true proportion is 0.001:
-#' designPower(s=100, n=30, delta=0.004, p.hyp=0.005, fixed="n",
-#'              alternative="less", method="CP", power=0.8)
-#' designPower(s=100, n=30, delta=0.004, p.hyp=0.005, fixed="n",
-#'              alternative="less", method="score", power=0.8)
+#' designPower(s = 100, n = 30, delta = 0.004, p.hyp = 0.005, fixed = "n",
+#'              alternative = "less", method = "CP", power = 0.8)
+#' designPower(s = 100, n = 30, delta = 0.004, p.hyp = 0.005, fixed = "n",
+#'              alternative = "less", method = "score", power = 0.8)
 
 designPower <- function(n, s, fixed = "s", delta, p.hyp, 
-                         conf.level = 0.95, power = 0.80, 
-                         alternative = "two.sided", 
-                         method="CP", biasrest = 0.05) {
+                        conf.level = 0.95, power = 0.80, 
+                        alternative = "two.sided", 
+                        method = "CP", biasrest = 0.05) {
   
   if (fixed == "s") {
     results <- nDesign(nmax = n, s = s, delta = delta,
                        p.hyp = p.hyp, conf.level = conf.level,
                        power = power, alternative = alternative,
                        method = method, biasrest = biasrest)
-
+    
   } else if (fixed == "n") {
     results <- sDesign(n = n, smax = s, delta = delta,
                        p.hyp = p.hyp, conf.level = conf.level,
@@ -447,7 +488,7 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
 
 
 ##################################################################
-# print.designPower() function -                                 #
+# print.designPower() function                                   #
 ##################################################################
 
 #' @title Print method for objects of class "designPower"
@@ -470,56 +511,67 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
 #' by Frank Schaarschmidt for the \code{binGroup} package. Minor 
 #' modifications were made for inclusion in the \code{binGroup2} package.
 
-"print.designPower" <- function(x, ...){
+"print.designPower" <- function(x, ...) {
   
   args <- list(...)
   if (is.null(args$digits)) {digits <- 4}
   else{digits <- args$digits}
   
-  if (x$alternative == "less")
-  {alt.hyp <- paste("true proportion is less than",x$p.hyp )
-  ptrue <- paste("assumed true proportion","=", x$p.hyp - x$delta)}
+  if (x$alternative == "less") {
+    alt.hyp <- paste("true proportion is less than", x$p.hyp)
+    ptrue <- paste("assumed true proportion", "=", x$p.hyp - x$delta)
+  }
   
-  if (x$alternative == "greater")
-  {alt.hyp <- paste("true proportion is greater than", x$p.hyp )
-  ptrue <- paste("assumed true proportion","=", x$p.hyp + x$delta)}
+  if (x$alternative == "greater") {
+    alt.hyp <- paste("true proportion is greater than", x$p.hyp)
+    ptrue <- paste("assumed true proportion", "=", x$p.hyp + x$delta)
+  }
   
-  if (x$alternative == "two.sided")
-  {alt.hyp <- paste("true proportion is not equal to",x$p.hyp )
-  ptrue <- paste("assumed true proportion","=", x$p.hyp - x$delta,"or", x$p.hyp + x$delta)}
+  if (x$alternative == "two.sided") {
+    alt.hyp <- paste("true proportion is not equal to", x$p.hyp)
+    ptrue <- paste("assumed true proportion", "=", x$p.hyp - x$delta, 
+                   "or", x$p.hyp + x$delta)
+  }
   
   if (names(x)[1] == "nout") {
     
-    if (x$power.reached == TRUE && x$bias.reached == FALSE)
-    {cat("Power was reached without violating bias restriction\n")
-      cat("for n","=",x$nout,"with power", "=",signif(x$powerout, digits),"\n")
-      cat("and bias","=",signif(x$biasout, digits),"\n")
+    if (x$power.reached == TRUE && x$bias.reached == FALSE) {
+      cat("Power was reached without violating bias restriction\n")
+      cat("for n", "=", x$nout, "with power", "=", 
+          signif(x$powerout, digits), "\n")
+      cat("and bias", "=", signif(x$biasout, digits), "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == FALSE && x$powerout != 0)
-    {cat("Power was not reached in the range of n","=",min(x$nit),"to",max(x$nit),"\n")
-      cat("Maximal power was reached for n","=",x$nout,"with power","=",signif(x$powerout, digits),"\n")
-      cat("and bias","=",signif(x$biasout, digits),"\n")
+    if (x$power.reached == FALSE && x$bias.reached == FALSE && 
+        x$powerout != 0) {
+      cat("Power was not reached in the range of n", "=", min(x$nit), "to", 
+          max(x$nit),"\n")
+      cat("Maximal power was reached for n", "=", x$nout, "with power", 
+          "=", signif(x$powerout, digits), "\n")
+      cat("and bias", "=", signif(x$biasout, digits), "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == TRUE)
-    {cat("Power can not be reached without violating bias restriction\n")
-      cat("in the range of n","=",min(x$nit),"to",max(x$nit),"\n")
-      cat("Maximal power was reached for n","=",x$nout,"\n")
-      cat("with power","=",signif(x$powerout, digits),"and bias","=",signif(x$biasout, digits),"\n")
+    if (x$power.reached == FALSE && x$bias.reached == TRUE) {
+      cat("Power can not be reached without violating bias restriction\n")
+      cat("in the range of n", "=", min(x$nit), "to", max(x$nit), "\n")
+      cat("Maximal power was reached for n", "=", x$nout, "\n")
+      cat("with power", "=", signif(x$powerout, digits), "and bias", 
+          "=", signif(x$biasout, digits), "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
-      cat( ptrue, "\n")
+      cat(ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == FALSE && x$powerout == 0)
-    {cat("Power can not be reached in the range of n","=",min(x$nit),",",max(x$nit),"\n")
+    if (x$power.reached == FALSE && x$bias.reached == FALSE && 
+        x$powerout == 0) {
+      cat("Power can not be reached in the range of n", "=", 
+          min(x$nit), ",", max(x$nit), "\n")
       cat("null hypothesis can not be rejected for any number of groups in this range\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
@@ -528,43 +580,50 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
     
   } else if (names(x)[1] == "sout") {
     
-    if (x$power.reached == TRUE && x$bias.reached == FALSE)
-    {cat("Power was reached without violating bias restriction","\n")
-      cat("for s","=",x$sout,"with power","=",signif(x$powerout, digits),"\n")
-      cat("and bias","=",signif(x$biasout, digits),"\n")
+    if (x$power.reached == TRUE && x$bias.reached == FALSE) {
+      cat("Power was reached without violating bias restriction","\n")
+      cat("for s", "=", x$sout, "with power", "=", 
+          signif(x$powerout, digits), "\n")
+      cat("and bias", "=", signif(x$biasout, digits), "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == FALSE && x$powerout != 0)
-    {cat("Power was not reached in the range of s","=",min(x$sit),",",max(x$sit),"\n")
-      cat("Maximal power was reached for s","=",x$sout,"with power","=",signif(x$powerout, digits),"\n")
-      cat("and bias","=",x$biasout,"\n")
+    if (x$power.reached == FALSE && x$bias.reached == FALSE && 
+        x$powerout != 0) {
+      cat("Power was not reached in the range of s", "=", min(x$sit), 
+          ",", max(x$sit), "\n")
+      cat("Maximal power was reached for s", "=", x$sout, "with power", 
+          "=", signif(x$powerout, digits), "\n")
+      cat("and bias", "=", x$biasout, "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == TRUE)
-    {cat("Power can not be reached without violating bias restriction","\n")
-      cat("Maximal power without violating biasrest","=", x$biasrest,"\n")
-      cat("was reached for s","=",x$sout,"\n")
-      cat("with power","=",signif(x$powerout, digits),"and bias","=",signif(x$biasout, digits),"\n")
+    if (x$power.reached == FALSE && x$bias.reached == TRUE) {
+      cat("Power can not be reached without violating bias restriction", "\n")
+      cat("Maximal power without violating biasrest", "=", x$biasrest, "\n")
+      cat("was reached for s", "=", x$sout, "\n")
+      cat("with power", "=", signif(x$powerout, digits), "and bias", 
+          "=", signif(x$biasout, digits), "\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
     
-    if (x$power.reached == FALSE && x$bias.reached == FALSE && x$powerout == 0)
-    {cat("Power can not be reached in the range of s","=",min(x$sit),",",max(x$sit),"\n")
+    if (x$power.reached == FALSE && x$bias.reached == FALSE && 
+        x$powerout == 0) {
+      cat("Power can not be reached in the range of s", "=", min(x$sit), 
+          ",", max(x$sit), "\n")
       cat("null hypothesis can not be rejected for any group size in this range\n")
       
       cat("alternative hypothesis:", alt.hyp ,"\n")
       cat( ptrue, "\n")
     }
   }
- 
+  
   invisible(x)
 }
 
@@ -576,33 +635,31 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
 # msep() function -                                              #
 ##################################################################
 
-"msep" <- function(n,s,p.tr){
-    
-    expected <- 0
-    for (y in 0:n)
-    {
-      expected <- expected + ((1 - (1 - y/n)^(1/s))*choose(n,y)*((1 - (1 - p.tr)^s)^y)*((1 - p.tr)^(s*(n - y))))
-    }
-    expected
-    
-    
-    varsum <- 0
-    for (y in 0:n)
-    {
-      varsum <- varsum + (((1 - y/n)^(2/s))*choose(n, n - y)*(((1 - p.tr)^s)^(n - y))*((1 - (1 - p.tr)^s)^y)) 
-    }
-    varp <- varsum - (1 - expected)^2
-    
-    expp <- expected
-    bias <- expected - p.tr
-    mse <- varp + bias^2
-    
-    
-    list(varp = varp,
-         mse = mse,
-         bias = bias,
-         exp = expected)
+"msep" <- function(n, s, p.tr){
+  
+  expected <- 0
+  for (y in 0:n) {
+    expected <- expected + ((1 - (1 - y / n)^(1 / s)) * choose(n, y) * 
+                              ((1 - (1 - p.tr)^s)^y) * 
+                              ((1 - p.tr)^(s * (n - y))))
   }
+  
+  expected
+  
+  varsum <- 0
+  for (y in 0:n) {
+    varsum <- varsum + (((1 - y / n)^(2 / s)) * choose(n, n - y) * 
+                          (((1 - p.tr)^s)^(n - y))*((1 - (1 - p.tr)^s)^y)) 
+  }
+  varp <- varsum - (1 - expected)^2
+  
+  expp <- expected
+  bias <- expected - p.tr
+  mse <- varp + bias^2
+  
+  
+  list(varp = varp, mse = mse, bias = bias, exp = expected)
+}
 
 
 
@@ -612,15 +669,22 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
 ##################################################################
 # Brianna Hitt - 03.07.2020
 # Changed "maximal" and "minimal" to "maximum" and "minimum", respectively
-# 
 
-"estDesign" <- function(n, smax, p.tr, biasrest = 0.05){
-    
-    if (length(n) != 1 || (n <= 1 | abs(round(n) - n) > 1e-07)) {stop("number of groups n must be specified as a single integer greater than 1")}
-    if (length(p.tr) != 1 || p.tr > 1 || p.tr < 0) {stop("true proportion p.tr must be specified as a single number between 0 and 1")}
-    if (length(smax) != 1 || (smax <= 1 | abs(round(smax) - smax) > 1e-07)) {stop("the maximal group size allowed in calculations must be a single integer greater than 1")}
-    if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0) {stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")}
-    
+"estDesign" <- function(n, smax, p.tr, biasrest = 0.05) {
+  
+  if (length(n) != 1 || (n <= 1 | abs(round(n) - n) > 1e-07)) {
+    stop("number of groups n must be specified as a single integer greater than 1")
+  }
+  if (length(p.tr) != 1 || p.tr > 1 || p.tr < 0) {
+    stop("true proportion p.tr must be specified as a single number between 0 and 1")
+  }
+  if (length(smax) != 1 || (smax <= 1 | abs(round(smax) - smax) > 1e-07)) {
+    stop("the maximal group size allowed in calculations must be a single integer greater than 1")
+  }
+  if (length(biasrest) != 1 || biasrest >= 1 || biasrest < 0) {
+    stop("the maximally allowed bias(p) specified in biasrest must be a single number between 0 and 1, usually should be close to 0")
+  }
+  
   for (i in 2:smax) {
     temp <- msep(n = n, p.tr = p.tr, s = i)
     
@@ -701,11 +765,11 @@ designPower <- function(n, s, fixed = "s", delta, p.hyp,
 #' 
 #' @examples 
 #' # Compare to Table 1 in Swallow (1985):
-#' designEst(n=10, smax=100, p.tr=0.001)
-#' designEst(n=10, smax=100, p.tr=0.01)
-#' designEst(n=25, smax=100, p.tr=0.05)
-#' designEst(n=40, smax=100, p.tr=0.25)
-#' designEst(n=200, smax=100, p.tr=0.30)
+#' designEst(n = 10, smax = 100, p.tr = 0.001)
+#' designEst(n = 10, smax = 100, p.tr = 0.01)
+#' designEst(n = 25, smax = 100, p.tr = 0.05)
+#' designEst(n = 40, smax = 100, p.tr = 0.25)
+#' designEst(n = 200, smax = 100, p.tr = 0.30)
 
 designEst <- estDesign
 

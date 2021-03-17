@@ -48,15 +48,15 @@ include two-stage hierarchical ("\kbd{ID2}"), three-stage hierarchical
 hierarchical ("\kbd{ID5}") testing.}
 
 \item{p.vec}{vector of overall joint probabilities. The joint probabilities 
-are assumed to be equal for all individuals in the algorithm (non-informative 
-testing only). There are four joint probabilities to 
+are assumed to be equal for all individuals in the algorithm 
+(non-informative testing only). There are four joint probabilities to 
 consider: \eqn{p_{00}}{p_00}, the probability that an individual tests 
 negative for both diseases; \eqn{p_{10}}{p_10}, the probability that an 
 individual tests positive only for the first disease; \eqn{p_{01}}{p_01}, 
 the probability that an individual tests positive only for the second 
 disease; and \eqn{p_{11}}{p_11}, the probability that an individual tests 
-positive for both diseases. The joint probabilities must sum to 1. 
-Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified.}
+positive for both diseases. The joint probabilities must sum to 1. Only one 
+of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified.}
 
 \item{probabilities}{matrix of joint probabilities for each individual, 
 where rows correspond to the four joint probabilities and columns correspond 
@@ -67,7 +67,8 @@ to each individual in the algorithm. Only one of \kbd{p.vec},
 distribution (for informative testing only). The vector will be used to 
 generate a heterogeneous matrix of joint probabilities for each individual. 
 The vector must have length 4. Further details are given under 'Details'.
-Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified.}
+Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be 
+specified.}
 
 \item{Se}{matrix of sensitivity values, where one value is given for each 
 disease (or infection) at each stage of testing. The rows of the matrix 
@@ -89,8 +90,8 @@ all stages of testing. Further details are given under 'Details'.}
 testing algorithm. The rows correspond to the stages of testing, the columns 
 correspond to each individual to be tested, and the cell values 
 specify the group number of each individual at each stage. Further details 
-are given under 'Details'. For array testing algorithms, this argument will be 
-ignored.}
+are given under 'Details'. For array testing algorithms, this argument will 
+be ignored.}
 
 \item{rowcol.sz}{the row/column size for array testing algorithms. For 
 hierarchical testing algorithms, this argument will be ignored.}
@@ -102,8 +103,8 @@ two diseases. This ordering is used with the joint probabilities. The
 default ordering is (p_00, p_10, p_01, p_11).}
 
 \item{a}{a vector containing indices indicating which individuals to 
-calculate individual accuracy measures for. If \kbd{NULL}, individual accuracy 
-measures will be displayed for all individuals in the algorithm.}
+calculate individual accuracy measures for. If \kbd{NULL}, individual 
+accuracy measures will be displayed for all individuals in the algorithm.}
 
 \item{print.time}{a logical value indicating whether the length of time 
 for calculations should be printed. The default is \kbd{TRUE}.}
@@ -120,12 +121,12 @@ if applicable (for non-informative algorithms only).}
 provided by the user, if applicable.}
 \item{alpha.vec}{the alpha vector provided by the user, if applicable 
 (for informative algorithms only).}
-\item{Se}{the matrix of sensitivity values for each disease at each stage of 
-testing.}
-\item{Sp}{the matrix of specificity values for each disease at each stage of 
-testing.}
-\item{Config}{a list specifying elements of the specified testing configuration, 
-which may include:
+\item{Se}{the matrix of sensitivity values for each disease at each stage 
+of testing.}
+\item{Sp}{the matrix of specificity values for each disease at each stage 
+of testing.}
+\item{Config}{a list specifying elements of the specified testing 
+configuration, which may include:
 \describe{
 \item{Stage1}{group size for the first stage of hierarchical testing, if 
 applicable.}
@@ -156,15 +157,17 @@ the same set of accuracy measures are displayed together in a single row of
 the matrix. The columns correspond to the pooling sensitivity, pooling 
 specificity, pooling positive predictive value, pooling negative predictive 
 value, and the indices for the individuals in each row of the matrix. 
-Individual accuracy measures are not displayed for array testing algorithms.}
+Individual accuracy measures are not displayed for array testing 
+algorithms.}
 \item{Disease 2 Individual}{a matrix of accuracy measures, pertaining to the 
-second disease, for each individual specified in \kbd{a}. The rows correspond 
-to each unique set of accuracy measures in the algorithm. Individuals with 
-the same set of accuracy measures are displayed together in a single row of 
-the matrix. The columns correspond to the pooling sensitivity, pooling 
-specificity, pooling positive predictive value, pooling negative predictive 
-value, and the indices for the individuals in each row of the matrix. 
-Individual accuracy measures are not displayed for array testing algorithms.}
+second disease, for each individual specified in \kbd{a}. The rows 
+correspond to each unique set of accuracy measures in the algorithm. 
+Individuals with the same set of accuracy measures are displayed together in 
+a single row of the matrix. The columns correspond to the pooling 
+sensitivity, pooling specificity, pooling positive predictive value, pooling 
+negative predictive value, and the indices for the individuals in each row 
+of the matrix. Individual accuracy measures are not displayed for array 
+testing algorithms.}
 \item{Overall}{a matrix of overall accuracy measures for the algorithm. 
 The rows correspond to each disease. The columns correspond to the pooling 
 sensitivity, pooling specificity, pooling positive predictive value, and 
@@ -185,13 +188,14 @@ Calculations for hierarchical group testing algorithms are performed as
 described in Bilder et al. (2019) and calculations for array-based group 
 testing algorithms are performed as described in Hou et al. (2019). 
 
-Available algorithms include two-, three-, four-, and five-stage hierarchical 
-testing and array testing with and without master pooling. Both non-informative 
-and informative group testing settings are allowed for hierarchical algorithms. 
-Only non-informative group testing settings are allowed for array testing 
-algorithms. Operating characteristics calculated are expected number of tests, 
-pooling sensitivity, pooling specificity, pooling positive predictive value, 
-and pooling negative predictive value for each individual.
+Available algorithms include two-, three-, four-, and five-stage 
+hierarchical testing and array testing with and without master pooling. Both 
+non-informative and informative group testing settings are allowed for 
+hierarchical algorithms. Only non-informative group testing settings are 
+allowed for array testing algorithms. Operating characteristics calculated 
+are expected number of tests, pooling sensitivity, pooling specificity, 
+pooling positive predictive value, and pooling negative predictive value for 
+each individual.
 
 For informative algorithms where the \kbd{alpha} argument is specified, a 
 heterogeneous matrix of joint probabilities for each individual is generated 
@@ -203,47 +207,49 @@ use of the Dirichlet distribution for this purpose.
 The sensitivity/specificity values are allowed to vary across stages of 
 testing. For hierarchical testing, a different sensitivity/specificity value
 may be used for each stage of testing. For array testing, a different 
-sensitivity/specificity value may be used for master pool testing (if included), 
-row/column testing, and individual testing. The values must be specified 
-in the order of the testing performed. For example, values are specified as 
-(stage 1, stage 2, stage 3) for three-stage hierarchical testing or 
-(master pool testing, row/column testing, individual testing) for array 
-testing with master pooling. A vector of \eqn{K} sensitivity/specificity 
-values may be specified, and sensitivity/specificity values for all stages 
-of testing are assumed to be equal. The first value in the vector will be 
-used at each stage of testing for the first disease, and the second value in 
-the vector will be used at each stage of testing for the second disease.
+sensitivity/specificity value may be used for master pool testing (if 
+included), row/column testing, and individual testing. The values must be 
+specified in the order of the testing performed. For example, values are 
+specified as (stage 1, stage 2, stage 3) for three-stage hierarchical 
+testing or (master pool testing, row/column testing, individual testing) for 
+array testing with master pooling. A vector of \eqn{K} 
+sensitivity/specificity values may be specified, and sensitivity/specificity 
+values for all stages of testing are assumed to be equal. The first value in 
+the vector will be used at each stage of testing for the first disease, and 
+the second value in the vector will be used at each stage of testing for the 
+second disease.
 
-The matrix specified  by \kbd{hier.config} defines the hierarchical group testing 
-algorithm for \eqn{I} individuals. The rows of the matrix correspond to the stages 
-\eqn{s=1,...,S} in the testing algorithm, and the columns correspond to individuals 
-\eqn{i=1,...I}. The cell values within the matrix represent the group number of 
-individual \eqn{i} at stage \eqn{s}. For three-stage, four-stage, five-stage, and 
-non-informative two-stage hierarchical testing, the first row of the matrix 
-consists of all ones. This indicates that all individuals in the algorithm are 
-tested together in a single group in the first stage of testing. For informative 
-two-stage hierarchical testing, the initial group (block) is not tested. Thus, 
-the first row of the matrix consists of the group numbers for each individual in 
-the first stage of testing. For all hierarchical algorithms, the final row of the 
-matrix denotes individual testing. Individuals who are not tested in a particular 
-stage are represented by "NA" (e.g., an individual tested in a group of size 1 in 
-the second stage of testing would not be tested again in a third stage of testing). 
-It is important to note that this matrix represents the testing that could be 
-performed if each group tests positively at each stage prior to the last. For 
-more details on this matrix (called a group membership matrix), see Bilder et al. 
-(2019). 
+The matrix specified  by \kbd{hier.config} defines the hierarchical group 
+testing algorithm for \eqn{I} individuals. The rows of the matrix correspond 
+to the stages \eqn{s=1,...,S} in the testing algorithm, and the columns 
+correspond to individuals \eqn{i=1,...I}. The cell values within the matrix 
+represent the group number of individual \eqn{i} at stage \eqn{s}. For 
+three-stage, four-stage, five-stage, and non-informative two-stage 
+hierarchical testing, the first row of the matrix consists of all ones. This 
+indicates that all individuals in the algorithm are tested together in a 
+single group in the first stage of testing. For informative two-stage 
+hierarchical testing, the initial group (block) is not tested. Thus, the 
+first row of the matrix consists of the group numbers for each individual 
+in the first stage of testing. For all hierarchical algorithms, the final 
+row of the matrix denotes individual testing. Individuals who are not tested 
+in a particular stage are represented by "NA" (e.g., an individual tested in 
+a group of size 1 in the second stage of testing would not be tested again 
+in a third stage of testing). It is important to note that this matrix 
+represents the testing that could be performed if each group tests 
+positively at each stage prior to the last. For more details on this matrix 
+(called a group membership matrix), see Bilder et al. (2019). 
 
 For array testing without master pooling, the \kbd{rowcol.sz} specified
-represents the row/column size for initial (stage 1) testing. For array testing
-with master pooling, the \kbd{rowcol.sz} specified represents the row/column size
-for stage 2 testing. This is because the master pool size is the overall array 
-size, given by the square of the row/column size.
+represents the row/column size for initial (stage 1) testing. For array 
+testing with master pooling, the \kbd{rowcol.sz} specified represents the 
+row/column size for stage 2 testing. This is because the master pool size is 
+the overall array size, given by the square of the row/column size.
 
 The displayed overall pooling sensitivity, pooling specificity, pooling 
 positive predictive value, and pooling negative predictive value are 
 weighted averages of the corresponding individual accuracy measures for all 
-individuals within the initial group (or block) for a hierarchical algorithm, 
-or within the entire array for an array-based algorithm. 
+individuals within the initial group (or block) for a hierarchical 
+algorithm, or within the entire array for an array-based algorithm. 
 Expressions for these averages are provided in the Supplementary Material 
 for Hitt et al. (2019). These expressions are based on accuracy definitions 
 given by Altman and Bland (1994a, 1994b).
@@ -265,17 +271,17 @@ allowed). See Bilder et al. (2019) for additional information.
 #   (Dorfman) testing.
 config.mat <- matrix(data = c(rep(1, 24), 1:24), 
                      nrow = 2, ncol = 24, byrow = TRUE)
-Se <- matrix(data=c(0.95, 0.95, 0.95, 0.95),
-             nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
-Sp <- matrix(data=c(0.99, 0.99, 0.99, 0.99),
-             nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
-opChar2(algorithm="D2", p.vec=c(0.90, 0.04, 0.04, 0.02),
-         Se=Se, Sp=Sp, hier.config=config.mat)
-opChar2(algorithm="D2", p.vec=c(0.90, 0.04, 0.04, 0.02),
-         Se=Se, Sp=Sp, hier.config=config.mat, a=c(1, 13, 24), 
-         print.time = FALSE)
+Se <- matrix(data = c(0.95, 0.95, 0.95, 0.95),
+             nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
+Sp <- matrix(data = c(0.99, 0.99, 0.99, 0.99),
+             nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
+opChar2(algorithm = "D2", p.vec = c(0.90, 0.04, 0.04, 0.02),
+         Se = Se, Sp = Sp, hier.config = config.mat)
+opChar2(algorithm = "D2", p.vec = c(0.90, 0.04, 0.04, 0.02),
+         Se = Se, Sp = Sp, hier.config = config.mat, 
+         a = c(1, 13, 24), print.time = FALSE)
                             
 # Calculate the operating characteristics for informative 
 #   two-stage hierarchical (Dorfman) testing.
@@ -283,37 +289,38 @@ opChar2(algorithm="D2", p.vec=c(0.90, 0.04, 0.04, 0.02),
 #   generated using the Dirichlet distribution.
 config.mat <- matrix(data = c(rep(1, 5), rep(2, 4), 3, 1:9, NA), 
                      nrow = 2, ncol = 10, byrow = TRUE)
-Se <- matrix(data=c(0.95, 0.95, 0.99, 0.99),
-             nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
-Sp <- matrix(data=c(0.96, 0.96, 0.98, 0.98),
-             nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
+Se <- matrix(data = c(0.95, 0.95, 0.99, 0.99),
+             nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
+Sp <- matrix(data = c(0.96, 0.96, 0.98, 0.98),
+             nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
 set.seed(8791)
-opChar2(algorithm="ID2", alpha=c(18.25, 0.75, 0.75, 0.25),
-         Se=Se, Sp=Sp, hier.config=config.mat)
+opChar2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25),
+         Se = Se, Sp = Sp, hier.config = config.mat)
 # Equivalent code using a heterogeneous matrix of joint
 #   probabilities for each individual
 set.seed(8791)
 p.unordered <- t(rBeta2009::rdirichlet(n = 10, 
                             shape = c(18.25, 0.75, 0.75, 0.25)))
 p.ordered <- p.unordered[, order(1 - p.unordered[1,])]
-opChar2(algorithm="ID2", probabilities=p.ordered,
-        Se=Se, Sp=Sp, hier.config=config.mat)
+opChar2(algorithm = "ID2", probabilities = p.ordered,
+        Se = Se, Sp = Sp, hier.config = config.mat)
          
 # Calculate the operating characteristics for 
 #   non-informative three-stage hierarchical testing.
 config.mat <- matrix(data = c(rep(1, 10), rep(1, 5), 
                               rep(2, 4), 3, 1:9, NA), 
                      nrow = 3, ncol = 10, byrow = TRUE)
-Se <- matrix(data=rep(0.95, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-Sp <- matrix(data=rep(0.99, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-opChar2(algorithm="D3", p.vec=c(0.95, 0.02, 0.02, 0.01),
-         Se=Se, Sp=Sp, hier.config=config.mat)
-opChar2(algorithm="D3", p.vec=c(0.95, 0.02, 0.02, 0.01),
-         Se=Se, Sp=Sp, hier.config=config.mat, a=c(1, 6, 10))
+Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+opChar2(algorithm = "D3", p.vec = c(0.95, 0.02, 0.02, 0.01),
+         Se = Se, Sp = Sp, hier.config = config.mat)
+opChar2(algorithm = "D3", p.vec = c(0.95, 0.02, 0.02, 0.01),
+        Se = Se, Sp = Sp, hier.config = config.mat, 
+        a = c(1, 6, 10))
     
 # Calculate the operating characteristics for informative 
 #   three-stage hierarchical testing. 
@@ -322,12 +329,12 @@ opChar2(algorithm="D3", p.vec=c(0.95, 0.02, 0.02, 0.01),
 config.mat <- matrix(data = c(rep(1, 15), 
                               rep(c(1, 2, 3), each = 5), 1:15), 
                      nrow = 3, ncol = 15, byrow = TRUE)
-Se <- matrix(data=rep(0.95, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-Sp <- matrix(data=rep(0.99, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-opChar2(algorithm="ID3", alpha=c(18.25, 0.75, 0.75, 0.25),
-         Se=Se, Sp=Sp, hier.config=config.mat)
+Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+opChar2(algorithm = "ID3", alpha = c(18.25, 0.75, 0.75, 0.25),
+         Se = Se, Sp = Sp, hier.config = config.mat)
          
 # Calculate the operating characteristics for 
 #   non-informative four-stage hierarchical testing. 
@@ -335,12 +342,12 @@ config.mat <- matrix(data = c(rep(1, 12), rep(1, 6), rep(2, 6),
                               rep(1, 4), rep(2, 2), rep(3, 3), 
                               rep(4, 3), 1:12), 
                      nrow = 4, ncol = 12, byrow = TRUE)
-Se <- matrix(data=rep(0.95, 8), nrow=2, ncol=4,
-             dimnames=list(Infection=1:2, Stage=1:4))
-Sp <- matrix(data=rep(0.99, 8), nrow=2, ncol=4,
-             dimnames=list(Infection=1:2, Stage=1:4))
-opChar2(algorithm="D4", p.vec=c(0.92, 0.05, 0.02, 0.01),
-         Se=Se, Sp=Sp, hier.config=config.mat)
+Se <- matrix(data = rep(0.95, 8), nrow = 2, ncol = 4,
+             dimnames = list(Infection = 1:2, Stage = 1:4))
+Sp <- matrix(data = rep(0.99, 8), nrow = 2, ncol = 4,
+             dimnames = list(Infection = 1:2, Stage = 1:4))
+opChar2(algorithm = "D4", p.vec = c(0.92, 0.05, 0.02, 0.01),
+         Se = Se, Sp = Sp, hier.config = config.mat)
 
 # Calculate the operating characteristics for informative 
 #   five-stage hierarchical testing. 
@@ -352,30 +359,30 @@ config.mat <- matrix(data = c(rep(1, 20), rep(1, 10), rep(2, 10),
                               rep(4, 2), rep(5, 3), rep(6, 2),
                               rep(7, 3), rep(8, 2), 1:20), 
                      nrow = 5, ncol = 20, byrow = TRUE)
-Se <- matrix(data=rep(0.95, 10), nrow=2, ncol=5,
-             dimnames=list(Infection=1:2, Stage=1:5))
-Sp <- matrix(data=rep(0.99, 10), nrow=2, ncol=5,
-             dimnames=list(Infection=1:2, Stage=1:5))
-opChar2(algorithm="ID5", alpha=c(18.25, 0.75, 0.75, 0.25),
-        Se=Se, Sp=Sp, hier.config=config.mat)
+Se <- matrix(data = rep(0.95, 10), nrow = 2, ncol = 5,
+             dimnames = list(Infection = 1:2, Stage = 1:5))
+Sp <- matrix(data = rep(0.99, 10), nrow = 2, ncol = 5,
+             dimnames = list(Infection = 1:2, Stage = 1:5))
+opChar2(algorithm = "ID5", alpha = c(18.25, 0.75, 0.75, 0.25),
+        Se = Se, Sp = Sp, hier.config = config.mat)
 
 # Calculate the operating characteristics for 
 #   non-informative array testing without master pooling.
-Se <- matrix(data=rep(0.95, 4), nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
-Sp <- matrix(data=rep(0.99, 4), nrow=2, ncol=2,
-             dimnames=list(Infection=1:2, Stage=1:2))
-opChar2(algorithm="A2", p.vec=c(0.90, 0.04, 0.04, 0.02),
-         Se=Se, Sp=Sp, rowcol.sz=12)
+Se <- matrix(data = rep(0.95, 4), nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
+Sp <- matrix(data = rep(0.99, 4), nrow = 2, ncol = 2,
+             dimnames = list(Infection = 1:2, Stage = 1:2))
+opChar2(algorithm = "A2", p.vec = c(0.90, 0.04, 0.04, 0.02),
+         Se = Se, Sp = Sp, rowcol.sz = 12)
                   
 # Calculate the operating characteristics for 
 #   non-informative array testing with master pooling.
-Se <- matrix(data=rep(0.95, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-Sp <- matrix(data=rep(0.99, 6), nrow=2, ncol=3,
-             dimnames=list(Infection=1:2, Stage=1:3))
-opChar2(algorithm="A2M", p.vec=c(0.90, 0.04, 0.04, 0.02),
-         Se=Se, Sp=Sp, rowcol.sz=10)
+Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
+             dimnames = list(Infection = 1:2, Stage = 1:3))
+opChar2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
+         Se = Se, Sp = Sp, rowcol.sz = 10)
 }
 \references{
 \insertRef{Altman1994a}{binGroup2}
@@ -405,7 +412,7 @@ This function was written by Brianna D. Hitt. It calls
 written by Christopher Bilder for Bilder et al. (2019), and \kbd{ARRAY}, 
 which was originally written by Peijie Hou for Hou et al. (2020). The 
 functions \kbd{ET.all.stages.new}, \kbd{PSePSpAllStages}, and \kbd{ARRAY} 
-were obtained from \url{http://chrisbilder.com/grouptesting}. Minor 
+were obtained from \url{http://chrisbilder.com/grouptesting/}. Minor 
 modifications were made to the functions for inclusion in the binGroup2 
 package.
 }

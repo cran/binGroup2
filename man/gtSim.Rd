@@ -63,9 +63,9 @@ set to be equal to sens.}
 set to be equal to spec.}
 }
 \value{
-For simple pooling (\kbd{type="sp"}) and the halving 
-protocol (\kbd{type="array"}), a data frame or for array 
-testing (\kbd{type="array"}), a list, which may include the following:
+For simple pooling (\kbd{type = "sp"}) and the halving 
+protocol (\kbd{type = "array"}), a data frame or for array 
+testing (\kbd{type = "array"}), a list, which may include the following:
 \item{gres}{the group response, for simple pooling and the halving 
 protocol only.}
 \item{col.resp}{the column group response, for array testing only.}
@@ -90,8 +90,8 @@ fit by \code{\link{gtReg}}.
 }
 \details{
 Generates group testing data in simple pooling form 
-(\kbd{type="sp"}), for the halving protocol (\kbd{type="halving"}), 
-or in array testing form (\kbd{type="array"}). 
+(\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}), 
+or in array testing form (\kbd{type = "array"}). 
 The covariates are either specified by the x argument or they 
 are generated from a gamma distribution with the given gshape 
 and gscale parameters. The individual probabilities are 
@@ -107,7 +107,7 @@ response is negative). Finally, the observed group responses
 are simulated using the ginve sens and spec. Individual retests
 are simulated from sens.ind and spec.ind for samples in 
 observed positive groups. Note that with a given group size 
-(specified by size2 with method="sp" or method="halving"), 
+(specified by size2 with \kbd{method = "sp"} or \kbd{method = "halving"}), 
 the last group may have fewer individuals.
 
 The true binary individual responses are then 
@@ -132,25 +132,25 @@ row is observed positive, NULL is returned.
 }
 \examples{
 set.seed(46)
-gt.data <- gtSim(type="sp", par=c(-12, 0.2), 
-                 size1=700, size2=5)
+gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+                 size1 = 700, size2 = 5)
 
 x1 <- sort(runif(100, 0, 30))
-x2 <- rgamma(100, shape=17, scale=1.5)
-gt.data <- gtSim(type="sp", x=cbind(x1, x2), 
-                 par=c(-14, 0.2, 0.3), size2=4, 
-                 sens=0.98, spec=0.98)
+x2 <- rgamma(100, shape = 17, scale = 1.5)
+gt.data <- gtSim(type = "sp", x = cbind(x1, x2), 
+                 par = c(-14, 0.2, 0.3), size2 = 4, 
+                 sens = 0.98, spec = 0.98)
                    
 set.seed(46)
-gt.data <- gtSim(type="halving", par=c(-6, 0.1), 
-                 gshape=17, gscale=1.4, size1=5000, 
-                 size2=5, sens=0.95, spec=0.95)
+gt.data <- gtSim(type = "halving", par = c(-6, 0.1), 
+                 gshape = 17, gscale = 1.4, size1 = 5000, 
+                 size2 = 5, sens = 0.95, spec = 0.95)
                    
 # 5x6 and 4x5 matrix
 set.seed(9128)
-sa1a <- gtSim(type="array", par=c(-7, 0.1), 
-              size1=c(5, 4), size2=c(6, 5), 
-              sens=0.95, spec=0.95)
+sa1a <- gtSim(type = "array", par = c(-7, 0.1), 
+              size1 = c(5, 4), size2 = c(6, 5), 
+              sens = 0.95, spec = 0.95)
 sa1a$dframe
 }
 \seealso{

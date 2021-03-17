@@ -12,23 +12,24 @@
 #' non-informative and informative hierarchical and array-based group testing 
 #' algorithms. Single-disease assays are used at each stage of the algorithms.
 #'
-#' @param algorithm character string defining the group testing algorithm to be used.
-#' Non-informative testing options include two-stage hierarchical ("\kbd{D2}"),
-#' three-stage hierarchical ("\kbd{D3}"), square array testing without master
-#' pooling ("\kbd{A2}"), and square array testing with master pooling ("\kbd{A2M}").
-#' Informative testing options include two-stage hierarchical ("\kbd{ID2}"),
-#' three-stage hierarchical ("\kbd{ID3}"), and square array testing without
-#' master pooling ("\kbd{IA2}").
+#' @param algorithm character string defining the group testing algorithm to 
+#' be used. Non-informative testing options include two-stage hierarchical 
+#' ("\kbd{D2}"), three-stage hierarchical ("\kbd{D3}"), square array testing 
+#' without master pooling ("\kbd{A2}"), and square array testing with master 
+#' pooling ("\kbd{A2M}"). Informative testing options include two-stage 
+#' hierarchical ("\kbd{ID2}"), three-stage hierarchical ("\kbd{ID3}"), and 
+#' square array testing without master pooling ("\kbd{IA2}").
 #' @param p overall probability of disease that will be used to generate a
-#' vector/matrix of individual probabilities. For non-informative algorithms, a
-#' homogeneous set of probabilities will be used. For informative algorithms, the
-#' \code{\link{expectOrderBeta}} function will be used to generate a heterogeneous
-#' set of probabilities. Further details are given under 'Details'. Either 
-#' \kbd{p} or \kbd{probabilities} should be specified, but not both.
-#' @param probabilities a vector of individual probabilities, which is homogeneous
-#' for non-informative testing algorithms and heterogeneous for informative
-#' testing algorithms. Either  \kbd{p} or \kbd{probabilities} should be specified,
+#' vector/matrix of individual probabilities. For non-informative algorithms, 
+#' a homogeneous set of probabilities will be used. For informative 
+#' algorithms, the \code{\link{expectOrderBeta}} function will be used to 
+#' generate a heterogeneous set of probabilities. Further details are given 
+#' under 'Details'. Either \kbd{p} or \kbd{probabilities} should be specified, 
 #' but not both.
+#' @param probabilities a vector of individual probabilities, which is 
+#' homogeneous for non-informative testing algorithms and heterogeneous for 
+#' informative testing algorithms. Either  \kbd{p} or \kbd{probabilities} 
+#' should be specified, but not both.
 #' @param Se a vector of sensitivity values, where one value is given for each 
 #' stage of testing (in order). If a single value is provided, sensitivity 
 #' values are assumed to be equal to this value for all stages of testing. 
@@ -38,8 +39,8 @@
 #' values are assumed to be equal to this value for all stages of testing. 
 #' Further details are given under 'Details'.
 #' @param group.sz a single group size or range of group sizes for which to
-#' calculate operating characteristics and/or find the OTC. The details of group
-#' size specification are given under 'Details'.
+#' calculate operating characteristics and/or find the OTC. The details of 
+#' group size specification are given under 'Details'.
 #' @param obj.fn a list of objective functions which are minimized to find the
 #' OTC. The expected number of tests per individual, "\kbd{ET}", will always
 #' be calculated. Additional options include "\kbd{MAR}"
@@ -70,12 +71,13 @@
 #' operating characteristics, as described in Hitt et al. (2019).
 #' 
 #' Available algorithms include two- and three-stage hierarchical testing and
-#' array testing with and without master pooling. Both non-informative and informative
-#' group testing settings are allowed for each algorithm, except informative
-#' array testing with master pooling is unavailable because this method has not
-#' appeared in the group testing literature. Operating characteristics calculated are
-#' expected number of tests, pooling sensitivity, pooling specificity, pooling
-#' positive predictive value, and pooling negative predictive value for each individual.
+#' array testing with and without master pooling. Both non-informative and 
+#' informative group testing settings are allowed for each algorithm, except 
+#' informative array testing with master pooling is unavailable because this 
+#' method has not appeared in the group testing literature. Operating 
+#' characteristics calculated are expected number of tests, pooling 
+#' sensitivity, pooling specificity, pooling positive predictive value, and 
+#' pooling negative predictive value for each individual.
 #' 
 #' For informative algorithms where the \kbd{p} argument is specified, the 
 #' expected value of order statistics from a beta distribution are found. 
@@ -98,56 +100,57 @@
 #' informative array testing, see McMahan et al. (2012b).
 #' 
 #' The sensitivity/specificity values are allowed to vary across stages of 
-#' testing. For hierarchical testing, a different sensitivity/specificity value 
-#' may be used for each stage of testing. For array testing, a different 
-#' sensitivity/specificity value may be used for master pool testing (if included), 
-#' row/column testing, and individual testing. The values must be specified 
-#' in order of the testing performed. For example, values are specified 
-#' as (stage 1, stage 2, stage 3) for three-stage hierarchical testing or 
-#' (master pool testing, row/column testing, individual testing) for array 
-#' testing with master pooling. A single sensitivity/specificity value may be 
-#' specified instead. In this situation, sensitivity/specificity values for all 
-#' stages are assumed to be equal.
+#' testing. For hierarchical testing, a different sensitivity/specificity 
+#' value may be used for each stage of testing. For array testing, a different 
+#' sensitivity/specificity value may be used for master pool testing (if 
+#' included), row/column testing, and individual testing. The values must be 
+#' specified in order of the testing performed. For example, values are 
+#' specified as (stage 1, stage 2, stage 3) for three-stage hierarchical 
+#' testing or (master pool testing, row/column testing, individual testing) 
+#' for array testing with master pooling. A single sensitivity/specificity 
+#' value may be specified instead. In this situation, sensitivity/specificity 
+#' values for all stages are assumed to be equal.
 #'
 #' The value(s) specified by \kbd{group.sz} represent the initial (stage 1)
 #' group size for hierarchical testing and the row/column size for array 
-#' testing. For informative two-stage hierarchical testing,
-#' the \kbd{group.sz} specified represents the block size used in the pool-specific
-#' optimal Dorfman (PSOD) method, where the initial group (block) is not
-#' tested. For more details on informative two-stage hierarchical testing
-#' implemented via the PSOD method, see Hitt et al. (2019) and McMahan et al. (2012a).
+#' testing. For informative two-stage hierarchical testing, the \kbd{group.sz} 
+#' specified represents the block size used in the pool-specific optimal 
+#' Dorfman (PSOD) method, where the initial group (block) is not tested. For 
+#' more details on informative two-stage hierarchical testing implemented via 
+#' the PSOD method, see Hitt et al. (2019) and McMahan et al. (2012a).
 #'
 #' If a single value is provided for \kbd{group.sz} with array testing or
-#' non-informative two-stage hierarchical testing, operating
-#' characteristics will be calculated and no optimization will be performed.
-#' If a single value is provided for \kbd{group.sz} with three-stage hierarchical or
-#' informative two-stage hierarchical, the OTC will be
-#' found over all possible configurations. If a range of group sizes is specified,
-#' the OTC will be found over all group sizes.
+#' non-informative two-stage hierarchical testing, operating characteristics 
+#' will be calculated and no optimization will be performed. If a single value 
+#' is provided for \kbd{group.sz} with three-stage hierarchical or informative 
+#' two-stage hierarchical, the OTC will be found over all possible 
+#' configurations. If a range of group sizes is specified, the OTC will be 
+#' found over all group sizes.
 #'
 #' In addition to the OTC, operating characteristics for some of the other
-#' configurations corresponding to each initial group size provided by the user
-#' will be displayed. These additional configurations are only determined for whichever
-#' objective function ("ET", "MAR", or "GR") is specified first in the
-#' function call. If "GR" is the objective function listed first, the
-#' first set of corresponding weights will be used.
-#' For algorithms where there is only one configuration for each
-#' initial group size (non-informative two-stage hierarchical and all array testing
-#' algorithms), results for each initial group size are provided. For algorithms where
-#' there is more than one possible configuration for each initial group size (informative
-#' two-stage hierarchical and all three-stage hierarchical algorithms), two sets of
-#' configurations are provided: 1) the best configuration for each initial group size,
-#' and 2) the top 10 configurations for each initial group size provided by the user.
-#' If a single value is provided for \kbd{group.sz} with array testing or
-#' non-informative two-stage hierarchical testing, operating characteristics will
-#' not be provided for configurations other than that specified by the user. 
-#' Results are sorted by the value of the objective function per individual, \kbd{value}.
+#' configurations corresponding to each initial group size provided by the 
+#' user will be displayed. These additional configurations are only determined 
+#' for whichever objective function ("ET", "MAR", or "GR") is specified first 
+#' in the function call. If "GR" is the objective function listed first, the
+#' first set of corresponding weights will be used. For algorithms where there 
+#' is only one configuration for each initial group size (non-informative 
+#' two-stage hierarchical and all array testing algorithms), results for each 
+#' initial group size are provided. For algorithms where there is more than 
+#' one possible configuration for each initial group size (informative
+#' two-stage hierarchical and all three-stage hierarchical algorithms), two 
+#' sets of configurations are provided: 1) the best configuration for each 
+#' initial group size, and 2) the top 10 configurations for each initial group 
+#' size provided by the user. If a single value is provided for \kbd{group.sz} 
+#' with array testing or non-informative two-stage hierarchical testing, 
+#' operating characteristics will not be provided for configurations other 
+#' than that specified by the user. Results are sorted by the value of the 
+#' objective function per individual, \kbd{value}.
 #'
-#' The displayed overall pooling sensitivity, pooling specificity, pooling positive
-#' predictive value, and pooling negative predictive value are weighted
-#' averages of the corresponding individual accuracy measures for all
-#' individuals within the initial group (or block) for a hierarchical algorithm, or
-#' within the entire array for an array-based algorithm.
+#' The displayed overall pooling sensitivity, pooling specificity, pooling 
+#' positive predictive value, and pooling negative predictive value are 
+#' weighted averages of the corresponding individual accuracy measures for all
+#' individuals within the initial group (or block) for a hierarchical 
+#' algorithm, or within the entire array for an array-based algorithm.
 #' Expressions for these averages are provided in the Supplementary
 #' Material for Hitt et al. (2019). These expressions are based on accuracy
 #' definitions given by Altman and Bland (1994a, 1994b). Individual 
@@ -158,7 +161,8 @@
 #' to be passed to the \code{\link{expectOrderBeta}} function, which generates 
 #' a vector of probabilities for informative group testing algorithms. The 
 #' \kbd{num.sim} argument specifies the number of simulations from the beta 
-#' distribution when simulation is used. By default, 10,000 simulations are used.
+#' distribution when simulation is used. By default, 10,000 simulations are 
+#' used.
 #'
 #' @return A list containing:
 #' \item{algorithm}{the group testing algorithm used for calculations.}
@@ -174,21 +178,23 @@
 #' \item{OTC}{a list specifying elements of the optimal testing configuration,
 #' which may include:
 #' \describe{
-#' \item{Stage1}{group size for the first stage of hierarchical testing, if applicable.}
-#' \item{Stage2}{group sizes for the second stage of hierarchical testing, if applicable.}
-#' \item{Block.sz}{the block size/initial group size for informative Dorfman testing,
-#' which is not tested.}
-#' \item{pool.szs}{group sizes for the first stage of testing for informative Dorfman
-#' testing.}
+#' \item{Stage1}{group size for the first stage of hierarchical testing, if 
+#' applicable.}
+#' \item{Stage2}{group sizes for the second stage of hierarchical testing, if 
+#' applicable.}
+#' \item{Block.sz}{the block size/initial group size for informative Dorfman 
+#' testing, which is not tested.}
+#' \item{pool.szs}{group sizes for the first stage of testing for informative 
+#' Dorfman testing.}
 #' \item{Array.dim}{the row/column size for array testing.}
 #' \item{Array.sz}{the overall array size for array testing (the square of the 
 #' row/column size).}}}
 #' \item{p.vec}{the sorted vector of individual probabilities, if applicable.}
-#' \item{p.mat}{the sorted matrix of individual probabilities in gradient arrangement,
-#' if applicable. Further details are given under 'Details'.}
-#' \item{ET}{the expected testing expenditure to decode all individuals in the algorithm;
-#' this includes all individuals in all groups for hierarchical algorithms or in the
-#' entire array for array testing.}
+#' \item{p.mat}{the sorted matrix of individual probabilities in gradient 
+#' arrangement, if applicable. Further details are given under 'Details'.}
+#' \item{ET}{the expected testing expenditure to decode all individuals in the 
+#' algorithm; this includes all individuals in all groups for hierarchical 
+#' algorithms or in the entire array for array testing.}
 #' \item{value}{the value of the objective function per individual.}
 #' \item{Accuracy}{a matrix of overall accuracy measures for the 
 #' algorithm. The columns correspond to the pooling sensitivity, 
@@ -250,9 +256,9 @@
 #' 
 #' # Find the OTC for non-informative
 #' #   two-stage hierarchical (Dorfman) testing.
-#' OTC1(algorithm="D2", p=0.05, Se=0.99, Sp=0.99, 
-#'      group.sz=3:100, obj.fn=c("ET", "MAR"), 
-#'      trace=TRUE, print.time=TRUE)
+#' OTC1(algorithm = "D2", p = 0.05, Se = 0.99, Sp = 0.99, 
+#'      group.sz = 2:100, obj.fn = "ET", 
+#'      trace = TRUE, print.time = TRUE)
 #'
 #' # Find the OTC for informative two-stage hierarchical 
 #' #   (Dorfman) testing.
@@ -263,45 +269,45 @@
 #' # This example takes approximately 2.5 minutes to run.
 #' \donttest{
 #' set.seed(52613)
-#' OTC1(algorithm="ID2", p=0.01, Se=0.95, Sp=0.95, group.sz=50,
-#'      obj.fn=c("ET", "MAR", "GR"),
-#'      weights=matrix(data=c(1, 1, 10, 10, 0.5, 0.5),
-#'      nrow=3, ncol=2, byrow=TRUE), alpha=0.5, 
-#'      trace=FALSE, print.time=TRUE, num.sim=10000)}
+#' OTC1(algorithm = "ID2", p = 0.01, Se = 0.95, Sp = 0.95, 
+#'      group.sz = 50, obj.fn = c("ET", "MAR", "GR"),
+#'      weights = matrix(data = c(1, 1, 10, 10, 0.5, 0.5),
+#'      nrow = 3, ncol = 2, byrow = TRUE), alpha = 0.5, 
+#'      trace = FALSE, print.time = TRUE, num.sim = 10000)}
 #'
 #' # Find the OTC over all possible testing configurations 
 #' #   for non-informative three-stage hierarchical testing 
 #' #   with a specified group size.
-#' OTC1(algorithm="D3", p=0.001, Se=0.95, Sp=0.95, group.sz=18,
-#'      obj.fn=c("ET", "MAR", "GR"),
-#'      weights=matrix(data=c(1, 1), nrow=1, ncol=2, byrow=TRUE), 
-#'      trace=FALSE, print.time=FALSE)
+#' OTC1(algorithm = "D3", p = 0.001, Se = 0.95, Sp = 0.95, 
+#'      group.sz = 18, obj.fn = "ET", 
+#'      trace = FALSE, print.time = FALSE)
 #'
 #' # Find the OTC for non-informative three-stage 
 #' #   hierarchical testing.
 #' # This example takes approximately 20 seconds to run.
 #' \donttest{
-#' OTC1(algorithm="D3", p=0.06, Se=0.90, Sp=0.90,
-#'      group.sz=3:30, obj.fn=c("ET", "MAR", "GR"),
-#'      weights=matrix(data=c(1, 1, 10, 10, 100, 100),
-#'      nrow=3, ncol=2, byrow=TRUE))}
+#' OTC1(algorithm = "D3", p = 0.06, Se = 0.90, Sp = 0.90,
+#'      group.sz = 3:30, obj.fn = c("ET", "MAR", "GR"),
+#'      weights = matrix(data = c(1, 1, 10, 10, 100, 100),
+#'      nrow = 3, ncol = 2, byrow = TRUE))}
 #'
 #' # Find the OTC over all possible configurations
 #' #   for informative three-stage hierarchical testing 
 #' #   with a specified group size and a heterogeneous 
 #' #   vector of probabilities.
 #' set.seed(1234)
-#' OTC1(algorithm="ID3", 
-#'      probabilities=c(0.012, 0.014, 0.011, 0.012, 0.010, 0.015), 
-#'      Se=0.99, Sp=0.99, group.sz=6, obj.fn=c("ET","MAR","GR"), 
-#'      weights=matrix(data=c(1, 1), nrow=1, ncol=2, byrow=TRUE), 
-#'      alpha=0.5, num.sim=5000, trace=FALSE)
+#' OTC1(algorithm = "ID3", 
+#'      probabilities = c(0.012, 0.014, 0.011, 
+#'                        0.012, 0.010, 0.015), 
+#'      Se = 0.99, Sp = 0.99, group.sz = 6, 
+#'      obj.fn = "ET", 
+#'      alpha = 0.5, num.sim = 5000, trace = FALSE)
 #'
 #' # Calculate the operating characteristics for 
 #' #   non-informative array testing without master pooling 
 #' #   with a specified array size.
-#' OTC1(algorithm="A2", p=0.005, Se=0.95, Sp=0.95, group.sz=8,
-#'      obj.fn=c("ET", "MAR"), trace=FALSE)
+#' OTC1(algorithm = "A2", p = 0.005, Se = 0.95, Sp = 0.95, 
+#'      group.sz = 8, obj.fn = "ET", trace = FALSE)
 #'
 #' # Find the OTC for informative array testing without
 #' #   master pooling.
@@ -310,80 +316,100 @@
 #' #   distribution with p = 0.03 and a heterogeneity level
 #' #   of alpha = 2. The probabilities are then arranged in
 #' #   a matrix using the gradient method.
-#' # This example takes approximately 30 seconds to run.
+#' # This example takes approximately 40 seconds to run.
 #' \donttest{
 #' set.seed(1002)
-#' OTC1(algorithm="IA2", p=0.03, Se=0.95, Sp=0.95,
-#'      group.sz=3:20, obj.fn=c("ET", "MAR", "GR"),
-#'      weights=matrix(data=c(1, 1, 10, 10, 100, 100), 
-#'                     nrow=3, ncol=2, byrow=TRUE), alpha=2)}
+#' OTC1(algorithm = "IA2", p = 0.03, Se = 0.95, Sp = 0.95,
+#'      group.sz = 2:20, obj.fn = c("ET", "MAR", "GR"),
+#'      weights = matrix(data = c(1, 1, 10, 10, 100, 100), 
+#'                       nrow = 3, ncol = 2, byrow = TRUE), 
+#'      alpha = 2)}
 #'
 #' # Find the OTC for non-informative array testing
 #' #   with master pooling.
-#' # This example takes approximately 20 seconds to run.
+#' # This example takes approximately 25 seconds to run.
 #' \donttest{
-#' OTC1(algorithm="A2M", p=0.02, Se=0.90, Sp=0.90,
-#'      group.sz=3:20, obj.fn=c("ET", "MAR", "GR"),
-#'      weights=matrix(data=c(1, 1, 10, 10, 0.5, 0.5, 2, 2, 100, 100, 
-#'                            10, 100), nrow=6, ncol=2, byrow=TRUE))}
+#' OTC1(algorithm = "A2M", p = 0.02, Se = 0.90, Sp = 0.90,
+#'      group.sz = 2:20, obj.fn = "ET")}
 
 # Brianna Hitt - 04.02.2020
 # Changed cat() to warning()
 
-OTC1 <- function(algorithm, p=NULL, probabilities=NULL, Se=0.99, Sp=0.99, 
-                 group.sz, obj.fn=c("ET","MAR"), weights=NULL, alpha=2, 
-                 trace=TRUE, print.time=TRUE, ...){
+# Brianna Hitt - 06.08.2020
+# Allowed for group sizes of 2
+
+# Brianna Hitt - 03.11.2021
+# Removed "MAR" as a default objective function
+# Changed warning() to message() for large initial group sizes that will 
+#   take significant time to run in OTC1(); message() allows the warning text 
+#   to display at the function start rather than at its completion. The warning 
+#   text was also edited.
+
+OTC1 <- function(algorithm, p = NULL, probabilities = NULL, 
+                 Se = 0.99, Sp = 0.99, group.sz, obj.fn = "ET", 
+                 weights = NULL, alpha = 2, 
+                 trace = TRUE, print.time = TRUE, ...) {
   
   ## make sure that all necessary information is included in the correct format
   if (!(algorithm %in% c("D2", "D3", "A2", "A2M", "ID2", "ID3", "IA2"))) {
     stop("Please specify one of the following algorithms: D2, ID2, D3, ID3, A2, IA2, A2M.")
   }
   
-  if(is.null(p) & is.null(probabilities)){
+  if (is.null(p) & is.null(probabilities)) {
     stop("Please specify an overall probability of disease using the 'p' argument, or specify a vector of individual probabilities using the 'probabilities' argument.")
-  } else if(!is.null(p) & !is.null(probabilities)){
+  } else if (!is.null(p) & !is.null(probabilities)) {
     stop("You have specified both an overall probability of disease AND a vector of individual probabilities. Please specify only one option.")
-  } else{
-    if(!is.null(p) & length(p)>1){
+  } else {
+    if (!is.null(p) & length(p) > 1) {
       stop("You have specified a probability vector instead of an overall probability of disease. Please specify an overall probability of disease, and the probability vector will be generated based on the algorithm specified for each group size included in the range.\n")
     }
-    if(!is.null(probabilities)){
-      if(length(group.sz)==1){
-        if((algorithm %in% c("D2", "D3", "ID2", "ID3")) & length(probabilities)!=group.sz){
+    if (!is.null(probabilities)) {
+      if (length(group.sz) == 1) {
+        if ((algorithm %in% c("D2", "D3", "ID2", "ID3")) & 
+            length(probabilities) != group.sz) {
           stop("The vector of individual probabilities is not the correct length. Please make sure that the length of the probability vector is the same as the specified group size.\n")
-        } else if((algorithm %in% c("A2", "A2M", "IA2")) & length(probabilities)!=group.sz^2){
+        } else if ((algorithm %in% c("A2", "A2M", "IA2")) & 
+                   length(probabilities) != group.sz^2) {
           stop("The vector of individual probabilities is not the correct length. Please make sure that the length of the probability vector is the same as the overall array size (the square of the specified row/column size).\n")
         }
-        if((algorithm %in% c("D2", "D3", "A2", "A2M")) & 
-           all.equal(probabilities, rep(probabilities[1],length(probabilities)))!=TRUE){
+        if ((algorithm %in% c("D2", "D3", "A2", "A2M")) & 
+            all.equal(probabilities, rep(probabilities[1], 
+                                         length(probabilities))) != TRUE) {
           stop("You have specified a heterogeneous probability vector for a non-informative algorithm. Please specify a homogeneous probability vector using the 'probabilities' argument or specify an overall probability of disease using the 'p' argument.\n")
         }
-      } else if(length(group.sz)>1){
+      } else if (length(group.sz) > 1) {
         stop("You have specified a probability vector along with a range of group sizes. Please specify a single group size.\n")
       }
     }
   }
   
-  Se <- generate.acc(algorithm=algorithm, diseases=1, value=Se, label="sens")
-  Sp <- generate.acc(algorithm=algorithm, diseases=1, value=Sp, label="spec")
+  Se <- generate.acc(algorithm = algorithm, diseases = 1, 
+                     value = Se, label = "sens")
+  Sp <- generate.acc(algorithm = algorithm, diseases = 1, 
+                     value = Sp, label = "spec")
   
   # check the minimum and maximum group sizes
   if (min(group.sz) < 3) {
-    if (algorithm %in% c("D2", "D3", "ID2", "ID3")) {
+    if (algorithm %in% c("D3", "ID2", "ID3")) {
       stop("Please specify a minimum group size of at least 3.\n")
-    } else if (algorithm %in% c("A2", "IA2", "A2M")) {
-      stop("Please specify a minimum row/column size of at least 3.\n")
+    }
+    if (min(group.sz) < 2) {
+      if (algorithm %in% c("D2")) {
+        stop("Please specify a minimum group size of at least 2.\n")
+      } else if (algorithm %in% c("A2", "IA2", "A2M")) {
+        stop("Please specify a minimum row/column size of at least 2.\n")
+      }
     }
   }
-  if(max(group.sz)>=50){
-    if(algorithm %in% c("D3", "ID2", "ID3")){
-      warning("You have specified a maximum group size of 50 or larger. This function may take a VERY long time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
-    } else if(algorithm %in% c("A2", "A2M", "IA2")){
-      warning("You have specified a maximum row/column size of 50 or larger. This function may take a VERY long time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
+  if (max(group.sz) >= 50) {
+    if (algorithm %in% c("D3", "ID2", "ID3")) {
+      message("Note: Because the maximum group size is 50 or larger, this function may take a significant amount of time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
+    } else if (algorithm %in% c("A2", "A2M", "IA2")) {
+      message("Note: Because the maximum row/column size is 50 or larger, this function may take a significant amount of time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
     }
   }
   
-  if(is.null(obj.fn)){
+  if (is.null(obj.fn)) {
     stop("Please specify one or more objective functions for which to find the optimal testing configuration.\n")
   }
   
@@ -391,102 +417,113 @@ OTC1 <- function(algorithm, p=NULL, probabilities=NULL, Se=0.99, Sp=0.99,
     obj.fn <- c(obj.fn, "ET")
   }
   
-  if("GR" %in% obj.fn){
-    if(is.null(weights)){
+  if ("GR" %in% obj.fn) {
+    if (is.null(weights)) {
       stop("No weights have been specified. The GR function will not be calculated.\n")
-    } else if(dim(weights)[2]!=2){
+    } else if (dim(weights)[2] != 2) {
       stop("Please check the dimension of the weights matrix. Each row should specify a set of weights, D1 and D2.\n")
     }
   }
   
   # call function for non-informative two-stage hierarchical (Dorfman) testing
-  if(algorithm == "D2"){
-    if(!is.null(p)){
-      results <- NI.Dorf.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                              obj.fn=obj.fn, weights=weights, 
-                              trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- NI.Dorf.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                              obj.fn=obj.fn, weights=weights, 
-                              trace=trace, print.time=print.time, ...)
+  if (algorithm == "D2") {
+    if (!is.null(p)) {
+      results <- NI.Dorf.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                              obj.fn = obj.fn, weights = weights, 
+                              trace = trace, print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- NI.Dorf.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                              group.sz = group.sz, 
+                              obj.fn = obj.fn, weights = weights, 
+                              trace = trace, print.time = print.time, ...)
     }
   }
   
   # call function for non-informative three-stage hierarchical testing
-  if(algorithm == "D3"){
-    if(!is.null(p)){
-      results <- NI.D3.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                            obj.fn=obj.fn, weights=weights, 
-                            trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- NI.D3.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                            obj.fn=obj.fn, weights=weights, 
-                            trace=trace, print.time=print.time, ...)
+  if (algorithm == "D3") {
+    if (!is.null(p)) {
+      results <- NI.D3.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                            obj.fn = obj.fn, weights = weights, 
+                            trace = trace, print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- NI.D3.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                            group.sz = group.sz, 
+                            obj.fn = obj.fn, weights = weights, 
+                            trace = trace, print.time = print.time, ...)
     }
   }
   
-  # call function for non-informative square array testing without master pooling
-  if(algorithm == "A2"){
-    if(!is.null(p)){
-      results <- NI.Array.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                               obj.fn=obj.fn, weights=weights, 
-                               trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- NI.Array.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                               obj.fn=obj.fn, weights=weights, 
-                               trace=trace, print.time=print.time, ...)
+  # call function for non-informative square array testing without 
+  # master pooling
+  if (algorithm == "A2") {
+    if (!is.null(p)) {
+      results <- NI.Array.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                               obj.fn = obj.fn, weights = weights, 
+                               trace = trace, print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- NI.Array.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                               group.sz = group.sz, 
+                               obj.fn = obj.fn, weights = weights, 
+                               trace = trace, print.time = print.time, ...)
     }
   }
   
   # call function for non-informative square array testing with master pooling
-  if(algorithm == "A2M"){
-    if(!is.null(p)){
-      results <- NI.A2M.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                             obj.fn=obj.fn, weights=weights, 
-                             trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- NI.A2M.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                             obj.fn=obj.fn, weights=weights, 
-                             trace=trace, print.time=print.time, ...)
+  if (algorithm == "A2M") {
+    if (!is.null(p)) {
+      results <- NI.A2M.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                             obj.fn = obj.fn, weights = weights, 
+                             trace = trace, print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- NI.A2M.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                             group.sz = group.sz, 
+                             obj.fn = obj.fn, weights = weights, 
+                             trace = trace, print.time = print.time, ...)
     }
   }
   
   # call function for informative two-stage hierarchical (Dorfman) testing
-  if(algorithm == "ID2"){
-    if(!is.null(p)){
-      results <- Inf.Dorf.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                               obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                               trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- Inf.Dorf.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                               obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                               trace=trace, print.time=print.time, ...)
+  if (algorithm == "ID2") {
+    if (!is.null(p)) {
+      results <- Inf.Dorf.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                               obj.fn = obj.fn, weights = weights, 
+                               alpha = alpha, trace = trace, 
+                               print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- Inf.Dorf.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                               group.sz = group.sz, obj.fn = obj.fn, 
+                               weights = weights, alpha = alpha, 
+                               trace = trace, print.time = print.time, ...)
     }
   }
   
   # call function for informative three-stage hierarchical testing
-  if(algorithm == "ID3"){
-    if(!is.null(p)){
-      results <- Inf.D3.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                             obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                             trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- Inf.D3.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                             obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                             trace=trace, print.time=print.time, ...)
+  if (algorithm == "ID3") {
+    if (!is.null(p)) {
+      results <- Inf.D3.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                             obj.fn = obj.fn, weights = weights, 
+                             alpha = alpha, trace = trace, 
+                             print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- Inf.D3.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                             group.sz = group.sz, obj.fn = obj.fn, 
+                             weights = weights, alpha = alpha, 
+                             trace = trace, print.time = print.time, ...)
     }
   }
   
   # call function for informative square array testing without master pooling
-  if(algorithm == "IA2"){
-    if(!is.null(p)){
-      results <- Inf.Array.OTC1(p=p, Se=Se, Sp=Sp, group.sz=group.sz, 
-                                obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                                trace=trace, print.time=print.time, ...)
-    } else if(!is.null(probabilities)){
-      results <- Inf.Array.OTC1(p=probabilities, Se=Se, Sp=Sp, group.sz=group.sz, 
-                                obj.fn=obj.fn, weights=weights, alpha=alpha, 
-                                trace=trace, print.time=print.time, ...)
+  if (algorithm == "IA2") {
+    if (!is.null(p)) {
+      results <- Inf.Array.OTC1(p = p, Se = Se, Sp = Sp, group.sz = group.sz, 
+                                obj.fn = obj.fn, weights = weights, 
+                                alpha = alpha, trace = trace, 
+                                print.time = print.time, ...)
+    } else if (!is.null(probabilities)) {
+      results <- Inf.Array.OTC1(p = probabilities, Se = Se, Sp = Sp, 
+                                group.sz = group.sz, obj.fn = obj.fn, 
+                                weights = weights, alpha = alpha, 
+                                trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -562,55 +599,58 @@ OTC1 <- function(algorithm, p=NULL, probabilities=NULL, Se=0.99, Sp=0.99,
 #' 
 #' # Find the optimal testing configuration for 
 #' #   non-informative two-stage hierarchical testing.
-#' res1 <- OTC1(algorithm="D2", p=0.01, Se=0.99, Sp=0.99, 
-#'              group.sz=3:100, obj.fn=c("ET", "MAR", "GR1"), 
-#'              weights=matrix(data=c(1,1), nrow=1, ncol=2))
+#' res1 <- OTC1(algorithm = "D2", p = 0.01, Se = 0.99, Sp = 0.99, 
+#'              group.sz = 2:100, obj.fn = c("ET", "MAR", "GR1"), 
+#'              weights = matrix(data = c(1,1), nrow = 1, ncol = 2))
 #' summary(res1)
 #' 
 #' # Find the optimal testing configuration for 
 #' #   informative three-stage hierarchical testing
-#' res2 <- OTC1(algorithm="ID3", p=0.025, 
-#'              Se=c(0.95, 0.95, 0.99), Sp=c(0.96, 0.96, 0.98), 
-#'              group.sz=3:15, obj.fn=c("ET", "MAR"), alpha=2)
+#' res2 <- OTC1(algorithm = "ID3", p = 0.025, 
+#'              Se = c(0.95, 0.95, 0.99), Sp = c(0.96, 0.96, 0.98), 
+#'              group.sz = 3:15, obj.fn = c("ET", "MAR"), alpha = 2)
 #' summary(res2)
 #' 
 #' # Find the optimal testing configuration for 
 #' #   informative array testing without master pooling.
 #' # This example takes approximately 30 seconds to run.
 #' \donttest{
-#' res3 <- OTC1(algorithm="IA2", p=0.05, alpha=2, 
-#'              Se=0.90, Sp=0.90, group.sz=3:20, obj.fn="ET")
+#' res3 <- OTC1(algorithm = "IA2", p = 0.05, alpha = 2, 
+#'              Se = 0.90, Sp = 0.90, group.sz = 2:20, 
+#'              obj.fn = "ET")
 #' summary(res3)}
 #' 
 #' # Find the optimal testing configuraiton for 
 #' #   informative two-stage hierarchical testing.
-#' Se <- matrix(data=c(rep(0.95, 2), rep(0.99, 2)), 
-#'              nrow=2, ncol=2, byrow=FALSE)
-#' Sp <- matrix(data=c(rep(0.96, 2), rep(0.98, 2)), 
-#'              nrow=2, ncol=2, byrow=FALSE)
-#' res4 <- OTC2(algorithm="ID2", alpha=c(18.25, 0.75, 0.75, 0.25), 
-#'                 Se=Se, Sp=Sp, group.sz=12)
+#' Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)), 
+#'              nrow = 2, ncol = 2, byrow = FALSE)
+#' Sp <- matrix(data = c(rep(0.96, 2), rep(0.98, 2)), 
+#'              nrow = 2, ncol = 2, byrow = FALSE)
+#' res4 <- OTC2(algorithm = "ID2", 
+#'              alpha = c(18.25, 0.75, 0.75, 0.25), 
+#'              Se = Se, Sp = Sp, group.sz = 12)
 #' summary(res4)
 #' 
 #' # Find the optimal testing configuration for 
 #' #   non-informative three-stage hierarchical testing.
-#' # This example takes approximately 3 minutes to run.
-#' Se <- matrix(data=c(rep(0.95, 6)), nrow=2, ncol=3)
-#' Sp <- matrix(data=c(rep(0.99, 6)), nrow=2, ncol=3)
+#' # This example takes approximately 1 minute to run.
+#' Se <- matrix(data = c(rep(0.95, 6)), nrow = 2, ncol = 3)
+#' Sp <- matrix(data = c(rep(0.99, 6)), nrow = 2, ncol = 3)
 #' \donttest{
-#' res5 <- OTC2(algorithm="D3", p.vec=c(0.95, 0.0275, 0.0175, 0.005), 
-#'                 Se=Se, Sp=Sp, group.sz=5:10)
+#' res5 <- OTC2(algorithm = "D3", 
+#'              p.vec = c(0.95, 0.0275, 0.0175, 0.005), 
+#'              Se = Se, Sp = Sp, group.sz = 5:20)
 #' summary(res5)}
 #' 
 #' # Find the optimal testing configuration for
 #' #   non-informative array testing with master pooling.
 #' # This example takes approximately 10 seconds to run.
 #' \donttest{
-#' res6 <- OTC2(algorithm="A2M", p.vec=c(0.90, 0.04, 0.04, 0.02), 
-#'              Se=rep(0.99, 2), Sp=rep(0.99, 2), group.sz=3:15)
+#' res6 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02), 
+#'              Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 2:20)
 #' summary(res6)}
 
-summary.OTC <- function(object, ...){
+summary.OTC <- function(object, ...) {
   
   # algorithm
   algorithm <- object$algorithm
@@ -639,43 +679,43 @@ summary.OTC <- function(object, ...){
     if (length(opt.ET$OTC[[2]]) > 1) {
       # concatenate pool sizes for ET objective function
       stage2.ET <- opt.ET$OTC[[2]][1]
-      for(i in 2:length(opt.ET$OTC[[2]])){
-        stage2.ET <- paste(stage2.ET, opt.ET$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.ET$OTC[[2]])) {
+        stage2.ET <- paste(stage2.ET, opt.ET$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for MAR objective function
       stage2.MAR <- opt.MAR$OTC[[2]][1]
-      for(i in 2:length(opt.MAR$OTC[[2]])){
-        stage2.MAR <- paste(stage2.MAR, opt.MAR$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.MAR$OTC[[2]])) {
+        stage2.MAR <- paste(stage2.MAR, opt.MAR$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR1 objective function
       stage2.GR1 <- opt.GR1$OTC[[2]][1]
-      for(i in 2:length(opt.GR1$OTC[[2]])){
-        stage2.GR1 <- paste(stage2.GR1, opt.GR1$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR1$OTC[[2]])) {
+        stage2.GR1 <- paste(stage2.GR1, opt.GR1$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR2 objective function
       stage2.GR2 <- opt.GR2$OTC[[2]][1]
-      for(i in 2:length(opt.GR2$OTC[[2]])){
-        stage2.GR2 <- paste(stage2.GR2, opt.GR2$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR2$OTC[[2]])) {
+        stage2.GR2 <- paste(stage2.GR2, opt.GR2$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR3 objective function
       stage2.GR3 <- opt.GR3$OTC[[2]][1]
-      for(i in 2:length(opt.GR3$OTC[[2]])){
-        stage2.GR3 <- paste(stage2.GR3, opt.GR3$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR3$OTC[[2]])) {
+        stage2.GR3 <- paste(stage2.GR3, opt.GR3$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR4 objective function
       stage2.GR4 <- opt.GR4$OTC[[2]][1]
-      for(i in 2:length(opt.GR4$OTC[[2]])){
-        stage2.GR4 <- paste(stage2.GR4, opt.GR4$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR4$OTC[[2]])) {
+        stage2.GR4 <- paste(stage2.GR4, opt.GR4$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR5 objective function
       stage2.GR5 <- opt.GR5$OTC[[2]][1]
-      for(i in 2:length(opt.GR5$OTC[[2]])){
-        stage2.GR5 <- paste(stage2.GR5, opt.GR5$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR5$OTC[[2]])) {
+        stage2.GR5 <- paste(stage2.GR5, opt.GR5$OTC[[2]][i], sep = ",")
       }
       # concatenate pool sizes for GR6 objective function
       stage2.GR6 <- opt.GR6$OTC[[2]][1]
-      for(i in 2:length(opt.GR6$OTC[[2]])){
-        stage2.GR6 <- paste(stage2.GR6, opt.GR6$OTC[[2]][i], sep=",")
+      for (i in 2:length(opt.GR6$OTC[[2]])) {
+        stage2.GR6 <- paste(stage2.GR6, opt.GR6$OTC[[2]][i], sep = ",")
       }
       
       stage2 <- c(stage2.ET, stage2.MAR, stage2.GR1, stage2.GR2, 
@@ -691,49 +731,49 @@ summary.OTC <- function(object, ...){
   #   if (length(opt.ET$OTC[[3]]) > 1) {
   #     # concatenate pool sizes for ET objective function
   #     stage3.ET <- opt.ET$OTC[[3]][1]
-  #     for(i in 2:length(opt.ET$OTC[[3]])){
-  #       stage3.ET <- paste(stage3.ET, opt.ET$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.ET$OTC[[3]])) {
+  #       stage3.ET <- paste(stage3.ET, opt.ET$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for MAR objective function
   #     stage3.MAR <- opt.MAR$OTC[[3]][1]
-  #     for(i in 2:length(opt.MAR$OTC[[3]])){
-  #       stage3.MAR <- paste(stage3.MAR, opt.MAR$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.MAR$OTC[[3]])) {
+  #       stage3.MAR <- paste(stage3.MAR, opt.MAR$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR1 objective function
   #     stage3.GR1 <- opt.GR1$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR1$OTC[[3]])){
-  #       stage3.GR1 <- paste(stage3.GR1, opt.GR1$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR1$OTC[[3]])) {
+  #       stage3.GR1 <- paste(stage3.GR1, opt.GR1$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR2 objective function
   #     stage3.GR2 <- opt.GR2$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR2$OTC[[3]])){
-  #       stage3.GR2 <- paste(stage3.GR2, opt.GR2$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR2$OTC[[3]])) {
+  #       stage3.GR2 <- paste(stage3.GR2, opt.GR2$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR3 objective function
   #     stage3.GR3 <- opt.GR3$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR3$OTC[[3]])){
-  #       stage3.GR3 <- paste(stage3.GR3, opt.GR3$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR3$OTC[[3]])) {
+  #       stage3.GR3 <- paste(stage3.GR3, opt.GR3$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR4 objective function
   #     stage3.GR4 <- opt.GR4$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR4$OTC[[3]])){
-  #       stage3.GR4 <- paste(stage3.GR4, opt.GR4$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR4$OTC[[3]])) {
+  #       stage3.GR4 <- paste(stage3.GR4, opt.GR4$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR5 objective function
   #     stage3.GR5 <- opt.GR5$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR5$OTC[[3]])){
-  #       stage3.GR5 <- paste(stage3.GR5, opt.GR5$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR5$OTC[[3]])) {
+  #       stage3.GR5 <- paste(stage3.GR5, opt.GR5$OTC[[3]][i], sep = ",")
   #     }
   #     # concatenate pool sizes for GR6 objective function
   #     stage3.GR6 <- opt.GR6$OTC[[3]][1]
-  #     for(i in 2:length(opt.GR6$OTC[[3]])){
-  #       stage3.GR6 <- paste(stage3.GR6, opt.GR6$OTC[[3]][i], sep=",")
+  #     for (i in 2:length(opt.GR6$OTC[[3]])) {
+  #       stage3.GR6 <- paste(stage3.GR6, opt.GR6$OTC[[3]][i], sep = ",")
   #     }
   #     
   #     stage3 <- c(stage3.ET, stage3.MAR, stage3.GR1, stage3.GR2, 
   #                 stage3.GR3, stage3.GR4, stage3.GR5, stage3.GR6)
   #   } else {
-  #     stage3  <- c(opt.ET$OTC[[3]], opt.MAR$OTC[[3]], opt.GR1$OTC[[3]], 
+  #     stage3 <- c(opt.ET$OTC[[3]], opt.MAR$OTC[[3]], opt.GR1$OTC[[3]], 
   #                  opt.GR2$OTC[[3]], opt.GR3$OTC[[3]], opt.GR4$OTC[[3]], 
   #                  opt.GR5$OTC[[3]], opt.GR6$OTC[[3]])
   #   }
@@ -763,7 +803,7 @@ summary.OTC <- function(object, ...){
   
   cat("Optimal testing configuration:\n")
   print(as.data.frame(config))
-
+  
   # create a matrix detailing the expected number of tests for each obj. fn
   ExpT <- c(opt.ET$ET, opt.MAR$ET, opt.GR1$ET, opt.GR2$ET, 
             opt.GR3$ET, opt.GR4$ET, opt.GR5$ET, opt.GR6$ET)
@@ -781,14 +821,14 @@ summary.OTC <- function(object, ...){
                  format(round(value, 4), nsmall = 4))
   rownames(tests) <- objfn.labels
   colnames(tests) <- c("E(T)", "Value")
-
+  
   cat("\nExpected number of tests:\n")
   print(as.data.frame(tests))
   cat("\nE(T) denotes the expected number of tests.\n")
   cat("Value denotes the objective function value per individual.\n\n")
   
   # create a matrix detailing the accuracy measures for each obj. fn
-  if(dim(opt.ET$Accuracy)[1]==1){
+  if (dim(opt.ET$Accuracy)[1] == 1) {
     overall.acc <- rbind(opt.ET$Accuracy, opt.MAR$Accuracy, opt.GR1$Accuracy, 
                          opt.GR2$Accuracy, opt.GR3$Accuracy, opt.GR4$Accuracy, 
                          opt.GR5$Accuracy, opt.GR6$Accuracy)
@@ -798,7 +838,7 @@ summary.OTC <- function(object, ...){
     
     cat("Overall accuracy of the algorithm:\n")
     print(as.data.frame(overall.acc))
-  } else if(dim(opt.ET$Accuracy)[1]==2){
+  } else if (dim(opt.ET$Accuracy)[1] == 2) {
     # overall.acc1 <- rbind(opt.ET$Accuracy[1,], opt.MAR$Accuracy[1,], 
     #                       opt.GR1$Accuracy[1,], opt.GR2$Accuracy[1,], 
     #                       opt.GR3$Accuracy[1,], opt.GR4$Accuracy[1,], 
@@ -814,8 +854,9 @@ summary.OTC <- function(object, ...){
     # overall.acc2 <- format(round(overall.acc2, 4), nsmall = 4)
     # rownames(overall.acc2) <- objfn.labels
     # colnames(overall.acc2) <- c("PSe", "PSp", "PPPV", "PNPV")
-    overall.acc <- as.data.frame(format(round(object$opt.ET$Accuracy, 4), nsmall = 4))
-
+    overall.acc <- as.data.frame(format(round(object$opt.ET$Accuracy, 4), 
+                                        nsmall = 4))
+    
     # cat("Overall accuracy of the algorithm for disease 1:\n")
     # print(as.data.frame(overall.acc1))
     # cat("Overall accuracy of the algorithm for disease 2:\n")
@@ -829,7 +870,7 @@ summary.OTC <- function(object, ...){
   cat("PPPV denotes the pooling positive predictive value.\n")
   cat("PNPV denotes the pooling negative predictive value.\n")
   
-  # if (dim(opt.ET$Accuracy)[1] == 1){
+  # if (dim(opt.ET$Accuracy)[1] == 1) {
   #   res <- list("Algorithm" = algorithm, 
   #               "Configuration" = config, 
   #               "Tests" = tests, 
@@ -870,8 +911,15 @@ summary.OTC <- function(object, ...){
 #' @param alpha a shape parameter for the beta distribution that
 #' specifies the degree of heterogeneity for the determined
 #' probability vector.
-#' @param grp.sz the number of total individuals for which to
+#' @param size the size of the vector of individual risk probabilities to be 
+#' generated. This is also the number of total individuals for which to
 #' determine risk probabilities.
+#' @param grp.sz the number of total individuals for which to determine risk 
+#' probabilities. This argument is deprecated; the \kbd{size} argument should 
+#' be used instead.
+#' @param num.sim the number of simulations. This argument is used only when 
+#' simulation is necessary. 
+#' @param rel.tol relative tolerance used for integration.
 #' @param ... arguments to be passed to the \code{beta.dist} function 
 #' written by Michael Black for Black et al. (2015).
 #'
@@ -880,14 +928,13 @@ summary.OTC <- function(object, ...){
 #' ordered from least to greatest. Depending on the specified probability, 
 #' \eqn{\alpha} level, and overall group size, simulation may be necessary in 
 #' order to determine the probabilities. For this reason, the user should set 
-#' a seed in order to reproduce results. The number of simulations can be
-#' specified by the user, with 10,000 as the default. The \kbd{expectOrderBeta} 
-#' function augments the \code{beta.dist} function by checking whether
-#' simulation is needed before attempting to determine the probabilities. 
-#' The \kbd{expectOrderBeta} function allows for the number of simulations to 
-#' be passed on to the \code{beta.dist} function as an additional argument.
-#' See Black et al. (2015) for additional details on the original \kbd{beta.dist} 
-#' function.
+#' a seed in order to reproduce results. The number of simulations (default = 
+#' 10,000) and relative tolerance for integration can be specified by the user. 
+#' The \kbd{expectOrderBeta} function augments the \code{beta.dist} function by 
+#' checking whether simulation is needed before attempting to determine the 
+#' probabilities, and by allowing the number of simulations to be specified by 
+#' the user. See Black et al. (2015) for additional details on the original 
+#' \kbd{beta.dist} function.
 #'
 #' @return A vector of individual risk probabilities.
 #'
@@ -896,29 +943,44 @@ summary.OTC <- function(object, ...){
 #' @references
 #' \insertRef{Black2015}{binGroup2}
 #'
-#' @seealso \code{\link{expectOrderBeta}} for generating a vector of individual 
-#' risk probabilities and \code{\link{informativeArrayProb}} for arranging a 
-#' vector of individual risk probabilities in a matrix for informative array 
-#' testing without master pooling.
+#' @seealso \code{\link{expectOrderBeta}} for generating a vector of 
+#' individual risk probabilities and \code{\link{informativeArrayProb}} for 
+#' arranging a vector of individual risk probabilities in a matrix for 
+#' informative array testing without master pooling.
 #'
 #' @examples
 #' set.seed(8791)
-#' expectOrderBeta(p=0.03, alpha=0.5, grp.sz=100)
+#' expectOrderBeta(p = 0.03, alpha = 0.5, size = 100, rel.tol = 0.0001)
 #'
-#' set.seed(52613)
-#' expectOrderBeta(p=0.005, alpha=2, grp.sz=40, num.sim=5000)
+#' expectOrderBeta(p = 0.05, alpha = 2, size = 40)
 
-expectOrderBeta <- function(p, alpha, grp.sz, ...){
+# Brianna Hitt - 03.12.2021
+# Added the num.sim and rel.tol arguments to the function call (rather than 
+#   leaving them as additional arguments in the ... argument).
+# Edited examples
+
+expectOrderBeta <- function(p, alpha, size, grp.sz, num.sim = 10000, 
+                            rel.tol = ifelse(alpha >= 1, .Machine$double.eps^0.25, 
+                                             .Machine$double.eps^0.1), ...) {
+  
+  if (!missing(grp.sz)) {
+    warning("argument grp.sz is deprecated; please use size instead.", 
+            call. = FALSE)
+    size <- grp.sz
+  }
+  
   if (is.na(p)) {
     NA
-  } else{
+  } else {
     p.try <- suppressWarnings(try(beta.dist2(p = p, alpha = alpha, 
-                                             grp.sz = grp.sz, ...), 
+                                             grp.sz = size, rel.tol = rel.tol, 
+                                             ...), 
                                   silent = TRUE))
     if (class(p.try) == "try-error") {
-      beta.dist2(p = p, alpha = alpha, grp.sz = grp.sz, simul = TRUE, ...)
-    } else{
-      beta.dist2(p = p, alpha = alpha, grp.sz = grp.sz, ...)
+      beta.dist2(p = p, alpha = alpha, grp.sz = size, simul = TRUE, 
+                 num.sim = num.sim, rel.tol = rel.tol, ...)
+    } else {
+      beta.dist2(p = p, alpha = alpha, grp.sz = size, rel.tol = rel.tol, ...)
     }
   }
 }
@@ -943,9 +1005,9 @@ expectOrderBeta <- function(p, alpha, grp.sz, ...){
 #      Note: Malinovsky, Albert, & Roy (2015) maximized the reciprocal, 
 #              E(C)/E(T).
 
-MAR.func <- function(ET, p.vec, PSe.vec, PSp.vec){
-  EC <- sum(PSe.vec*p.vec + PSp.vec*(1-p.vec))
-  ET/EC
+MAR.func <- function(ET, p.vec, PSe.vec, PSp.vec) {
+  EC <- sum(PSe.vec * p.vec + PSp.vec * (1 - p.vec))
+  ET / EC
 }
 ###############################################################################
 
@@ -965,8 +1027,9 @@ MAR.func <- function(ET, p.vec, PSe.vec, PSp.vec){
 #              D1, D2 - weights/costs for misclassification
 #      note: this function specifies equal weights of 1 by default
 
-GR.func <- function(ET, p.vec, PSe.vec, PSp.vec, D1=1, D2=1){
-  ET + D1*sum((1-PSp.vec)*(1-p.vec)) + D2*sum((1-PSe.vec)*p.vec)
+GR.func <- function(ET, p.vec, PSe.vec, PSp.vec, D1 = 1, D2 = 1) {
+  ET + D1 * sum((1 - PSp.vec) * (1 - p.vec)) + 
+    D2 * sum((1 - PSe.vec) * p.vec)
 }
 ###############################################################################
 
@@ -980,10 +1043,10 @@ GR.func <- function(ET, p.vec, PSe.vec, PSp.vec, D1=1, D2=1){
 #      inputs: x = object containing the start time
 
 time.it <- function(x) {
-  end.time<-proc.time()
-  save.time<-end.time-x
-  cat("\n Number of minutes running: ", round(save.time[3]/60, 2), "\n \n")
-  save.time[3]/60
+  end.time <- proc.time()
+  save.time <- end.time - x
+  cat("\n Number of minutes running: ", round(save.time[3] / 60, 2), "\n \n")
+  save.time[3] / 60
 }
 ###############################################################################
 
@@ -1020,20 +1083,23 @@ generate.acc <- function(algorithm, diseases, value, label) {
     } else if (algorithm %in% c("D2", "ID2", "A2", "IA2")) {
       if (length(value) == 2) {
         output <- value
-      } else{
-        stop("Please specify a ", measure, " vector with two values, one for each stage of the testing algorithm.\n")
+      } else {
+        stop("Please specify a ", measure, 
+             " vector with two values, one for each stage of the testing algorithm.\n")
       }
     } else if (algorithm %in% c("D3", "ID3", "A2M")) {
       if (length(value) == 3) {
         output <- value
-      } else{
-        stop("Please specify a ", measure, " vector with three values, one for each stage of the testing algorithm.\n")
+      } else {
+        stop("Please specify a ", measure, 
+             " vector with three values, one for each stage of the testing algorithm.\n")
       }
     } else if (algorithm %in% c("D4", "ID4")) {
       if (length(value) == 4) {
         output <- value
       } else {
-        stop("Please specify a ", measure, " vector with four values, one for each stage of the testing algorithm.\n")
+        stop("Please specify a ", measure, 
+             " vector with four values, one for each stage of the testing algorithm.\n")
       }
     }
   } else if (diseases == 2) {
@@ -1052,33 +1118,38 @@ generate.acc <- function(algorithm, diseases, value, label) {
           output <- matrix(data = value, nrow = 2, ncol = 5, 
                            dimnames = list(Infection = 1:2, Stage = 1:5))
         }
-      } else{
-        stop("Please specify a matrix of ", measure, " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
+      } else {
+        stop("Please specify a matrix of ", measure, 
+             " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
       }
     } else if (is.matrix(value)) {
       if (algorithm %in% c("D2", "ID2", "A2", "IA2")) {
         if (dim(value)[1] == 2 & dim(value)[2] == 2) {
           output <- value
-        } else{
-          stop("Please specify a 2x2 matrix of ", measure, " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
+        } else {
+          stop("Please specify a 2x2 matrix of ", measure, "
+               values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
         }
       } else if (algorithm %in% c("D3", "ID3", "A2M")) {
         if (dim(value)[1] == 2 & dim(value)[2] == 3) {
           output <- value
-        } else{
-          stop("Please specify a 2x3 matrix of ", measure, " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
+        } else {
+          stop("Please specify a 2x3 matrix of ", measure, 
+               " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
         }
       } else if (algorithm %in% c("D4", "ID4")) {
         if (dim(value)[1] == 2 & dim(value)[2] == 4) {
           output <- value
         } else {
-          stop("Please specify a 2x4 matrix of ", measure, " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
+          stop("Please specify a 2x4 matrix of ", measure, 
+               " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
         }
       } else if (algorithm %in% c("D5", "ID5")) {
         if (dim(value)[1] == 2 & dim(value)[2] == 5) {
           output <- value
         } else {
-          stop("Please specify a 2x5 matrix of ", measure, " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
+          stop("Please specify a 2x5 matrix of ", measure, 
+               " values with the correct dimensions. Each row should correspond to a disease, and each column should correspond to a stage in the algorithm.\n")
         }
       }
     }

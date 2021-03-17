@@ -67,52 +67,55 @@ the \code{\link{OTC1}} or \code{\link{OTC2}} function.
 
 # Find the optimal testing configuration for 
 #   non-informative two-stage hierarchical testing.
-res1 <- OTC1(algorithm="D2", p=0.01, Se=0.99, Sp=0.99, 
-             group.sz=3:100, obj.fn=c("ET", "MAR", "GR1"), 
-             weights=matrix(data=c(1,1), nrow=1, ncol=2))
+res1 <- OTC1(algorithm = "D2", p = 0.01, Se = 0.99, Sp = 0.99, 
+             group.sz = 2:100, obj.fn = c("ET", "MAR", "GR1"), 
+             weights = matrix(data = c(1,1), nrow = 1, ncol = 2))
 summary(res1)
 
 # Find the optimal testing configuration for 
 #   informative three-stage hierarchical testing
-res2 <- OTC1(algorithm="ID3", p=0.025, 
-             Se=c(0.95, 0.95, 0.99), Sp=c(0.96, 0.96, 0.98), 
-             group.sz=3:15, obj.fn=c("ET", "MAR"), alpha=2)
+res2 <- OTC1(algorithm = "ID3", p = 0.025, 
+             Se = c(0.95, 0.95, 0.99), Sp = c(0.96, 0.96, 0.98), 
+             group.sz = 3:15, obj.fn = c("ET", "MAR"), alpha = 2)
 summary(res2)
 
 # Find the optimal testing configuration for 
 #   informative array testing without master pooling.
 # This example takes approximately 30 seconds to run.
 \donttest{
-res3 <- OTC1(algorithm="IA2", p=0.05, alpha=2, 
-             Se=0.90, Sp=0.90, group.sz=3:20, obj.fn="ET")
+res3 <- OTC1(algorithm = "IA2", p = 0.05, alpha = 2, 
+             Se = 0.90, Sp = 0.90, group.sz = 2:20, 
+             obj.fn = "ET")
 summary(res3)}
 
 # Find the optimal testing configuraiton for 
 #   informative two-stage hierarchical testing.
-Se <- matrix(data=c(rep(0.95, 2), rep(0.99, 2)), 
-             nrow=2, ncol=2, byrow=FALSE)
-Sp <- matrix(data=c(rep(0.96, 2), rep(0.98, 2)), 
-             nrow=2, ncol=2, byrow=FALSE)
-res4 <- OTC2(algorithm="ID2", alpha=c(18.25, 0.75, 0.75, 0.25), 
-                Se=Se, Sp=Sp, group.sz=12)
+Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)), 
+             nrow = 2, ncol = 2, byrow = FALSE)
+Sp <- matrix(data = c(rep(0.96, 2), rep(0.98, 2)), 
+             nrow = 2, ncol = 2, byrow = FALSE)
+res4 <- OTC2(algorithm = "ID2", 
+             alpha = c(18.25, 0.75, 0.75, 0.25), 
+             Se = Se, Sp = Sp, group.sz = 12)
 summary(res4)
 
 # Find the optimal testing configuration for 
 #   non-informative three-stage hierarchical testing.
-# This example takes approximately 3 minutes to run.
-Se <- matrix(data=c(rep(0.95, 6)), nrow=2, ncol=3)
-Sp <- matrix(data=c(rep(0.99, 6)), nrow=2, ncol=3)
+# This example takes approximately 1 minute to run.
+Se <- matrix(data = c(rep(0.95, 6)), nrow = 2, ncol = 3)
+Sp <- matrix(data = c(rep(0.99, 6)), nrow = 2, ncol = 3)
 \donttest{
-res5 <- OTC2(algorithm="D3", p.vec=c(0.95, 0.0275, 0.0175, 0.005), 
-                Se=Se, Sp=Sp, group.sz=5:10)
+res5 <- OTC2(algorithm = "D3", 
+             p.vec = c(0.95, 0.0275, 0.0175, 0.005), 
+             Se = Se, Sp = Sp, group.sz = 5:20)
 summary(res5)}
 
 # Find the optimal testing configuration for
 #   non-informative array testing with master pooling.
 # This example takes approximately 10 seconds to run.
 \donttest{
-res6 <- OTC2(algorithm="A2M", p.vec=c(0.90, 0.04, 0.04, 0.02), 
-             Se=rep(0.99, 2), Sp=rep(0.99, 2), group.sz=3:15)
+res6 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02), 
+             Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 2:20)
 summary(res6)}
 }
 \seealso{

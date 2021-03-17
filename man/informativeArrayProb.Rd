@@ -7,7 +7,7 @@
 informativeArrayProb(prob.vec, nr, nc, method = "sd")
 }
 \arguments{
-\item{prob.vec}{vector of individual risk probabilities, of length nr*nc.}
+\item{prob.vec}{vector of individual risk probabilities, of length nr * nc.}
 
 \item{nr}{number of rows in the array.}
 
@@ -35,16 +35,16 @@ for informative array testing without master pooling.
 #   function and requires the user to set a seed in order 
 #   to reproduce results.
 set.seed(1107)
-p.vec1 <- expectOrderBeta(p=0.05, alpha=2, grp.sz=100)
-informativeArrayProb(prob.vec=p.vec1, nr=10, nc=10, 
-                       method="gd")
+p.vec1 <- expectOrderBeta(p = 0.05, alpha = 2, size = 100)
+informativeArrayProb(prob.vec = p.vec1, nr = 10, nc = 10, 
+                     method = "gd")
 
 # Use the spiral arrangement method to create a matrix
 #   of individual risk probabilities for a 5x5 array.
 set.seed(8791)
-p.vec2 <- expectOrderBeta(p=0.02, alpha=0.5, grp.sz=25)
-informativeArrayProb(prob.vec=p.vec2, nr=5, nc=5, 
-                       method="sd")
+p.vec2 <- expectOrderBeta(p = 0.02, alpha = 0.5, size = 25)
+informativeArrayProb(prob.vec = p.vec2, nr = 5, nc = 5, 
+                     method = "sd")
 }
 \references{
 \insertRef{McMahan2012b}{binGroup2}
@@ -56,5 +56,5 @@ probabilities.
 \author{
 This function was originally written by Christopher McMahan for 
 McMahan et al. (2012). The function was obtained from 
-\url{http://chrisbilder.com/grouptesting}.
+\url{http://chrisbilder.com/grouptesting/}.
 }

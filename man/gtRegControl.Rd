@@ -36,8 +36,8 @@ A list with components named as the input arguments.
 \description{
 Auxiliary function to control fitting parameters 
 of the EM algorithm used internally in \code{\link{gtReg}} 
-for simple pooling (\kbd{type="sp"}) with \kbd{method="Xie"} 
-or for array testing (\kbd{type="array"}).
+for simple pooling (\kbd{type = "sp"}) with \kbd{method = "Xie"} 
+or for array testing (\kbd{type = "array"}).
 }
 \examples{
 # The default settings:

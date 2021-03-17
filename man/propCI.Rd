@@ -81,20 +81,20 @@ of equal or different sizes.
 }
 \details{
 Confidence interval methods include the Agresti-Coull 
-(\kbd{ci.method="AC"}), bias- and skewness-corrected 
-(\kbd{ci.method="bc-skew-score"}), Blaker (\kbd{ci.method="Blaker"}), 
-Clopper-Pearson (\kbd{ci.method="CP"}), exact (\kbd{ci.method="exact"}), 
-likelihood ratio test (\kbd{ci.method="lrt"}), Wilson score 
-(\kbd{ci.method="score"}), skewness-corrected 
-(\kbd{ci.method="skew-score"}), second-order corrected 
-(\kbd{ci.method="soc"}), and Wald 
-(\kbd{ci.method="Wald"}) intervals. The Agresti-Coull, Blaker, 
+(\kbd{ci.method = "AC"}), bias- and skewness-corrected 
+(\kbd{ci.method = "bc-skew-score"}), Blaker (\kbd{ci.method = "Blaker"}), 
+Clopper-Pearson (\kbd{ci.method = "CP"}), exact (\kbd{ci.method = "exact"}), 
+likelihood ratio test (\kbd{ci.method = "lrt"}), Wilson score 
+(\kbd{ci.method = "score"}), skewness-corrected 
+(\kbd{ci.method = "skew-score"}), second-order corrected 
+(\kbd{ci.method = "soc"}), and Wald 
+(\kbd{ci.method = "Wald"}) intervals. The Agresti-Coull, Blaker, 
 Clopper-Pearson, and second-order corrected intervals are available 
 only for the equal group size case.
 
-Point estimates available include the MLE (\kbd{pt.method="mle"}), 
-bias-corrected MLE (\kbd{pt.method="Gart"} or \kbd{pt.method="bc-mle"}), 
-and bias-preventative (\kbd{pt.method="Firth"}). Only the MLE method 
+Point estimates available include the MLE (\kbd{pt.method = "mle"}), 
+bias-corrected MLE (\kbd{pt.method = "Gart"} or \kbd{pt.method = "bc-mle"}), 
+and bias-preventative (\kbd{pt.method = "Firth"}). Only the MLE method 
 is available when calculating the Clopper-Pearson, Blaker, Agresti-Coull, 
 second-order corrected, or exact intervals.
 
@@ -117,20 +117,26 @@ recommendations on the best point estimator methods.}
 #   3 groups out of 24 test positively; 
 #   each group has a size of 7.
 # Clopper-Pearson interval:
-propCI(x=3, m=7, n=24, ci.method="CP", 
-       conf.level=0.95, alternative="two.sided")
+propCI(x = 3, m = 7, n = 24, ci.method = "CP", 
+       conf.level = 0.95, alternative = "two.sided")
       
-# Blaker interval:
-propCI(x=3, m=7, n=24, ci.method="Blaker", 
-       conf.level=0.95, alternative="two.sided")
-      
-# Wilson score interval: 
-propCI(x=3, m=7, n=24, ci.method="score", 
-       conf.level=0.95, alternative="two.sided")
+# Clopper-Pearson interval with the bias-corrected 
+#   MLE (\kbd{pt.method = "Gart"}). 
+propCI(x = 3, m = 7, n = 24, pt.method = "Gart", 
+       ci.method = "CP", conf.level = 0.95, 
+       alternative = "two.sided")
       
 # One-sided Clopper-Pearson interval:
-propCI(x=3, m=7, n=24, ci.method="CP", 
-       conf.level=0.95, alternative="less")
+propCI(x = 3, m = 7, n = 24, ci.method = "CP", 
+       conf.level = 0.95, alternative = "less")
+       
+# Blaker interval:
+propCI(x = 3, m = 7, n = 24, ci.method = "Blaker", 
+       conf.level = 0.95, alternative = "two.sided")
+      
+# Wilson score interval: 
+propCI(x = 3, m = 7, n = 24, ci.method = "score", 
+       conf.level = 0.95, alternative = "two.sided")
 
 # Calculate confidence intervals with a group size of 1. 
 #   These match those found using the binom.confint() 
@@ -147,22 +153,27 @@ propCI(x = 4, m = 1, n = 10, pt.method = "mle",
 #   groups of size 5; also, 
 #   2 groups out of 3 test positively with 
 #   groups of size 2.
-propCI(x=c(1,2), m=c(5,2), n=c(2,3), ci.method="exact") 
+propCI(x = c(1,2), m = c(5,2), n = c(2,3), ci.method = "exact") 
+
+# Bias-preventative point estimate (\kbd{pt.method = "Firth"}) 
+#   with an exact confidence interval.
+propCI(x = c(1,2), m = c(5,2), n = c(2,3), 
+       pt.method = "Firth", ci.method = "exact") 
 
 # Recalculate the example given in
 #   Hepworth (1996), table 5:
-propCI(x=c(0,0), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(0,1), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(0,2), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(0,3), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(1,0), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(1,1), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(1,2), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(1,3), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(2,0), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(2,1), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(2,2), m=c(5,2), n=c(2,3), ci.method="exact")
-propCI(x=c(2,3), m=c(5,2), n=c(2,3), ci.method="exact")
+propCI(x = c(0,0), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(0,1), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(0,2), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(0,3), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(1,0), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(1,1), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(1,2), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(1,3), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(2,0), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(2,1), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(2,2), m = c(5,2), n = c(2,3), ci.method = "exact")
+propCI(x = c(2,3), m = c(5,2), n = c(2,3), ci.method = "exact")
 
 # Example with multiple groups of various sizes: 
 #   0 out of 5 groups test positively with 
@@ -173,20 +184,20 @@ propCI(x=c(2,3), m=c(5,2), n=c(2,3), ci.method="exact")
 #   groups of size 10; and
 #   2 out of 5 groups test positively with 
 #   groups of size 50.
-x1 <- c(0,0,1,2)
-m1 <- c(1,5,10,50)
-n1 <- c(5,5,5,5)
-propCI(x=x1, m=m1, n=n1, pt.method="Gart", 
-       ci.method="skew-score")
-propCI(x=x1, m=m1, n=n1, pt.method="Gart", 
-       ci.method="score")
+x1 <- c(0, 0, 1, 2)
+m1 <- c(1, 5, 10, 50)
+n1 <- c(5, 5, 5, 5)
+propCI(x = x1, m = m1, n = n1, pt.method = "Gart", 
+       ci.method = "skew-score")
+propCI(x = x1, m = m1, n = n1, pt.method = "Gart", 
+       ci.method = "score")
 
 # Reproducing estimates from Table 1 in
 #   Hepworth & Biggerstaff (2017):
-propCI(x=c(1,2), m=c(20,5), n=c(8,8), 
-       pt.method="Firth", ci.method="lrt")
-propCI(x=c(7,8), m=c(20,5), n=c(8,8), 
-       pt.method="Firth", ci.method="lrt")
+propCI(x = c(1, 2), m = c(20, 5), n = c(8, 8), 
+       pt.method = "Firth", ci.method = "lrt")
+propCI(x = c(7, 8), m = c(20, 5), n = c(8, 8), 
+       pt.method = "Firth", ci.method = "lrt")
 }
 \references{
 \insertRef{Biggerstaff2008}{binGroup2}

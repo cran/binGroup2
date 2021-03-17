@@ -13,8 +13,8 @@ operating characteristics for a group testing algorithm.}
 \item{...}{currently not used.}
 }
 \value{
-\kbd{summary.opChar} returns an object of class \kbd{"summary.opChar"}, 
-a list containing:
+\kbd{summary.opChar} returns an object of class 
+\kbd{"summary.opChar"}, a list containing:
 \item{Algorithm}{character string specifying the name of the group testing 
 algorithm.}
 \item{Configuration}{matrix detailing the configuration from \kbd{object}. 
@@ -56,51 +56,51 @@ array size for an array testing algorithm. The \kbd{Tests} component
 of the result gives the expected number of tests and the expected 
 number of tests per individual for the algorithm. 
 
-The \kbd{Accuracy} component gives the individual accuracy measures for each 
-individual in \kbd{object} and the overall accuracy measures for the 
+The \kbd{Accuracy} component gives the individual accuracy measures for 
+each individual in \kbd{object} and the overall accuracy measures for the 
 algorithm. Accuracy measures included are the pooling sensitivity, pooling 
 specificity, pooling positive predictive value, and pooling negative 
 predictive value. The overall accuracy measures displayed are weighted 
-averages of the corresponding individual accuracy measures for all individuals 
-in the algorithm. Expressions for these averages are provided in the 
-Supplementary Material for Hitt et al. (2019). For more information, see the 
-'Details' section for the \code{\link{operatingCharacteristics1}} 
+averages of the corresponding individual accuracy measures for all 
+individuals in the algorithm. Expressions for these averages are provided 
+in the Supplementary Material for Hitt et al. (2019). For more information, 
+see the Details' section for the \code{\link{operatingCharacteristics1}} 
 (\kbd{opChar1}) or \code{\link{operatingCharacteristics2}} (\kbd{opChar2}) 
 function.
 }
 \examples{
 # Calculate the operating characteristics for 
 #   non-informative four-stage hierarchical testing.
-config.mat <- matrix(data=c(rep(1, 24), rep(1, 16), rep(2, 8), 
+config.mat <- matrix(data = c(rep(1, 24), rep(1, 16), rep(2, 8), 
                             rep(1, 8), rep(2, 8), rep(3, 4), 
                             rep(4, 2), rep(5, 2), 1:24), 
-                     nrow=4, ncol=24, byrow=TRUE)
-calc1 <- opChar1(algorithm="D4", p=0.01, Se=0.99, Sp=0.99, 
-                 hier.config=config.mat, a=c(1, 9, 17, 21, 23))
+                     nrow = 4, ncol = 24, byrow = TRUE)
+calc1 <- opChar1(algorithm = "D4", p = 0.01, Se = 0.99, Sp = 0.99, 
+                 hier.config = config.mat, a = c(1, 9, 17, 21, 23))
 summary(calc1)
 
 # Calculate the operating characteristics for 
 #   informative array testing without master pooling.
-calc2 <- opChar1(algorithm="IA2", p=0.025, alpha=0.5, 
-                 Se=0.95, Sp=0.99, rowcol.sz=12)
+calc2 <- opChar1(algorithm = "IA2", p = 0.025, alpha = 0.5, 
+                 Se = 0.95, Sp = 0.99, rowcol.sz = 12)
 summary(calc2)
 
 # Calculate the operating characteristics for 
 #   informative two-stage hierarchical testing.
-config.mat <- matrix(data=c(rep(1, 5), rep(2, 4), 1, 1:10), 
-                     nrow=2, ncol=10, byrow=TRUE)
-Se <- matrix(data=c(rep(0.95, 2), rep(0.99, 2)), 
-             nrow=2, ncol=2, byrow=FALSE)
-Sp <- matrix(data=c(rep(0.96, 2), rep(0.98, 2)), 
-             nrow=2, ncol=2, byrow=FALSE)
-calc3 <- opChar2(algorithm="ID2", alpha=c(18.25, 0.75, 0.75, 0.25), 
-                 Se=Se, Sp=Sp, hier.config=config.mat)
+config.mat <- matrix(data = c(rep(1, 5), rep(2, 4), 1, 1:10), 
+                     nrow = 2, ncol = 10, byrow = TRUE)
+Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)), 
+             nrow = 2, ncol = 2, byrow = FALSE)
+Sp <- matrix(data = c(rep(0.96, 2), rep(0.98, 2)), 
+             nrow = 2, ncol = 2, byrow = FALSE)
+calc3 <- opChar2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25), 
+                 Se = Se, Sp = Sp, hier.config = config.mat)
 summary(calc3)
 
 # Calculate the operating characteristics for 
 #   non-informative array testing with master pooling.
-calc4 <- opChar2(algorithm="A2M", p.vec=c(0.92, 0.05, 0.02, 0.01), 
-                 Se=rep(0.95, 2), Sp=rep(0.99, 2), rowcol.sz=8)
+calc4 <- opChar2(algorithm = "A2M", p.vec = c(0.92, 0.05, 0.02, 0.01), 
+                 Se = rep(0.95, 2), Sp = rep(0.99, 2), rowcol.sz = 8)
 summary(calc4)
 }
 \seealso{

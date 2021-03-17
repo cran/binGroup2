@@ -43,20 +43,20 @@ are available for the confidence interval methods in \code{\link{propCI}}.
 The two-sided (\kbd{method="two.sided"}) option calculates the 
 expected width between the lower and upper bound of a two-sided 
 \eqn{conf.level*100} percent confidence interval. See Tebbs & Bilder (2004) 
-for expression. The one-sided (\kbd{method="less"} or \kbd{method="greater"}) 
-options calculate the expected distance between the one-sided limit and the 
-assumed true proportion \kbd{p} for a one-sided \eqn{conf.level*100} percent 
-confidence interval.
+for expression. The one-sided (\kbd{method="less"} or 
+\kbd{method="greater"}) options calculate the expected distance between the 
+one-sided limit and the assumed true proportion \kbd{p} for a one-sided 
+\eqn{conf.level*100} percent confidence interval.
 }
 \examples{
 # Examine different group sizes to determine 
 #   the shortest expected width.
-gtWidth(n=20, s=seq(from=1, to=200, by=10),
-        p=0.01, alternative="less", method="CP")
+gtWidth(n = 20, s = seq(from = 1, to = 200, by = 10),
+        p = 0.01, alternative = "less", method = "CP")
 
 # Calculate the expected width of the confidence  
 #   interval with a group size of 1 (individual testing).
-gtWidth(n=20, s=1, p=0.005, alternative="less", method="CP")
+gtWidth(n = 20, s = 1, p = 0.005, alternative = "less", method = "CP")
 }
 \references{
 \insertRef{Tebbs2004}{binGroup2}

@@ -1,8 +1,8 @@
 Package: binGroup2
 Type: Package
 Title: Identification and Estimation using Group Testing
-Version: 1.0.2
-Date: 2020-04-06
+Version: 1.1.0
+Date: 2021-03-15
 Authors@R: c(person("Brianna", "Hitt", role=c("aut", "cre"), email="brianna.hitt@huskers.unl.edu", comment=c(ORCID="0000-0002-0645-0067")), 
              person("Christopher", "Bilder",  role="aut", comment=c(ORCID="0000-0002-2848-8576")), 
              person("Frank", "Schaarschmidt", role="aut", comment=c(ORCID="0000-0002-6599-3803")),
@@ -28,16 +28,16 @@ Description: Methods for the group testing identification problem: 1) Operating
     described in Biggerstaff (2008) <doi:10.1198/108571108X379055> and 
     Hepworth & Biggerstaff (2017) <doi:10.1007/s13253-017-0297-2>. 
     Regression modeling is described in Xie (2001) <doi:10.1002/sim.817>.
-Imports: graphics, grDevices, partitions, rBeta2009, Rcpp (>= 1.0.0),
-        Rdpack, stats, utils
+Imports: ggplot2, graphics, grDevices, partitions, rBeta2009, Rcpp (>=
+        1.0.0), Rdpack, scales, stats, utils
 RdMacros: Rdpack
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2020-04-07 04:50:07 UTC; bhitt
+Packaged: 2021-03-15 22:50:38 UTC; Brianna.Hitt
 Author: Brianna Hitt [aut, cre] (<https://orcid.org/0000-0002-0645-0067>),
   Christopher Bilder [aut] (<https://orcid.org/0000-0002-2848-8576>),
   Frank Schaarschmidt [aut] (<https://orcid.org/0000-0002-6599-3803>),
@@ -49,4 +49,4 @@ Author: Brianna Hitt [aut, cre] (<https://orcid.org/0000-0002-0645-0067>),
   Peijie Hou [ctb],
   Peng Chen [ctb]
 Repository: CRAN
-Date/Publication: 2020-04-07 16:00:06 UTC
+Date/Publication: 2021-03-17 06:50:10 UTC

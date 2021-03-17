@@ -52,15 +52,15 @@ with 3 to 5 stages.
 }
 \examples{
 # Equivalent to Dorfman testing (two-stage hierarchical)
-halving(p=rep(0.01, 10), sp=1, se=1, stages=2, 
-        order.p=TRUE)
+halving(p = rep(0.01, 10), sp = 1, se = 1, stages = 2, 
+        order.p = TRUE)
 
 # Halving over three stages; each individual has a 
 #   different probability of being positive
 set.seed(12895)
-p.vec <- expectOrderBeta(p=0.05, alpha=2, grp.sz=20)
-halving(p=p.vec, sp=0.95, se=0.95, stages=3, 
-        order.p=TRUE)
+p.vec <- expectOrderBeta(p = 0.05, alpha = 2, size = 20)
+halving(p = p.vec, sp = 0.95, se = 0.95, stages = 3, 
+        order.p = TRUE)
 }
 \references{
 \insertRef{Black2012}{binGroup2}
@@ -77,7 +77,7 @@ Other operating characteristic functions:
 \author{
 This function was originally written by Michael Black for Black 
 et al. (2012). The function was obtained from 
-\url{http://chrisbilder.com/grouptesting}. Minor modifications have been 
+\url{http://chrisbilder.com/grouptesting/}. Minor modifications have been 
 made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{operating characteristic functions}

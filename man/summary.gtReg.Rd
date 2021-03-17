@@ -17,24 +17,24 @@
 \item{call}{the component from \kbd{object}.}
 \item{link}{the component from \kbd{object}.}
 \item{deviance}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{aic}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{df.residual}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{null.deviance}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{df.null}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{deviance.resid}{the deviance residuals, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{coefficients}{the matrix of coefficients, standard errors, 
 z-values, and p-values. Aliased coefficients are omitted.}
 \item{counts}{the component from \kbd{object}.}
 \item{method}{the component from \kbd{object}, 
-for simple pooling (\kbd{type="sp"} in \code{\link{gtReg}}) only.}
+for simple pooling (\kbd{type = "sp"} in \code{\link{gtReg}}) only.}
 \item{Gibbs.sample.size}{the component from \kbd{object}, 
-for array testing (\kbd{type="array"} in \code{\link{gtReg}}) only.}
+for array testing (\kbd{type = "array"} in \code{\link{gtReg}}) only.}
 \item{cov.mat}{the estimated covariance matrix of the estimated 
 coefficients.}
 }
@@ -54,22 +54,22 @@ estimate is \kbd{NaN}.
 }
 \examples{
 data(hivsurv)
-fit1 <- gtReg(type="sp", formula=groupres ~ AGE + EDUC., 
-              data=hivsurv, groupn=gnum, sens=0.9, spec=0.9, 
-              method="Xie")
+fit1 <- gtReg(type = "sp", formula = groupres ~ AGE + EDUC., 
+              data = hivsurv, groupn = gnum, sens = 0.9, spec = 0.9, 
+              method = "Xie")
 summary(fit1)
 
 # This examples takes approximately 5 seconds to run.
 # 5x6 and 4x5 array
 set.seed(9128)
-sa2a <- gtSim(type="array", par=c(-7,0.1), size1=c(5,4), 
-              size2=c(6,5), sens=0.95, spec=0.95)
+sa2a <- gtSim(type = "array", par = c(-7, 0.1), size1 = c(5, 4), 
+              size2 = c(6, 5), sens = 0.95, spec = 0.95)
 sa2 <- sa2a$dframe
 \donttest{
-fit2 <- gtReg(type="array", formula=cbind(col.resp, row.resp) ~ x, 
-              data=sa2, coln=coln, rown=rown, arrayn=arrayn, 
-              sens=0.95, spec=0.95, linkf="logit", 
-              n.gibbs=1000, tol=0.005)
+fit2 <- gtReg(type = "array", formula = cbind(col.resp, row.resp) ~ x, 
+              data = sa2, coln = coln, rown = rown, arrayn = arrayn, 
+              sens = 0.95, spec = 0.95, linkf = "logit", 
+              n.gibbs = 1000, tol = 0.005)
 summary(fit2)}
 }
 \seealso{

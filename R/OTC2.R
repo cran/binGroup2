@@ -25,15 +25,15 @@
 #' include two-stage hierarchical ("\kbd{ID2}") and three-stage hierarchical 
 #' ("\kbd{ID3}") testing.
 #' @param p.vec vector of overall joint probabilities. The joint probabilities
-#' are assumed to be equal for all individuals in the algorithm (non-informative 
-#' testing only). There are four joint probabilities to 
+#' are assumed to be equal for all individuals in the algorithm 
+#' (non-informative testing only). There are four joint probabilities to 
 #' consider: \eqn{p_{00}}{p_00}, the probability that an individual tests 
 #' negative for both diseases; \eqn{p_{10}}{p_10}, the probability that an 
 #' individual tests positive only for the first disease; \eqn{p_{01}}{p_01}, 
 #' the probability that an individual tests positive only for the second 
 #' disease; and \eqn{p_{11}}{p_11}, the probability that an individual tests 
-#' positive for both diseases. The joint probabilities must sum to 1. 
-#' Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified.
+#' positive for both diseases. The joint probabilities must sum to 1. Only one 
+#' of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified.
 #' @param probabilities matrix of joint probabilities for each individual, 
 #' where rows correspond to the four joint probabilities and columns correspond 
 #' to each individual in the algorithm. Only one of \kbd{p.vec}, 
@@ -42,21 +42,22 @@
 #' distribution (for informative testing only). The vector will be used to 
 #' generate a heterogeneous matrix of joint probabilities for each individual. 
 #' The vector must have length 4. Further details are given under 'Details'. 
-#' Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be specified. 
+#' Only one of \kbd{p.vec}, \kbd{probabilities}, or \kbd{alpha} should be 
+#' specified. 
 #' @param Se matrix of sensitivity values, where one value is given for each 
-#' disease (or infection) at each stage of testing. The rows of the matrix correspond 
-#' to each disease \eqn{k=1,...,K}, and the columns of the matrix correspond to each 
-#' stage of testing \eqn{s=1,...,S}. If a vector of \eqn{K} values is provided, 
-#' the sensitivity values associated with disease \eqn{k} are assumed to be equal 
-#' to the \eqn{k}th value in the vector for all stages of testing. 
-#' Further details are given under 'Details'.
+#' disease (or infection) at each stage of testing. The rows of the matrix 
+#' correspond to each disease \eqn{k=1,...,K}, and the columns of the matrix 
+#' correspond to each stage of testing \eqn{s=1,...,S}. If a vector of \eqn{K} 
+#' values is provided, the sensitivity values associated with disease \eqn{k} 
+#' are assumed to be equal to the \eqn{k}th value in the vector for all stages 
+#' of testing. Further details are given under 'Details'.
 #' @param Sp matrix of specificity values, where one value is given for each 
-#' disease (or infection) at each stage of testing. The rows of the matrix correspond 
-#' to each disease \eqn{k=1,...,K}, and the columns of the matrix correspond 
-#' to each stage of testing \eqn{s=1,...,S}. If a vector of \eqn{K} values is provided, 
-#' the specificity values associated with disease \eqn{k} are assumed to be equal 
-#' to the \eqn{k}th value in the vector for all stages of testing. 
-#' Further details are given under 'Details'.
+#' disease (or infection) at each stage of testing. The rows of the matrix 
+#' correspond to each disease \eqn{k=1,...,K}, and the columns of the matrix 
+#' correspond to each stage of testing \eqn{s=1,...,S}. If a vector of \eqn{K} 
+#' values is provided, the specificity values associated with disease \eqn{k} 
+#' are assumed to be equal to the \eqn{k}th value in the vector for all stages 
+#' of testing. Further details are given under 'Details'.
 #' @param ordering matrix detailing the ordering for the binary responses of 
 #' the diseases. The columns of the matrix correspond to each disease and the 
 #' rows of the matrix correspond to each of the 4 sets of binary responses for 
@@ -81,12 +82,12 @@
 #' described in Hou et al. (2019).
 #' 
 #' Available algorithms include two- and three-stage hierarchical testing and 
-#' array testing with and without master pooling. Both non-informative and informative
-#' group testing settings are allowed for hierarchical algorithms. Only 
-#' non-informative group testing settings are allowed for array testing algorithms. 
-#' Operating characteristics calculated are expected number of tests, 
-#' pooling sensitivity, pooling specificity, pooling positive predictive value, and 
-#' pooling negative predictive value for each individual.
+#' array testing with and without master pooling. Both non-informative and 
+#' informative group testing settings are allowed for hierarchical algorithms. 
+#' Only non-informative group testing settings are allowed for array testing 
+#' algorithms. Operating characteristics calculated are expected number of 
+#' tests, pooling sensitivity, pooling specificity, pooling positive 
+#' predictive value, and pooling negative predictive value for each individual.
 #' 
 #' For informative algorithms where the \kbd{alpha} argument is specified, a 
 #' heterogeneous matrix of joint probabilities for each individual is generated 
@@ -98,16 +99,17 @@
 #' The sensitivity/specificity values are allowed to vary across stages of 
 #' testing. For hierarchical testing, a different sensitivity/specificity value
 #' may be used for each stage of testing. For array testing, a different 
-#' sensitivity/specificity value may be used for master pool testing (if included), 
-#' row/column testing, and individual testing. The values must be specified 
-#' in the order of the testing performed. For example, values are specified as 
-#' (stage 1, stage 2, stage 3) for three-stage hierarchical testing or 
-#' (master pool testing, row/column testing, individual testing) for array 
-#' testing with master pooling. A vector of \eqn{K} sensitivity/specificity 
-#' values may be specified, and sensitivity/specificity values for all stages 
-#' of testing are assumed to be equal. The first value in the vector will be 
-#' used at each stage of testing for the first disease, and the second value in 
-#' the vector will be used at each stage of testing for the second disease.
+#' sensitivity/specificity value may be used for master pool testing (if 
+#' included), row/column testing, and individual testing. The values must be 
+#' specified in the order of the testing performed. For example, values are 
+#' specified as (stage 1, stage 2, stage 3) for three-stage hierarchical 
+#' testing or (master pool testing, row/column testing, individual testing) 
+#' for array testing with master pooling. A vector of \eqn{K} 
+#' sensitivity/specificity values may be specified, and sensitivity/specificity 
+#' values for all stages of testing are assumed to be equal. The first value 
+#' in the vector will be used at each stage of testing for the first disease, 
+#' and the second value in the vector will be used at each stage of testing 
+#' for the second disease.
 #' 
 #' The value(s) specified by \kbd{group.sz} represent the initial (stage 1) 
 #' group size for hierarchical testing and the row/column size for array 
@@ -121,22 +123,24 @@
 #' In addition to the OTC, operating characteristics for some of the other
 #' configurations corresponding to each initial group size provided by the user
 #' are displayed. For algorithms where there is only one configuration for each
-#' initial group size (non-informative two-stage hierarchical and all array testing
-#' algorithms), results for each initial group size are provided. For algorithms where
-#' there is more than one possible configuration for each initial group size (informative
-#' two-stage hierarchical and all three-stage hierarchical algorithms), two sets of
-#' configurations are provided: 1) the best configuration for each initial group size,
-#' and 2) the top 10 configurations for each initial group size provided by the user.
-#' If a single value is provided for \kbd{group.sz} with array testing or
-#' non-informative two-stage hierarchical testing, operating characteristics will
-#' not be provided for configurations other than that specified by the user.
-#' Results are sorted by the value of the objective function per individual, \kbd{value}.
+#' initial group size (non-informative two-stage hierarchical and all array 
+#' testing algorithms), results for each initial group size are provided. For 
+#' algorithms where there is more than one possible configuration for each 
+#' initial group size (informative two-stage hierarchical and all three-stage 
+#' hierarchical algorithms), two sets of configurations are provided: 1) the 
+#' best configuration for each initial group size, and 2) the top 10 
+#' configurations for each initial group size provided by the user. If a single 
+#' value is provided for \kbd{group.sz} with array testing or non-informative 
+#' two-stage hierarchical testing, operating characteristics will not be 
+#' provided for configurations other than that specified by the user. Results 
+#' are sorted by the value of the objective function per individual, 
+#' \kbd{value}.
 #' 
 #' The displayed overall pooling sensitivity, pooling specificity, pooling 
 #' positive predictive value, and pooling negative predictive value are 
 #' weighted averages of the corresponding individual accuracy measures for all 
-#' individuals within the initial group (or block) for a hierarchical algorithm, or 
-#' within the entire array for an array-based algorithm. 
+#' individuals within the initial group (or block) for a hierarchical 
+#' algorithm, or within the entire array for an array-based algorithm. 
 #' Expressions for these averages are provided in the Supplementary Material 
 #' for Hitt et al. (2019). These expressions are based on accuracy definitions 
 #' given by Altman and Bland (1994a, 1994b). Individual accuracy measures can 
@@ -151,10 +155,10 @@
 #' provided by the user, if applicable.}
 #' \item{alpha.vec}{the alpha vector provided by the user, if applicable 
 #' (for informative algorithms only).}
-#' \item{Se}{the matrix of sensitivity values for each disease at each stage of 
-#' testing.}
-#' \item{Sp}{the matrix of specificity values for each disease at each stage of 
-#' testing.}
+#' \item{Se}{the matrix of sensitivity values for each disease at each stage 
+#' of testing.}
+#' \item{Sp}{the matrix of specificity values for each disease at each stage 
+#' of testing.}
 #' \item{opt.ET}{a list containing:
 #' \describe{
 #' \item{OTC}{a list specifying elements of the optimal testing configuration, 
@@ -214,7 +218,7 @@
 #' written by Christopher Bilder for Bilder et al. (2019), and \kbd{ARRAY}, 
 #' which was originally written by Peijie Hou for Hou et al. (2020). The 
 #' functions \kbd{ET.all.stages.new}, \kbd{PSePSpAllStages}, and \kbd{ARRAY} 
-#' were obtained from \url{http://chrisbilder.com/grouptesting}. Minor 
+#' were obtained from \url{http://chrisbilder.com/grouptesting/}. Minor 
 #' modifications were made to the functions for inclusion in the binGroup2 
 #' package.
 #' 
@@ -246,8 +250,8 @@
 #'              dimnames = list(Infection = 1:2, Stage = 1:2))
 #' Sp <- matrix(data = c(0.96, 0.96, 0.98, 0.98), nrow = 2, ncol = 2,
 #'              dimnames = list(Infection = 1:2, Stage = 1:2))
-#' OTC2(algorithm = "D2", p.vec=c(0.90, 0.04, 0.04, 0.02),
-#'      Se = Se, Sp = Sp, group.sz = 3:30)
+#' OTC2(algorithm = "D2", p.vec = c(0.90, 0.04, 0.04, 0.02),
+#'      Se = Se, Sp = Sp, group.sz = 2:30)
 #'
 #' # Find the OTC over all possible testing configurations 
 #' #   for informative two-stage hierarchical (Dorfman) 
@@ -261,7 +265,7 @@
 #'              dimnames = list(Infection = 1:2, Stage = 1:2))
 #' \donttest{
 #' set.seed(1002)
-#' OTC2(algorithm = "ID2", alpha=c(18.25, 0.75, 0.75, 0.25),
+#' OTC2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25),
 #'      Se = Se, Sp = Sp, group.sz = 10:20)}
 #'      
 #' # Find the OTC for non-informative three-stage 
@@ -272,7 +276,7 @@
 #' Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
 #'              dimnames = list(Infection = 1:2, Stage = 1:3))
 #' \donttest{
-#' OTC2(algorithm = "D3", p.vec=c(0.95, 0.02, 0.02, 0.01),
+#' OTC2(algorithm = "D3", p.vec = c(0.95, 0.02, 0.02, 0.01),
 #'      Se = Se, Sp = Sp, group.sz = 3:20)}
 #'      
 #' # Find the OTC over all possible configurations 
@@ -288,9 +292,9 @@
 #' p.unordered <- t(rBeta2009::rdirichlet(n = 12, 
 #'                             shape = c(18.25, 0.75, 0.75, 0.25)))
 #' p.ordered <- p.unordered[, order(1 - p.unordered[1,])]
-#' OTC2(algorithm="ID3", probabilities = p.ordered,
-#'          Se=Se, Sp=Sp, group.sz = 12, 
-#'          trace=FALSE, print.time=FALSE)
+#' OTC2(algorithm = "ID3", probabilities = p.ordered,
+#'          Se = Se, Sp = Sp, group.sz = 12, 
+#'          trace = FALSE, print.time = FALSE)
 #'                             
 #' # Find the OTC for non-informative array testing 
 #' #   without master pooling.
@@ -298,8 +302,8 @@
 #'              dimnames = list(Infection = 1:2, Stage = 1:2))
 #' Sp <- matrix(data = rep(0.99, 4), nrow = 2, ncol = 2,
 #'              dimnames = list(Infection = 1:2, Stage = 1:2))
-#' OTC2(algorithm = "A2", p.vec=c(0.90, 0.04, 0.04, 0.02),
-#'      Se = Se, Sp = Sp, group.sz = 3:12)
+#' OTC2(algorithm = "A2", p.vec = c(0.90, 0.04, 0.04, 0.02),
+#'      Se = Se, Sp = Sp, group.sz = 2:12)
 #'                   
 #' # Find the OTC for non-informative array testing 
 #' #   with master pooling.
@@ -307,18 +311,28 @@
 #'              dimnames = list(Infection = 1:2, Stage = 1:3))
 #' Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
 #'              dimnames = list(Infection = 1:2, Stage = 1:3))
-#' OTC2(algorithm = "A2M", p.vec=c(0.90, 0.04, 0.04, 0.02),
+#' OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
 #'      Se = Se, Sp = Sp, group.sz = 10, 
-#'      trace=FALSE, print.time=FALSE)
+#'      trace = FALSE, print.time = FALSE)
 
 # Brianna Hitt - 04.02.2020
 # Changed cat() to warning()
+
+# Brianna Hitt - 06.08.2020
+# Allowed for group sizes of 2
+
+# Brianna Hitt - 03.11.2021
+# Removed "MAR" as a default objective function
+# Changed warning() to message() for large initial group sizes that will 
+#   take significant time to run in OTC1(); message() allows the warning text 
+#   to display at the function start rather than at its completion. The warning 
+#   text was also edited.
 
 OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL, 
                  alpha = NULL, Se, Sp, 
                  ordering = matrix(data = c(0,1,0,1,0,0,1,1), 
                                    nrow = 4, ncol = 2), group.sz, 
-                 trace = TRUE, print.time = TRUE, ...){
+                 trace = TRUE, print.time = TRUE, ...) {
   
   if (!(algorithm %in% c("D2", "D3", "A2", "A2M", "ID2", "ID3"))) {
     stop("Please specify one of the following algorithms: D2, ID2, D3, ID3, A2, A2M.")
@@ -332,7 +346,8 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     } else if (algorithm %in% c("ID2", "ID3", "IA2")) {
       stop("Please specify a matrix of joint probabilities for each individual using the 'probabilities' argument, or specify a vector of shape parameters for the Dirichlet distribution using the 'alpha' argument.\n")
     }
-  } else if (sum(!is.null(p.vec), !is.null(probabilities), !is.null(alpha)) > 1) {
+  } else if (sum(!is.null(p.vec), !is.null(probabilities), 
+                 !is.null(alpha)) > 1) {
     stop("You have specified more than one of the following arguments: p.vec, probabilities, alpha. Please specify only one option.\n")
   } else {
     if (!is.null(p.vec)) {
@@ -348,16 +363,22 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     } else if (!is.null(probabilities)) {
       if (length(group.sz) == 1) {
         if (dim(probabilities)[1] != 4 | 
-            (algorithm %in% c("D2", "D3", "ID2", "ID3") & dim(probabilities)[2] != group.sz) | 
-            (algorithm %in% c("A2", "IA2", "A2M") & dim(probabilities)[2] != group.sz^2)) {
+            (algorithm %in% c("D2", "D3", "ID2", "ID3") & 
+             dim(probabilities)[2] != group.sz) | 
+            (algorithm %in% c("A2", "IA2", "A2M") & 
+             dim(probabilities)[2] != group.sz^2)) {
           stop("Please specify a matrix of joint probabilities with the correct dimensions. Each row should correspond to one of the four joint probabilities. Each column should correspond to an individual in the algorithm.\n")
         }
         
         if ((algorithm %in% c("D2", "D3", "A2", "A2M")) & 
-            (all.equal(probabilities[1,], rep(probabilities[1,1], dim(probabilities)[2])) != TRUE | 
-             all.equal(probabilities[2,], rep(probabilities[2,1], dim(probabilities)[2])) != TRUE | 
-             all.equal(probabilities[3,], rep(probabilities[3,1], dim(probabilities)[2])) != TRUE | 
-             all.equal(probabilities[4,], rep(probabilities[4,1], dim(probabilities)[2])) != TRUE)) {
+            (all.equal(probabilities[1,], rep(probabilities[1,1], 
+                                              dim(probabilities)[2])) != TRUE | 
+             all.equal(probabilities[2,], rep(probabilities[2,1], 
+                                              dim(probabilities)[2])) != TRUE | 
+             all.equal(probabilities[3,], rep(probabilities[3,1], 
+                                              dim(probabilities)[2])) != TRUE | 
+             all.equal(probabilities[4,], rep(probabilities[4,1], 
+                                              dim(probabilities)[2])) != TRUE)) {
           stop("You have specified a heterogeneous matrix of joint probabilities for a non-informative algorithm. Please specify a homogeneous matrix of joint probabilities using the 'probabilities' argument or specify an overall joint probability vector using the 'p.vec' argument.\n")
         }
       } else {
@@ -373,8 +394,10 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     }
   }
   
-  Se <- generate.acc(algorithm = algorithm, diseases = 2, value = Se, label = "sens")
-  Sp <- generate.acc(algorithm = algorithm, diseases = 2, value = Sp, label = "spec")
+  Se <- generate.acc(algorithm = algorithm, diseases = 2, 
+                     value = Se, label = "sens")
+  Sp <- generate.acc(algorithm = algorithm, diseases = 2, 
+                     value = Sp, label = "spec")
   
   # check the dimension of the ordering matrix
   if (dim(ordering)[1] != 4 | dim(ordering)[2] != 2) {
@@ -383,17 +406,22 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
   
   # check the minimum and maximum group sizes
   if (min(group.sz) < 3) {
-    if (algorithm %in% c("D2", "D3", "ID2", "ID3")) {
+    if (algorithm %in% c("D3", "ID2", "ID3")) {
       stop("Please specify a minimum group size of at least 3.\n")
-    } else {
-      stop("Please specify a minimum row/column size of at least 3.\n")
+    }
+    if (min(group.sz) < 2) {
+      if (algorithm %in% c("D2")) {
+        stop("Please specify a minimum group size of at least 2.\n")
+      } else if (algorithm %in% c("A2", "IA2", "A2M")) {
+        stop("Please specify a minimum row/column size of at least 2.\n")
+      }
     }
   }
   if (max(group.sz) >= 50) {
     if (algorithm %in% c("D3", "ID2", "ID3")) {
-      warning("You have specified a maximum group size of 50 or larger. This function may take a VERY long time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
+      message("Note: Because the maximum group size is 50 or larger, this function may take a significant amount of time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
     } else if (algorithm %in% c("A2", "A2M", "IA2")) {
-      warning("You have specified a maximum row/column size of 50 or larger. This function may take a VERY long time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
+      message("Note: Because the maximum row/column size is 50 or larger, this function may take a significant amount of time to run. Press 'ESC' if you wish to cancel the submitted statements.\n")
     }
   }
   
@@ -402,11 +430,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if  (!is.null(p.vec)) {
       results <- NI.Dorf.OTC2(p.vec = p.vec, Se = Se, Sp = Sp, 
                               ordering = ordering, group.sz = group.sz, 
-                              trace=trace, print.time=print.time, ...)
+                              trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- NI.Dorf.OTC2(p.vec = probabilities[,1], Se = Se, Sp = Sp, 
                               ordering = ordering, group.sz = group.sz, 
-                              trace=trace, print.time=print.time, ...)
+                              trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -415,11 +443,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if (!is.null(p.vec)) {
       results <- NI.D3.OTC2(p.vec = p.vec, Se = Se, Sp = Sp, 
                             ordering = ordering, group.sz = group.sz, 
-                            trace=trace, print.time=print.time, ...)
+                            trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- NI.D3.OTC2(p.vec = probabilities[,1], Se = Se, Sp = Sp, 
                             ordering = ordering, group.sz = group.sz, 
-                            trace=trace, print.time=print.time, ...)
+                            trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -428,11 +456,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if (!is.null(p.vec)) {
       results <- NI.Array.OTC2(p.vec = p.vec, Se = Se, Sp = Sp, 
                                group.sz = group.sz, 
-                               trace=trace, print.time=print.time, ...)
+                               trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- NI.Array.OTC2(p.vec = probabilities[,1], Se = Se, Sp = Sp, 
                                group.sz = group.sz, 
-                               trace=trace, print.time=print.time, ...)
+                               trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -441,11 +469,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if (!is.null(p.vec)) {
       results <- NI.A2M.OTC2(p.vec = p.vec, Se = Se, Sp = Sp, 
                              group.sz = group.sz, 
-                             trace=trace, print.time=print.time, ...)
+                             trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- NI.A2M.OTC2(p.vec = probabilities[,1], Se = Se, Sp = Sp, 
                              group.sz = group.sz, 
-                             trace=trace, print.time=print.time, ...)
+                             trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -454,11 +482,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if  (!is.null(alpha)) {
       results <- Inf.Dorf.OTC2(alpha = alpha, Se = Se, Sp = Sp, 
                                ordering = ordering, group.sz = group.sz, 
-                               trace=trace, print.time=print.time, ...)
+                               trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- Inf.Dorf.OTC2(probabilities = probabilities, Se = Se, Sp = Sp, 
                                ordering = ordering, group.sz = group.sz, 
-                               trace=trace, print.time=print.time, ...)
+                               trace = trace, print.time = print.time, ...)
     }
   }
   
@@ -467,11 +495,11 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
     if  (!is.null(alpha)) {
       results <- Inf.D3.OTC2(alpha = alpha, Se = Se, Sp = Sp, 
                              ordering = ordering, group.sz = group.sz, 
-                             trace=trace, print.time=print.time, ...)
+                             trace = trace, print.time = print.time, ...)
     } else if (!is.null(probabilities)) {
       results <- Inf.D3.OTC2(probabilities = probabilities, Se = Se, Sp = Sp, 
                              ordering = ordering, group.sz = group.sz, 
-                             trace=trace, print.time=print.time, ...)
+                             trace = trace, print.time = print.time, ...)
     }
   }
   

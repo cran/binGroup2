@@ -55,28 +55,28 @@ probability of success.
 #   less than 0.5 percent (\eqn{p < 0.005}) of the units
 #   in the population show a detrimental trait (positive test).
 #   y=1 positive test and 9 negative tests are observed.
-gtTest(n=10, y=1, s=100, p.hyp=0.005, alternative="less", 
-        method="exact")
+gtTest(n = 10, y = 1, s = 100, p.hyp = 0.005, 
+       alternative = "less", method = "exact")
 
 # The exact test corresponds to the 
 #   limits of the Clopper-Pearson confidence interval
 #   in the example of Tebbs & Bilder (2004):
-gtTest(n=24, y=3, s=7, alternative="two.sided",
-        method="exact", p.hyp=0.0543)
+gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
+       method = "exact", p.hyp = 0.0543)
         
-gtTest(n=24, y=3, s=7, alternative="two.sided",
-        method="exact", p.hyp=0.0038)
+gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
+       method = "exact", p.hyp = 0.0038)
         
 # Hypothesis test with a group size of 1.
-gtTest(n=24, y=3, s=1, alternative="two.sided",
-        method="exact", p.hyp=0.1)         
+gtTest(n = 24, y = 3, s = 1, alternative = "two.sided",
+       method = "exact", p.hyp = 0.1)         
         
 # Further methods:
-gtTest(n=24, y=3, s=7, alternative="two.sided",
-        method="score", p.hyp=0.0516)
+gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
+       method = "score", p.hyp = 0.0516)
         
-gtTest(n=24, y=3, s=7, alternative="two.sided",
-        method="Wald", p.hyp=0.0401)
+gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
+       method = "Wald", p.hyp = 0.0401)
 }
 \seealso{
 \code{\link{propCI}} for confidence intervals in 

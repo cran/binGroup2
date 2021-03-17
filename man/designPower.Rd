@@ -142,19 +142,19 @@ acceptable group size \kbd{s} is returned.
 # The maximum group size because of limited
 #   sensitivity of the diagnostic test might be s=20 and we
 #   can only afford to perform maximally 100 tests:
-designPower(n=100, s=20, delta=0.002, p.hyp=0.005, fixed="s",
-             alternative="less", method="CP", power=0.8)
+designPower(n = 100, s = 20, delta = 0.002, p.hyp = 0.005, fixed = "s",
+             alternative = "less", method = "CP", power = 0.8)
         
 # One might accept to detect delta=0.004,
 #   i.e. reject H0: p>=0.005 with power 80 percent 
 #   when the true proportion is 0.001:
-designPower(n=100, s=20, delta=0.004, p.hyp=0.005, fixed="s",
-             alternative="less", method="CP", power=0.8)
+designPower(n = 100, s = 20, delta = 0.004, p.hyp = 0.005, fixed = "s",
+             alternative = "less", method = "CP", power = 0.8)
              
 # Power for a design with a fixed group size of s=1 
 #   (individual testing).
-designPower(n=500, s=1, delta=0.05, p.hyp=0.10, 
-            fixed="s", method="CP", power=0.80)
+designPower(n = 500, s = 1, delta = 0.05, p.hyp = 0.10, 
+            fixed = "s", method = "CP", power = 0.80)
         
 # Assume that objective is to show that a proportion
 #   is smaller than 0.005 (i.e. 0.5\%) with a 
@@ -165,16 +165,16 @@ designPower(n=500, s=1, delta=0.05, p.hyp=0.10,
 # The maximum number of groups might be 30, where the 
 #   overall sensitivity is not limited until group 
 #   size s=100.
-designPower(s=100, n=30, delta=0.002, p.hyp=0.005, fixed="n",
-             alternative="less", method="CP", power=0.8)
+designPower(s = 100, n = 30, delta = 0.002, p.hyp = 0.005, fixed = "n",
+             alternative = "less", method = "CP", power = 0.8)
         
 # One might accept to detect delta=0.004,
 #   i.e. reject H0: p>=0.005 with power 80 percent 
 #   when the true proportion is 0.001:
-designPower(s=100, n=30, delta=0.004, p.hyp=0.005, fixed="n",
-             alternative="less", method="CP", power=0.8)
-designPower(s=100, n=30, delta=0.004, p.hyp=0.005, fixed="n",
-             alternative="less", method="score", power=0.8)
+designPower(s = 100, n = 30, delta = 0.004, p.hyp = 0.005, fixed = "n",
+             alternative = "less", method = "CP", power = 0.8)
+designPower(s = 100, n = 30, delta = 0.004, p.hyp = 0.005, fixed = "n",
+             alternative = "less", method = "score", power = 0.8)
 }
 \references{
 \insertRef{Swallow1985}{binGroup2}

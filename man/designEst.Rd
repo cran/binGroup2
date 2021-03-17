@@ -45,11 +45,11 @@ specified number of groups must be less than \eqn{n=1020}.
 }
 \examples{
 # Compare to Table 1 in Swallow (1985):
-designEst(n=10, smax=100, p.tr=0.001)
-designEst(n=10, smax=100, p.tr=0.01)
-designEst(n=25, smax=100, p.tr=0.05)
-designEst(n=40, smax=100, p.tr=0.25)
-designEst(n=200, smax=100, p.tr=0.30)
+designEst(n = 10, smax = 100, p.tr = 0.001)
+designEst(n = 10, smax = 100, p.tr = 0.01)
+designEst(n = 25, smax = 100, p.tr = 0.05)
+designEst(n = 40, smax = 100, p.tr = 0.25)
+designEst(n = 200, smax = 100, p.tr = 0.30)
 }
 \references{
 \insertRef{Swallow1985}{binGroup2}

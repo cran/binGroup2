@@ -7,6 +7,7 @@ export(expectOrderBeta, informativeArrayProb,
        designEst, designPower
 )
 
+import(ggplot2)
 import(graphics)
 import(Rcpp)
 
@@ -14,6 +15,7 @@ importFrom("grDevices", "dev.new")
 importFrom("partitions", "parts")
 importFrom("rBeta2009", "rdirichlet")
 importFrom("Rdpack", "reprompt")
+importFrom("scales", "pretty_breaks")
 importFrom("stats","binomial", "binom.test", "coef", "dbinom", "delete.response", "dbeta", "dnorm", "glm.fit", "integrate", "is.empty.model", "lm", "lm.fit", "model.extract", "model.frame", "model.matrix", "model.response", "na.omit", "na.pass", "optim", "pbeta", "pbinom", "plogis", "pnorm", "printCoefmat", "qbeta", "qbinom", "qchisq", "qnorm", "quantile", "rbeta", "rbinom", "residuals", "rgamma", "runif", "terms", "uniroot")
 importFrom("utils", "tail")
 
@@ -21,6 +23,8 @@ useDynLib(binGroup2, .registration=TRUE)
 
 S3method(summary, opChar)
 S3method(summary, OTC)
+
+S3method(plot, OTC)
 
 S3method(summary, gtReg)
 S3method(predict, gtReg)

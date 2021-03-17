@@ -75,25 +75,26 @@ bias are calculated for each line in this matrix.
 #   the power to reject H0: p>=0.1 using an
 #   upper Clopper-Pearson ("CP") confidence interval
 #   is calculated with the following call:
-gtPower(n=24, s=7, delta=0.06, p.hyp=0.1,
-        conf.level=0.95, alternative="less", method="CP")
+gtPower(n = 24, s = 7, delta = 0.06, p.hyp = 0.1,
+        conf.level = 0.95, alternative = "less", method = "CP")
 
 # Explore development of power and bias for varying 
 #   n, s, delta. How much can we decrease the number of 
 #   groups (costly tests to be performed) by pooling the same 
 #   number of 320 individuals to groups of increasing size 
 #   without largely decreasing power?
-gtPower(n=c(320,160,80,64,40,32,20,10,5),
-        s=c(1,2,4,5,8,10,16,32,64), delta=0.01, p.hyp=0.02)
+gtPower(n = c(320, 160, 80, 64, 40, 32, 20, 10, 5), 
+        s = c(1, 2, 4, 5, 8, 10, 16, 32, 64), 
+        delta = 0.01,  p.hyp = 0.02)
                   
 # What happens to the power for increasing differences
 #   between the true proportion and the threshold proportion?
-gtPower(n=50, s=10, delta=seq(from=0, to=0.01, by=0.001),
-        p.hyp=0.01, method="CP")
+gtPower(n = 50, s = 10, delta = seq(from = 0, to = 0.01, by = 0.001),
+        p.hyp = 0.01, method = "CP")
          
 # Calculate power with a group size of 1 (individual testing).
-gtPower(n=100, s=1, delta=seq(from=0, to=0.01, by=0.001),
-        p.hyp=0.01, method="CP")
+gtPower(n = 100, s = 1, delta = seq(from = 0, to = 0.01, by = 0.001),
+        p.hyp = 0.01, method = "CP")
 }
 \references{
 \insertRef{Schaarschmidt2007}{binGroup2}

@@ -5,7 +5,15 @@
 \title{Determine a vector of probabilities for informative group
 testing algorithms}
 \usage{
-expectOrderBeta(p, alpha, grp.sz, ...)
+expectOrderBeta(
+  p,
+  alpha,
+  size,
+  grp.sz,
+  num.sim = 10000,
+  rel.tol = ifelse(alpha >= 1, .Machine$double.eps^0.25, .Machine$double.eps^0.1),
+  ...
+)
 }
 \arguments{
 \item{p}{overall probability of disease that will be used to determine a 
@@ -17,8 +25,18 @@ random variable with a beta distribution,
 specifies the degree of heterogeneity for the determined
 probability vector.}
 
-\item{grp.sz}{the number of total individuals for which to
+\item{size}{the size of the vector of individual risk probabilities to be 
+generated. This is also the number of total individuals for which to
 determine risk probabilities.}
+
+\item{grp.sz}{the number of total individuals for which to determine risk 
+probabilities. This argument is deprecated; the \kbd{size} argument should 
+be used instead.}
+
+\item{num.sim}{the number of simulations. This argument is used only when 
+simulation is necessary.}
+
+\item{rel.tol}{relative tolerance used for integration.}
 
 \item{...}{arguments to be passed to the \code{beta.dist} function 
 written by Michael Black for Black et al. (2015).}
@@ -37,30 +55,28 @@ Black et al. (2015) to determine a vector of individual risk probabilities,
 ordered from least to greatest. Depending on the specified probability, 
 \eqn{\alpha} level, and overall group size, simulation may be necessary in 
 order to determine the probabilities. For this reason, the user should set 
-a seed in order to reproduce results. The number of simulations can be
-specified by the user, with 10,000 as the default. The \kbd{expectOrderBeta} 
-function augments the \code{beta.dist} function by checking whether
-simulation is needed before attempting to determine the probabilities. 
-The \kbd{expectOrderBeta} function allows for the number of simulations to 
-be passed on to the \code{beta.dist} function as an additional argument.
-See Black et al. (2015) for additional details on the original \kbd{beta.dist} 
-function.
+a seed in order to reproduce results. The number of simulations (default = 
+10,000) and relative tolerance for integration can be specified by the user. 
+The \kbd{expectOrderBeta} function augments the \code{beta.dist} function by 
+checking whether simulation is needed before attempting to determine the 
+probabilities, and by allowing the number of simulations to be specified by 
+the user. See Black et al. (2015) for additional details on the original 
+\kbd{beta.dist} function.
 }
 \examples{
 set.seed(8791)
-expectOrderBeta(p=0.03, alpha=0.5, grp.sz=100)
+expectOrderBeta(p = 0.03, alpha = 0.5, size = 100, rel.tol = 0.0001)
 
-set.seed(52613)
-expectOrderBeta(p=0.005, alpha=2, grp.sz=40, num.sim=5000)
+expectOrderBeta(p = 0.05, alpha = 2, size = 40)
 }
 \references{
 \insertRef{Black2015}{binGroup2}
 }
 \seealso{
-\code{\link{expectOrderBeta}} for generating a vector of individual 
-risk probabilities and \code{\link{informativeArrayProb}} for arranging a 
-vector of individual risk probabilities in a matrix for informative array 
-testing without master pooling.
+\code{\link{expectOrderBeta}} for generating a vector of 
+individual risk probabilities and \code{\link{informativeArrayProb}} for 
+arranging a vector of individual risk probabilities in a matrix for 
+informative array testing without master pooling.
 }
 \author{
 Brianna D. Hitt

@@ -1,10 +1,10 @@
 ##################################################################
 # sim.gt() function                                              #
 ##################################################################
-sim.gt <- function (x = NULL, gshape = 20, gscale = 2, par,
-                    linkf = c("logit", "probit", "cloglog"),
-                    sample.size, group.size, sens = 1, spec = 1, 
-                    sens.ind = NULL, spec.ind = NULL){
+sim.gt <- function(x = NULL, gshape = 20, gscale = 2, par,
+                   linkf = c("logit", "probit", "cloglog"),
+                   sample.size, group.size, sens = 1, spec = 1, 
+                   sens.ind = NULL, spec.ind = NULL) {
   if (is.null(sens.ind))
     sens.ind <- sens
   if (is.null(spec.ind))
@@ -22,7 +22,7 @@ sim.gt <- function (x = NULL, gshape = 20, gscale = 2, par,
                  probit = pnorm(X %*% par),
                  cloglog = 1 - exp(-exp(X %*% par)))
   ind <- rbinom(n = sample.size, size = 1, prob = pijk)
-  num.g <- ceiling(sample.size/group.size)
+  num.g <- ceiling(sample.size / group.size)
   vec <- 1:sample.size
   groupn <- rep(1:num.g, each = group.size)[vec]
   save.sum <- tapply(ind, groupn, sum)
@@ -35,13 +35,14 @@ sim.gt <- function (x = NULL, gshape = 20, gscale = 2, par,
   gres <- rep(save.obs, each = group.size)[vec]
   for (i in vec) {
     if (gres[i] == 1)
-      ret[i] <- ifelse(ind[i] == 1, rbinom(1,
-                                           1, sens.ind), 1 - rbinom(1, 1, spec.ind))
+      ret[i] <- ifelse(ind[i] == 1, 
+                       rbinom(1, 1, sens.ind), 1 - rbinom(1, 1, spec.ind))
   }   
-  grd <- data.frame(gres = gres, x = x, groupn = groupn, ind = ind, retest = ret)
+  grd <- data.frame(gres = gres, x = x, groupn = groupn, ind = ind, 
+                    retest = ret)
   if (ncol(X) > 2)
     for (i in 2:ncol(X))
-      colnames(grd)[i] <- paste("x", i - 1, sep="")
+      colnames(grd)[i] <- paste("x", i - 1, sep = "")
   grd
 }
 
@@ -50,10 +51,10 @@ sim.gt <- function (x = NULL, gshape = 20, gscale = 2, par,
 ##################################################################
 # sim.halving() function                                         #
 ##################################################################
-sim.halving <- function (x = NULL, gshape = 20, gscale = 2, par,
-                         linkf = c("logit", "probit", "cloglog"),
-                         sample.size, group.size, sens = 1, spec = 1,
-                         sens.ind = NULL, spec.ind = NULL){
+sim.halving <- function(x = NULL, gshape = 20, gscale = 2, par,
+                        linkf = c("logit", "probit", "cloglog"),
+                        sample.size, group.size, sens = 1, spec = 1,
+                        sens.ind = NULL, spec.ind = NULL) {
   if (is.null(sens.ind))
     sens.ind <- sens
   if (is.null(spec.ind))
@@ -71,7 +72,7 @@ sim.halving <- function (x = NULL, gshape = 20, gscale = 2, par,
                  probit = pnorm(X %*% par),
                  cloglog = 1 - exp(-exp(X %*% par)))
   ind <- rbinom(n = sample.size, size = 1, prob = pijk)
-  num.g <- ceiling(sample.size/group.size)
+  num.g <- ceiling(sample.size / group.size)
   vec <- 1:sample.size
   groupn <- rep(1:num.g, each = group.size)[vec]
   save.sum <- tapply(ind, groupn, sum)
@@ -84,24 +85,24 @@ sim.halving <- function (x = NULL, gshape = 20, gscale = 2, par,
     save.obs[grn] <- ifelse(save.group[grn] == 1, rbinom(1, 1, sens),
                             1 - rbinom(1, 1, spec))
     if (save.obs[grn] == 1) {
-      sub1 <- vec1[1:ceiling(gs/2)]
-      sub2 <- vec1[(ceiling(gs/2) + 1):gs]
+      sub1 <- vec1[1:ceiling(gs / 2)]
+      sub2 <- vec1[(ceiling(gs / 2) + 1):gs]
       tZ1 <- sum(ind[sub1])
       tZ2 <- sum(ind[sub2])
-      Z1 <- ifelse(tZ1 == 1, rbinom(1,
-                                    1, sens), 1 - rbinom(1, 1, spec))
-      Z2 <- ifelse(tZ2 == 1, rbinom(1,
-                                    1, sens), 1 - rbinom(1, 1, spec))
+      Z1 <- ifelse(tZ1 == 1, rbinom(1, 1, sens), 
+                   1 - rbinom(1, 1, spec))
+      Z2 <- ifelse(tZ2 == 1, rbinom(1, 1, sens), 
+                   1 - rbinom(1, 1, spec))
       if (Z1 == 1) {
         for (i1 in sub1) {
-          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1,
-                                                 1, sens.ind), 1 - rbinom(1, 1, spec.ind))
+          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind), 
+                            1 - rbinom(1, 1, spec.ind))
         }
       }
       if (Z2 == 1) {
         for (i1 in sub2) {
-          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1,
-                                                 1, sens.ind), 1 - rbinom(1, 1, spec.ind))
+          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind), 
+                            1 - rbinom(1, 1, spec.ind))
         }
       }
       subgroup[sub1] <- Z1
@@ -113,7 +114,7 @@ sim.halving <- function (x = NULL, gshape = 20, gscale = 2, par,
                     retest = ret, subgroup = subgroup)
   if (ncol(X) > 2)
     for (i in 2:ncol(X))
-      colnames(grd)[i] <- paste("x", i - 1, sep="")
+      colnames(grd)[i] <- paste("x", i - 1, sep = "")
   grd
 }
 
@@ -123,10 +124,10 @@ sim.halving <- function (x = NULL, gshape = 20, gscale = 2, par,
 ##################################################################
 # "mp" refers to matrix pooling, another name for array testing
 
-sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
-                    linkf = c("logit", "probit", "cloglog"),
-                    n.row, n.col, sens = 1, spec = 1, 
-                    sens.ind = NULL, spec.ind = NULL){
+sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
+                   linkf = c("logit", "probit", "cloglog"),
+                   n.row, n.col, sens = 1, spec = 1, 
+                   sens.ind = NULL, spec.ind = NULL) {
   if (is.null(sens.ind))
     sens.ind <- sens
   if (is.null(spec.ind))
@@ -181,23 +182,23 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
     if (all(row.err == 0)) {
       for (j in index) {
         if (colr[j] == 1)
-          ret[j] <- ifelse(ind[j] == 1, rbinom(1,
-                                               1, sens.ind), 1 - rbinom(1, 1, spec.ind))
+          ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+                           1 - rbinom(1, 1, spec.ind))
       }
     }
     else {
       if (all(col.err == 0)) {
         for (j in index) {
           if (rowr[j] == 1)
-            ret[j] <- ifelse(ind[j] == 1, rbinom(1,
-                                                 1, sens.ind), 1 - rbinom(1, 1, spec.ind))
+            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+                             1 - rbinom(1, 1, spec.ind))
         }
       }
       else {
         for (j in index) {
           if (rowr[j] == 1 && colr[j] == 1)
-            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1,
-                                                 sens.ind), 1 - rbinom(1, 1, spec.ind))
+            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+                             1 - rbinom(1, 1, spec.ind))
         }
       }
     }
@@ -211,10 +212,9 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
                     arrayn = sq, retest = ret)
   if (ncol(X) > 2)
     for (i in 1:(ncol(X) - 1))
-      colnames(grd)[i] <- paste("x", i, sep="")
+      colnames(grd)[i] <- paste("x", i, sep = "")
   list(dframe = grd, ind = individual, prob = as.vector(pijk))
 }
-
 
 
 
@@ -260,8 +260,8 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
 #' set to be equal to spec. 
 #' 
 #' @details Generates group testing data in simple pooling form 
-#' (\kbd{type="sp"}), for the halving protocol (\kbd{type="halving"}), 
-#' or in array testing form (\kbd{type="array"}). 
+#' (\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}), 
+#' or in array testing form (\kbd{type = "array"}). 
 #' The covariates are either specified by the x argument or they 
 #' are generated from a gamma distribution with the given gshape 
 #' and gscale parameters. The individual probabilities are 
@@ -277,7 +277,7 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
 #' are simulated using the ginve sens and spec. Individual retests
 #' are simulated from sens.ind and spec.ind for samples in 
 #' observed positive groups. Note that with a given group size 
-#' (specified by size2 with method="sp" or method="halving"), 
+#' (specified by size2 with \kbd{method = "sp"} or \kbd{method = "halving"}), 
 #' the last group may have fewer individuals.
 #' 
 #' The true binary individual responses are then 
@@ -300,9 +300,9 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
 #' will be assigned a simulated retest result. If no column or 
 #' row is observed positive, NULL is returned.
 #' 
-#' @return For simple pooling (\kbd{type="sp"}) and the halving 
-#' protocol (\kbd{type="array"}), a data frame or for array 
-#' testing (\kbd{type="array"}), a list, which may include the following:
+#' @return For simple pooling (\kbd{type = "sp"}) and the halving 
+#' protocol (\kbd{type = "array"}), a data frame or for array 
+#' testing (\kbd{type = "array"}), a list, which may include the following:
 #' \item{gres}{the group response, for simple pooling and the halving 
 #' protocol only.}
 #' \item{col.resp}{the column group response, for array testing only.}
@@ -330,52 +330,52 @@ sim.mp <- function (x = NULL, gshape = 20, gscale = 2, par,
 #' 
 #' @examples 
 #' set.seed(46)
-#' gt.data <- gtSim(type="sp", par=c(-12, 0.2), 
-#'                  size1=700, size2=5)
+#' gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+#'                  size1 = 700, size2 = 5)
 #' 
 #' x1 <- sort(runif(100, 0, 30))
-#' x2 <- rgamma(100, shape=17, scale=1.5)
-#' gt.data <- gtSim(type="sp", x=cbind(x1, x2), 
-#'                  par=c(-14, 0.2, 0.3), size2=4, 
-#'                  sens=0.98, spec=0.98)
+#' x2 <- rgamma(100, shape = 17, scale = 1.5)
+#' gt.data <- gtSim(type = "sp", x = cbind(x1, x2), 
+#'                  par = c(-14, 0.2, 0.3), size2 = 4, 
+#'                  sens = 0.98, spec = 0.98)
 #'                    
 #' set.seed(46)
-#' gt.data <- gtSim(type="halving", par=c(-6, 0.1), 
-#'                  gshape=17, gscale=1.4, size1=5000, 
-#'                  size2=5, sens=0.95, spec=0.95)
+#' gt.data <- gtSim(type = "halving", par = c(-6, 0.1), 
+#'                  gshape = 17, gscale = 1.4, size1 = 5000, 
+#'                  size2 = 5, sens = 0.95, spec = 0.95)
 #'                    
 #' # 5x6 and 4x5 matrix
 #' set.seed(9128)
-#' sa1a <- gtSim(type="array", par=c(-7, 0.1), 
-#'               size1=c(5, 4), size2=c(6, 5), 
-#'               sens=0.95, spec=0.95)
+#' sa1a <- gtSim(type = "array", par = c(-7, 0.1), 
+#'               size1 = c(5, 4), size2 = c(6, 5), 
+#'               sens = 0.95, spec = 0.95)
 #' sa1a$dframe
 
 # Brianna Hitt - 01-06-2020
 
-gtSim <- function(type="sp", x=NULL, gshape=20, gscale=2, par, 
-                    linkf=c("logit", "probit", "cloglog"),
-                    size1, size2, sens=1, spec=1, 
-                    sens.ind=NULL, spec.ind=NULL){
+gtSim <- function(type = "sp", x = NULL, gshape = 20, gscale = 2, par, 
+                  linkf = c("logit", "probit", "cloglog"),
+                  size1, size2, sens = 1, spec = 1, 
+                  sens.ind = NULL, spec.ind = NULL) {
   
-  if(type=="sp"){
+  if (type == "sp") {
     # for use with gtreg 
-    results <- sim.gt(x=x, gshape=gshape, gscale=gscale, par=par,
-                      linkf=linkf, sample.size=size1, group.size=size2, 
-                      sens=sens, spec=spec, 
-                      sens.ind=sens.ind, spec.ind=spec.ind)
-  } else if(type=="halving"){
+    results <- sim.gt(x = x, gshape = gshape, gscale = gscale, par = par,
+                      linkf = linkf, sample.size = size1, group.size = size2, 
+                      sens = sens, spec = spec, 
+                      sens.ind = sens.ind, spec.ind = spec.ind)
+  } else if (type == "halving") {
     # for use with gtreg.halving
-    results <- sim.halving(x=x, gshape=gshape, gscale=gscale, par=par,
-                           linkf=linkf, sample.size=size1, group.size=size2, 
-                           sens=sens, spec=spec,
-                           sens.ind=sens.ind, spec.ind=spec.ind)
-  } else if(type=="array"){
+    results <- sim.halving(x = x, gshape = gshape, gscale = gscale, par = par,
+                           linkf = linkf, sample.size = size1, 
+                           group.size = size2, sens = sens, spec = spec,
+                           sens.ind = sens.ind, spec.ind = spec.ind)
+  } else if (type == "array") {
     # for use with gtreg.mp
-    results <- sim.mp(x=x, gshape=gshape, gscale=gscale, par=par,
-                      linkf=linkf, n.row=size1, n.col=size2, 
-                      sens=sens, spec=spec, 
-                      sens.ind=sens.ind, spec.ind=spec.ind)
+    results <- sim.mp(x = x, gshape = gshape, gscale = gscale, par = par,
+                      linkf = linkf, n.row = size1, n.col = size2, 
+                      sens = sens, spec = spec, 
+                      sens.ind = sens.ind, spec.ind = spec.ind)
   }
   results
 }

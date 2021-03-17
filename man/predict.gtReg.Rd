@@ -25,7 +25,7 @@ predictors are used.}
 option is on the scale of the linear predictors. The \kbd{"response"} 
 option is on the scale of the response variable. Thus, for the 
 logit model, the \kbd{"link"} predictions are of log-odds 
-(probabilities on the logit scale) and  \kbd{type="response"} 
+(probabilities on the logit scale) and  \kbd{type = "response"} 
 gives the predicted probabilities.}
 
 \item{se.fit}{a logical value indicating whether standard errors 
@@ -40,8 +40,8 @@ missing values in \kbd{newdata}. The default is to predict \kbd{NA}.}
 \item{...}{currently not used.}
 }
 \value{
-If \kbd{se=FALSE}, a vector or matrix of predictions. If 
-\kbd{se=TRUE}, a list containing:
+If \kbd{se = FALSE}, a vector or matrix of predictions. If 
+\kbd{se = TRUE}, a list containing:
 \item{fit}{predictions.}
 \item{se.fit}{estimated standard errors.}
 \item{lower}{the lower bound of the confidence interval, 
@@ -60,7 +60,7 @@ on the data used for the fit. When \kbd{newdata} is present and
 contains missing values, how the missing values will be dealt with 
 is determined by the \kbd{na.action} argument. In this case, if 
 \kbd{na.action=na.omit}, omitted cases will not appear, whereas 
-if \kbd{na.action=na.exclude}, omitted cases will appear (in 
+if \kbd{na.action = na.exclude}, omitted cases will appear (in 
 predictions and standard errors) with value \kbd{NA}.
 }
 \examples{

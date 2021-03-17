@@ -77,18 +77,18 @@ proportions based on group testing data.
 }
 \details{
 Confidence interval methods include the Wilson score 
-(\kbd{ci.method="score"}), skewness-corrected score 
-(\kbd{ci.method="skew-score"}), bias- and skewness-corrected score 
-(\kbd{ci.method="bc-skew-score"}), likelihood ratio test 
-(\kbd{ci.method="lrt"}), and Wald (\kbd{ci.method="Wald"}) interval. 
+(\kbd{ci.method = "score"}), skewness-corrected score 
+(\kbd{ci.method = "skew-score"}), bias- and skewness-corrected score 
+(\kbd{ci.method = "bc-skew-score"}), likelihood ratio test 
+(\kbd{ci.method = "lrt"}), and Wald (\kbd{ci.method = "Wald"}) interval. 
 For computational details, simulation results, and recommendations on 
 confidence interval methods, see Biggerstaff (2008).
 
-Point estimates available include the MLE (\kbd{pt.method="mle"}), 
-bias-corrected MLE (\kbd{pt.method="Gart"} or \kbd{pt.method="bc-mle"}), 
-and bias-preventative (\kbd{pt.method="Firth"}). For additional details 
-and recommendations on point estimation, see Hepworth and Biggerstaff 
-(2017).
+Point estimates available include the MLE (\kbd{pt.method = "mle"}), 
+bias-corrected MLE (\kbd{pt.method = "Gart"} or 
+\kbd{pt.method = "bc-mle"}), and bias-preventative 
+(\kbd{pt.method = "Firth"}). For additional details and recommendations 
+on point estimation, see Hepworth and Biggerstaff (2017).
 }
 \examples{
 # Estimate the prevalence in two populations 
@@ -111,22 +111,22 @@ and recommendations on point estimation, see Hepworth and Biggerstaff
 #   groups of size 10; and 
 #   4 out of 5 groups test positively with 
 #   groups of size 50.
-x1 <- c(0,0,1,2)
-m <- c(1,5,10,50)
-n <- c(5,5,5,5)
-x2 <- c(0,1,0,4)
-propDiffCI(x1=x1, m1=m, x2=x2, m2=m, n1=n, n2=n, 
-           pt.method="Gart", ci.method="score")
+x1 <- c(0, 0, 1, 2)
+m <- c(1, 5, 10, 50)
+n <- c(5, 5, 5, 5)
+x2 <- c(0, 1, 0, 4)
+propDiffCI(x1 = x1, m1 = m, x2 = x2, m2 = m, n1 = n, n2 = n, 
+           pt.method = "Gart", ci.method = "score")
 
 # Compare recommended methods:
-propDiffCI(x1=x1, m1=m, x2=x2, m2=m, n1=n, n2=n,
-           pt.method="mle", ci.method="lrt")
+propDiffCI(x1 = x1, m1 = m, x2 = x2, m2 = m, n1 = n, n2 = n,
+           pt.method = "mle", ci.method = "lrt")
 
-propDiffCI(x1=x1, m1=m, x2=x2, m2=m, n1=n, n2=n,
-           pt.method="mle", ci.method="score")
+propDiffCI(x1 = x1, m1 = m, x2 = x2, m2 = m, n1 = n, n2 = n,
+           pt.method = "mle", ci.method = "score")
 
-propDiffCI(x1=x1, m1=m, x2=x2, m2=m, n1=n, n2=n,
-           pt.method="mle", ci.method="skew-score")
+propDiffCI(x1 = x1, m1 = m, x2 = x2, m2 = m, n1 = n, n2 = n,
+           pt.method = "mle", ci.method = "skew-score")
 }
 \references{
 \insertRef{Biggerstaff2008}{binGroup2}

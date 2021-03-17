@@ -57,8 +57,8 @@ Sterrett (1SIS), two-stage informative Sterrett (2SIS), and full
 informative Sterrett (FIS) testing.}
 \item{save.diff.CDF}{a data frame containing the sum of the differences
 in the cumulative distribution function for each pairwise comparison of
-one-stage informative Sterrett (1SIS), two-stage informative Sterrett (2SIS),
-full informative Sterrett (FIS), and Dorfman testing.}
+one-stage informative Sterrett (1SIS), two-stage informative Sterrett 
+(2SIS), full informative Sterrett (FIS), and Dorfman testing.}
 }
 \description{
 Summary measures for Sterrett algorithms.
@@ -103,8 +103,8 @@ detail in the Appendix of Bilder et al. (2010).
 #   2SIS may be preferred because it is
 #   easier to implement.
 set.seed(1231)
-p.vec1 <- rbeta(n=8, shape1=1, shape2=10)
-save.it1 <- Sterrett(p=p.vec1, Sp=0.90, Se=0.95)
+p.vec1 <- rbeta(n = 8, shape1 = 1, shape2 = 10)
+save.it1 <- Sterrett(p = p.vec1, Sp = 0.90, Se = 0.95)
 save.it1$mean.sd
 
 # Example 2: One individual is "high risk" and
@@ -114,9 +114,9 @@ save.it1$mean.sd
 #   similarly. All three informative Sterrett
 #   procedures offer large improvements over
 #   Dorfman testing.
-p.vec2 <- c(rep(x=0.01, times=9), 0.5)
-save.it2 <- Sterrett(p=p.vec2, Sp=0.99, Se=0.99,
-                     cond.prob.plot=TRUE)
+p.vec2 <- c(rep(x = 0.01, times = 9), 0.5)
+save.it2 <- Sterrett(p = p.vec2, Sp = 0.99, Se = 0.99,
+                     cond.prob.plot = TRUE)
 save.it2$mean.sd
 
 # Example 3: Two individuals are at higher
@@ -128,8 +128,8 @@ save.it2$mean.sd
 #   Bilder et al. (2010)) is used for FIS.
 #   The Sterrett() function does this
 #   automatically for I>12.
-p.vec3 <- c(rep(x=0.01, times=98), 0.1, 0.1)
-save.it3 <- Sterrett(p=p.vec3, Sp=0.99, Se=0.99)
+p.vec3 <- c(rep(x = 0.01, times = 98), 0.1, 0.1)
+save.it3 <- Sterrett(p = p.vec3, Sp = 0.99, Se = 0.99)
 save.it3$mean.sd
 }
 \references{
@@ -149,7 +149,7 @@ Other operating characteristic functions:
 \author{
 This function was originally written as \kbd{info.gt}
 by Christopher Bilder for Bilder et al. (2010). The function was obtained 
-from \url{http://chrisbilder.com/grouptesting}. Minor modifications were 
+from \url{http://chrisbilder.com/grouptesting/}. Minor modifications were 
 made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{operating characteristic functions}

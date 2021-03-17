@@ -43,24 +43,24 @@ typically the environment from which \code{gtReg} is called.}
 
 \item{groupn}{a vector, list, or data frame of the group 
 numbers that designates individuals to groups (for use with 
-simple pooling, \kbd{type="sp"}, or the halving protocol, 
-\kbd{type="halving"}).}
+simple pooling, \kbd{type = "sp"}, or the halving protocol, 
+\kbd{type = "halving"}).}
 
 \item{subg}{a vector, list, or data frame of the group numbers 
 that designates individuals to subgroups (for use with the 
-halving protocol, \kbd{type="halving"}).}
+halving protocol, \kbd{type = "halving"}).}
 
 \item{coln}{a vector, list, or data frame that specifies the
 column group number for each sample (for use with array 
-testing, \kbd{type="array"}).}
+testing, \kbd{type = "array"}).}
 
 \item{rown}{a vector, list, or data frame that specifies the
 row group number for each sample (for use with array testing, 
-\kbd{type="array"}).}
+\kbd{type = "array"}).}
 
 \item{arrayn}{a vector, list, or data frame that specifies the
 array number for each sample (for use with array testing, 
-\kbd{type="array"}).}
+\kbd{type = "array"}).}
 
 \item{retest}{a vector, list, or data frame of individual 
 retest results. Default value is \kbd{NULL} for no retests. 
@@ -119,17 +119,17 @@ coefficients. Not included for array testing.}
 \item{null.deviance}{the deviance for the null model,
 comparable with \kbd{deviance}. The null model will 
 include only the intercept, if there is one in the model.
-Provided for simple pooling, \kbd{type="sp"}, only.}
+Provided for simple pooling, \kbd{type = "sp"}, only.}
 \item{counts}{the number of iterations in \kbd{optim} 
 (Vansteelandt's method) or the number of iterations in the 
 EM algorithm (Xie's method, halving, and array testing).}
 \item{Gibbs.sample.size}{the number of Gibbs samples 
 generated in each E step. Provided for array testing, 
-\kbd{type="array"}, only.}
+\kbd{type = "array"}, only.}
 \item{df.residual}{the residual degrees of freedom.
-Provided for simple pooling, \kbd{type="sp"}, only.}
+Provided for simple pooling, \kbd{type = "sp"}, only.}
 \item{df.null}{the residual degrees of freedom for the null model.
-Provided for simple pooling, \kbd{type="sp"}, only.}
+Provided for simple pooling, \kbd{type = "sp"}, only.}
 \item{z}{the vector of group responses. Not included for array testing.}
 \item{call}{the matched call.}
 \item{formula}{the formula supplied.}
@@ -180,7 +180,7 @@ re-ordered so that main effects come first, followed by the
 interactions, all second-order, all third-order, and so on; 
 to avoid this, pass a terms object as the formula.
 
-For simple pooling (\kbd{type="sp"}), the functions \kbd{gtreg.fit}, 
+For simple pooling (\kbd{type = "sp"}), the functions \kbd{gtreg.fit}, 
 \kbd{EM}, and \kbd{EM.ret}, where the first corresponds to Vansteelandt's 
 method described in Vansteelandt et al. (2000) and the last two correspond 
 to Xie's method described in Xie (2001), are called to carry out the 
@@ -276,50 +276,50 @@ on \kbd{"gtReg"} objects.
 #   account when interpreting the run times given.
 
 data(hivsurv)
-fit1 <- gtReg(type="sp", formula = groupres ~ AGE + EDUC., 
-              data = hivsurv, groupn = gnum, sens = 0.9, 
-              spec = 0.9, method = "Xie")
+fit1 <- gtReg(type = "sp", formula  =  groupres ~ AGE + EDUC., 
+              data  =  hivsurv, groupn  =  gnum, sens  =  0.9, 
+              spec  =  0.9, method  =  "Xie")
 fit1
 
 set.seed(46)
-gt.data <- gtSim(type="sp", par=c(-12, 0.2), 
-                 size1=700, size2=5)
-fit2 <- gtReg(type="sp", formula=gres~x, data=gt.data, 
-              groupn=groupn)
+gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+                 size1 = 700, size2 = 5)
+fit2 <- gtReg(type = "sp", formula = gres ~ x, data = gt.data, 
+              groupn = groupn)
 fit2
 
 set.seed(21)
-gt.data <- gtSim(type="sp", par=c(-12, 0.2), 
-                 size1=700, size2=6, sens=0.95, spec=0.95, 
-                 sens.ind=0.98, spec.ind=0.98)
-fit3 <- gtReg(type="sp", formula=gres~x, data=gt.data, 
-              groupn=groupn, retest=retest, method="Xie", 
-              sens=0.95, spec=0.95, sens.ind=0.98, 
-              spec.ind=0.98, trace=TRUE)
+gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+                 size1 = 700, size2 = 6, sens = 0.95, spec = 0.95, 
+                 sens.ind = 0.98, spec.ind = 0.98)
+fit3 <- gtReg(type = "sp", formula = gres ~ x, data = gt.data, 
+              groupn = groupn, retest = retest, method = "Xie", 
+              sens = 0.95, spec = 0.95, sens.ind = 0.98, 
+              spec.ind = 0.98, trace = TRUE)
 summary(fit3)
 
 set.seed(46)
-gt.data <- gtSim(type="halving", par=c(-6, 0.1), gshape=17, 
-                 gscale=1.4, size1=5000, size2=5, 
-                 sens=0.95, spec=0.95)
-fit4 <- gtReg(type="halving", formula=gres~x, 
-              data=gt.data, groupn=groupn, subg=subgroup, 
-              retest=retest, sens=0.95, spec=0.95, 
-              start=c(-6, 0.1), trace=TRUE)
+gt.data <- gtSim(type = "halving", par = c(-6, 0.1), gshape = 17, 
+                 gscale = 1.4, size1 = 5000, size2 = 5, 
+                 sens = 0.95, spec = 0.95)
+fit4 <- gtReg(type = "halving", formula = gres ~ x, 
+              data = gt.data, groupn = groupn, subg = subgroup, 
+              retest = retest, sens = 0.95, spec = 0.95, 
+              start = c(-6, 0.1), trace = TRUE)
 summary(fit4)
 
 # This example takes approximately 15 seconds to run.
 # 5x6 and 4x5 array
 set.seed(9128)
-sa1a <- gtSim(type="array", par=c(-7, 0.1), size1=c(5,4), 
-              size2=c(6,5), sens=0.95, spec=0.95)
+sa1a <- gtSim(type = "array", par = c(-7, 0.1), size1 = c(5, 4), 
+              size2 = c(6, 5), sens = 0.95, spec = 0.95)
 sa1 <- sa1a$dframe
 \donttest{
-fit5 <- gtReg(type="array", 
-              formula=cbind(col.resp, row.resp)~x, 
-              data=sa1, coln=coln, rown=rown, 
-              arrayn=arrayn, sens=0.95, spec=0.95, 
-              tol=0.005, n.gibbs=2000, trace=TRUE)
+fit5 <- gtReg(type = "array", 
+              formula = cbind(col.resp, row.resp) ~ x, 
+              data = sa1, coln = coln, rown = rown, 
+              arrayn = arrayn, sens = 0.95, spec = 0.95, 
+              tol = 0.005, n.gibbs = 2000, trace = TRUE)
 fit5
 summary(fit5)}
 
@@ -327,17 +327,17 @@ summary(fit5)}
 #   may take. It takes approximately 1.5 minutes to achieve 
 #   convergence.
 set.seed(9012)
-sa2a <- gtSim(type="array", par=c(-7, 0.1), 
-              size1=rep(10, 4), size2=rep(10, 4), 
-              sens=0.95, spec=0.95)
+sa2a <- gtSim(type = "array", par = c(-7, 0.1), 
+              size1 = rep(10, 4), size2 = rep(10, 4), 
+              sens = 0.95, spec = 0.95)
 sa2 <- sa2a$dframe
 \donttest{
-fit6 <- gtReg(type="array", 
-              formula=cbind(col.resp, row.resp)~x, 
-              data=sa2, coln=coln, rown=rown, 
-              arrayn=arrayn, retest=retest, 
-              sens=0.95, spec=0.95, 
-              start=c(-7, 0.1), tol=0.005)
+fit6 <- gtReg(type = "array", 
+              formula = cbind(col.resp, row.resp) ~ x, 
+              data = sa2, coln = coln, rown = rown, 
+              arrayn = arrayn, retest = retest, 
+              sens = 0.95, spec = 0.95, 
+              start = c(-7, 0.1), tol = 0.005)
 fit6
 summary(fit6)}
 }
