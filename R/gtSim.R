@@ -3,7 +3,7 @@
 ##################################################################
 sim.gt <- function(x = NULL, gshape = 20, gscale = 2, par,
                    linkf = c("logit", "probit", "cloglog"),
-                   sample.size, group.size, sens = 1, spec = 1, 
+                   sample.size, group.size, sens = 1, spec = 1,
                    sens.ind = NULL, spec.ind = NULL) {
   if (is.null(sens.ind))
     sens.ind <- sens
@@ -35,10 +35,10 @@ sim.gt <- function(x = NULL, gshape = 20, gscale = 2, par,
   gres <- rep(save.obs, each = group.size)[vec]
   for (i in vec) {
     if (gres[i] == 1)
-      ret[i] <- ifelse(ind[i] == 1, 
+      ret[i] <- ifelse(ind[i] == 1,
                        rbinom(1, 1, sens.ind), 1 - rbinom(1, 1, spec.ind))
-  }   
-  grd <- data.frame(gres = gres, x = x, groupn = groupn, ind = ind, 
+  }
+  grd <- data.frame(gres = gres, x = x, groupn = groupn, ind = ind,
                     retest = ret)
   if (ncol(X) > 2)
     for (i in 2:ncol(X))
@@ -89,19 +89,19 @@ sim.halving <- function(x = NULL, gshape = 20, gscale = 2, par,
       sub2 <- vec1[(ceiling(gs / 2) + 1):gs]
       tZ1 <- sum(ind[sub1])
       tZ2 <- sum(ind[sub2])
-      Z1 <- ifelse(tZ1 == 1, rbinom(1, 1, sens), 
+      Z1 <- ifelse(tZ1 == 1, rbinom(1, 1, sens),
                    1 - rbinom(1, 1, spec))
-      Z2 <- ifelse(tZ2 == 1, rbinom(1, 1, sens), 
+      Z2 <- ifelse(tZ2 == 1, rbinom(1, 1, sens),
                    1 - rbinom(1, 1, spec))
       if (Z1 == 1) {
         for (i1 in sub1) {
-          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind), 
+          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind),
                             1 - rbinom(1, 1, spec.ind))
         }
       }
       if (Z2 == 1) {
         for (i1 in sub2) {
-          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind), 
+          ret[i1] <- ifelse(ind[i1] == 1, rbinom(1, 1, sens.ind),
                             1 - rbinom(1, 1, spec.ind))
         }
       }
@@ -126,7 +126,7 @@ sim.halving <- function(x = NULL, gshape = 20, gscale = 2, par,
 
 sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
                    linkf = c("logit", "probit", "cloglog"),
-                   n.row, n.col, sens = 1, spec = 1, 
+                   n.row, n.col, sens = 1, spec = 1,
                    sens.ind = NULL, spec.ind = NULL) {
   if (is.null(sens.ind))
     sens.ind <- sens
@@ -182,7 +182,7 @@ sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
     if (all(row.err == 0)) {
       for (j in index) {
         if (colr[j] == 1)
-          ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+          ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind),
                            1 - rbinom(1, 1, spec.ind))
       }
     }
@@ -190,14 +190,14 @@ sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
       if (all(col.err == 0)) {
         for (j in index) {
           if (rowr[j] == 1)
-            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind),
                              1 - rbinom(1, 1, spec.ind))
         }
       }
       else {
         for (j in index) {
           if (rowr[j] == 1 && colr[j] == 1)
-            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind), 
+            ret[j] <- ifelse(ind[j] == 1, rbinom(1, 1, sens.ind),
                              1 - rbinom(1, 1, spec.ind))
         }
       }
@@ -224,157 +224,155 @@ sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
 ##################################################################
 
 #' @title Simulation function for group testing data
-#' 
-#' @description Simulates data in group testing form ready to be 
-#' fit by \code{\link{gtReg}}. 
-#' 
-#' @param type \kbd{"sp"} for simple pooling, \kbd{"halving"} for 
-#' halving protocol, and \kbd{"array"} for array testing 
+#'
+#' @description Simulates data in group testing form ready to be
+#' fit by \code{\link{gtReg}}.
+#'
+#' @param type \kbd{"sp"} for simple pooling (Dorfman testing with
+#' or without retests), \kbd{"halving"} for
+#' halving protocol, and \kbd{"array"} for array testing
 #' (also known as matrix pooling).
-#' @param x a matrix of user-submitted covariates with which to 
-#' simulate the data. Default is NULL, in which case a gamma 
+#' @param x a matrix of user-submitted covariates with which to
+#' simulate the data. Default is \kbd{NULL}, in which case a gamma
 #' distribution is used to generate the covariates automatically.
-#' @param gshape shape parameter for the gamma distribution. The 
+#' @param gshape shape parameter for the gamma distribution. The
 #' value must be non-negative. Default value is set to 20.
-#' @param gscale scale parameter for the gamma distribution. The 
+#' @param gscale scale parameter for the gamma distribution. The
 #' value must be strictly positive. Default value is set to 2.
 #' @param par the true coefficients in the linear predictor.
-#' @param size1 sample size of the simulated data (for use with 
-#' \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies the 
-#' number of rows in each matrix (for use with \kbd{"array"} method). If 
+#' @param size1 sample size of the simulated data (for use with
+#' \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies the
+#' number of rows in each matrix (for use with \kbd{"array"} method). If
 #' only one matrix is simulated, this value is a scalar.
-#' @param size2 group size in pooling individual samples (for use 
-#' with \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies 
-#' the number of columns in each matrix (for use with \kbd{"array"} method). 
-#' If only one matrix is simulated, this value is a scalar. 
-#' @param linkf a character string specifying one of the three 
-#' link functions to be used: \kbd{"logit"} (default), \kbd{"probit"}, or 
+#' @param size2 group size in pooling individual samples (for use
+#' with \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies
+#' the number of columns in each matrix (for use with \kbd{"array"} method).
+#' If only one matrix is simulated, this value is a scalar.
+#' @param linkf a character string specifying one of the three
+#' link functions to be used: \kbd{"logit"} (default), \kbd{"probit"}, or
 #' \kbd{"cloglog"}.
-#' @param sens sensitivity of the group tests. Default value is 
+#' @param sens sensitivity of the group tests. Default value is
 #' set to 1.
-#' @param spec specificity of the group tests. Default value is 
+#' @param spec specificity of the group tests. Default value is
 #' set to 1.
-#' @param sens.ind sensitivity of the individual retests. If NULL, 
+#' @param sens.ind sensitivity of the individual retests. If NULL,
 #' set to be equal to sens.
-#' @param spec.ind specificity of the individual retests. If NULL, 
-#' set to be equal to spec. 
-#' 
-#' @details Generates group testing data in simple pooling form 
-#' (\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}), 
-#' or in array testing form (\kbd{type = "array"}). 
-#' The covariates are either specified by the x argument or they 
-#' are generated from a gamma distribution with the given gshape 
-#' and gscale parameters. The individual probabilities are 
-#' calculated from the covariates, the coefficients given in par, 
-#' and the link function specified through linkf. The true binary
-#' individual responses are then simulated from the individual 
-#' probabilities. 
-#' 
-#' The true group responses are found from the 
-#' individual responses within the groups (i.e., if at least one 
-#' response is positive, the group is positive; otherwise, the group 
-#' response is negative). Finally, the observed group responses
-#' are simulated using the ginve sens and spec. Individual retests
-#' are simulated from sens.ind and spec.ind for samples in 
-#' observed positive groups. Note that with a given group size 
-#' (specified by size2 with \kbd{method = "sp"} or \kbd{method = "halving"}), 
-#' the last group may have fewer individuals.
-#' 
-#' The true binary individual responses are then 
-#' simulated from the individual probabilities. The group, subgroup, 
-#' and individual retests are simulated using the given sens 
-#' and spec under the halving protocol.
-#' 
-#' The true binary individual responses are then simulated from 
-#' the individual probabilites. The individuals are organized into
-#' (by column) one or more matrices specified by n.row and n.col, 
-#' and the true group responses are found (i.e., if at least one 
-#' response is positive, the group is positive; otherwise, the 
-#' group response is negative). The observed row and column group 
-#' responses are then simulated using the given sens and spec 
-#' values. Individual retests are simulated from sens.ind and 
-#' spec.ind for individuals that lie on the intersection of an 
-#' observed positive row and and observed positive column. In 
-#' the case where no column (row) tests positive in a matrix, 
-#' all the individuals in any observed positive rows (columns) 
-#' will be assigned a simulated retest result. If no column or 
-#' row is observed positive, NULL is returned.
-#' 
-#' @return For simple pooling (\kbd{type = "sp"}) and the halving 
-#' protocol (\kbd{type = "array"}), a data frame or for array 
+#' @param spec.ind specificity of the individual retests. If NULL,
+#' set to be equal to spec.
+#'
+#' @details Generates group testing data in simple pooling form
+#' (\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}),
+#' or in array testing form (\kbd{type = "array"}).
+#' The covariates are either specified by the \kbd{x} argument or they
+#' are generated from a gamma distribution with the given \kbd{gshape}
+#' and \kbd{gscale} parameters. The individual probabilities are
+#' calculated from the covariates, the coefficients given in \kbd{par},
+#' and the link function specified through \kbd{linkf}. The true binary
+#' individual responses are then simulated from the individual
+#' probabilities.
+#'
+#' Under the matrix pooling protocol (\kbd{type = "array"}),
+#' the individuals are first organized into (by column) one or more matrices
+#' specified by the number of rows (\kbd{size1}) and the number of columns
+#' (\kbd{size2}).
+#'
+#' Then, for all pooling protocols, the true group responses are found
+#' from the individual responses within groups or within rows/columns for
+#' matrix pooling (i.e., if at least one response is positive, the group is
+#' positive; otherwise, the group response is negative).
+#' Finally, the observed group (\kbd{method = "sp"}) and subgroup
+#' \kbd{method = "halving"} only), or row and column responses
+#' \kbd{method = "array"} are simulated using the given \kbd{sens} and
+#' \kbd{spec}.
+#'
+#' For the simple pooling and halving protocols, individual retests are
+#' simulated from \kbd{sens.ind} and \kbd{spec.ind} for samples in observed
+#' positive groups. Note that with a given group size (specified by \kbd{size2}
+#' with \kbd{method = "sp"} or \kbd{method = "halving"}), the last group may
+#' have fewer individuals.
+#' For the matrix pooling protocol, individual retests are simulated from
+#' \kbd{sens.ind} and \kbd{spec.ind} for individuals that lie on the
+#' intersection of an observed positive row and and observed positive column.
+#' In the case where no column (row) tests positive in a matrix, all the
+#' individuals in any observed positive rows (columns) will be assigned a
+#' simulated retest result. If no column or row is observed positive, NULL is
+#' returned.
+#'
+#' @return For simple pooling (\kbd{type = "sp"}) and the halving
+#' protocol (\kbd{type = "halving"}), a data frame or for array
 #' testing (\kbd{type = "array"}), a list, which may include the following:
-#' \item{gres}{the group response, for simple pooling and the halving 
+#' \item{gres}{the group response, for simple pooling and the halving
 #' protocol only.}
 #' \item{col.resp}{the column group response, for array testing only.}
 #' \item{row.resp}{the row group response, for array testing only.}
 #' \item{x}{the covariate.}
-#' \item{groupn}{the group number, for simple pooling and the halving 
+#' \item{groupn}{the group number, for simple pooling and the halving
 #' protocol only.}
 #' \item{arrayn}{the array number, for array testing only.}
 #' \item{coln}{the column group number, for array testing only.}
 #' \item{rown}{the row group number, for array testing only.}
-#' \item{ind}{the true individual responses. For simple pooling and the 
-#' halving protocol, these are included in the data frame of results. 
-#' For array testing, these are included in the list of results, with 
+#' \item{ind}{the true individual responses. For simple pooling and the
+#' halving protocol, these are included in the data frame of results.
+#' For array testing, these are included in the list of results, with
 #' individual responses presented in matrices.}
 #' \item{retest}{the results of individual retests.}
 #' \item{subgroup}{the subgroup number, for the halving protocol.}
 #' \item{prob}{the individual probabilities, for array testing only.}
-#' 
-#' @author This function is a combination of \kbd{sim.gt}, \kbd{sim.halving}, 
-#' and \kbd{sim.mp} written by Boan Zhang for the \code{binGroup} package. 
-#' Minor modifications have been made for inclusion of the functions in the 
+#'
+#' @author This function is a combination of \kbd{sim.gt}, \kbd{sim.halving},
+#' and \kbd{sim.mp} written by Boan Zhang for the \code{binGroup} package.
+#' Minor modifications have been made for inclusion of the functions in the
 #' \code{binGroup2} package.
-#' 
+#'
 #' @seealso \code{\link{gtReg}} to fit simulated group testing data.
-#' 
-#' @examples 
+#'
+#' @examples
 #' set.seed(46)
-#' gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+#' gt.data <- gtSim(type = "sp", par = c(-12, 0.2),
 #'                  size1 = 700, size2 = 5)
-#' 
+#'
 #' x1 <- sort(runif(100, 0, 30))
 #' x2 <- rgamma(100, shape = 17, scale = 1.5)
-#' gt.data <- gtSim(type = "sp", x = cbind(x1, x2), 
-#'                  par = c(-14, 0.2, 0.3), size2 = 4, 
+#' gt.data <- gtSim(type = "sp", x = cbind(x1, x2),
+#'                  par = c(-14, 0.2, 0.3), size2 = 4,
 #'                  sens = 0.98, spec = 0.98)
-#'                    
+#'
 #' set.seed(46)
-#' gt.data <- gtSim(type = "halving", par = c(-6, 0.1), 
-#'                  gshape = 17, gscale = 1.4, size1 = 5000, 
+#' gt.data <- gtSim(type = "halving", par = c(-6, 0.1),
+#'                  gshape = 17, gscale = 1.4, size1 = 5000,
 #'                  size2 = 5, sens = 0.95, spec = 0.95)
-#'                    
+#'
 #' # 5x6 and 4x5 matrix
 #' set.seed(9128)
-#' sa1a <- gtSim(type = "array", par = c(-7, 0.1), 
-#'               size1 = c(5, 4), size2 = c(6, 5), 
+#' sa1a <- gtSim(type = "array", par = c(-7, 0.1),
+#'               size1 = c(5, 4), size2 = c(6, 5),
 #'               sens = 0.95, spec = 0.95)
 #' sa1a$dframe
 
 # Brianna Hitt - 01-06-2020
 
-gtSim <- function(type = "sp", x = NULL, gshape = 20, gscale = 2, par, 
+gtSim <- function(type = "sp", x = NULL, gshape = 20, gscale = 2, par,
                   linkf = c("logit", "probit", "cloglog"),
-                  size1, size2, sens = 1, spec = 1, 
+                  size1, size2, sens = 1, spec = 1,
                   sens.ind = NULL, spec.ind = NULL) {
-  
+
   if (type == "sp") {
-    # for use with gtreg 
+    # for use with gtreg
     results <- sim.gt(x = x, gshape = gshape, gscale = gscale, par = par,
-                      linkf = linkf, sample.size = size1, group.size = size2, 
-                      sens = sens, spec = spec, 
+                      linkf = linkf, sample.size = size1, group.size = size2,
+                      sens = sens, spec = spec,
                       sens.ind = sens.ind, spec.ind = spec.ind)
   } else if (type == "halving") {
     # for use with gtreg.halving
     results <- sim.halving(x = x, gshape = gshape, gscale = gscale, par = par,
-                           linkf = linkf, sample.size = size1, 
+                           linkf = linkf, sample.size = size1,
                            group.size = size2, sens = sens, spec = spec,
                            sens.ind = sens.ind, spec.ind = spec.ind)
   } else if (type == "array") {
     # for use with gtreg.mp
     results <- sim.mp(x = x, gshape = gshape, gscale = gscale, par = par,
-                      linkf = linkf, n.row = size1, n.col = size2, 
-                      sens = sens, spec = spec, 
+                      linkf = linkf, n.row = size1, n.col = size2,
+                      sens = sens, spec = spec,
                       sens.ind = sens.ind, spec.ind = spec.ind)
   }
   results

@@ -7,23 +7,22 @@
 gtWidth(n, s, p, conf.level = 0.95, alternative = "two.sided", method = "CP")
 }
 \arguments{
-\item{n}{integer specifying the number of groups. A vector of 
+\item{n}{integer specifying the number of groups. A vector of
 integers is also allowed.}
 
-\item{s}{integer specifying the common size of groups. A vector 
+\item{s}{integer specifying the common size of groups. A vector
 of integers is also allowed.}
 
-\item{p}{the assumed true proportion of individuals showing 
+\item{p}{the assumed true proportion of individuals showing
 the trait to be estimated. A vector is also allowed.}
 
 \item{conf.level}{the required confidence level of the interval.}
 
-\item{alternative}{character string specifying the alternative 
+\item{alternative}{character string specifying the alternative
 hypothesis, either \kbd{"two.sided"}, \kbd{"less"}, or \kbd{"greater"}.}
 
-\item{method}{character string specifying the confidence 
-interval method. Available options include those in 
-\code{\link{propCI}}.}
+\item{method}{character string specifying the confidence
+interval method. Available options include those in \code{\link{propCI}}.}
 }
 \value{
 A matrix containing the columns:
@@ -31,30 +30,30 @@ A matrix containing the columns:
 \item{n}{the number of groups.}
 \item{s}{the group size.}
 \item{p}{the assumed true proportion.}
-\item{expCIWidth}{the expected value of the confidence 
+\item{expCIWidth}{the expected value of the confidence
 interval width as defined under the argument \kbd{alternative}.}
 }
 \description{
-Calculation of the expected value of the width of 
-confidence intervals for one proportion in group testing. Calculations 
+Calculation of the expected value of the width of
+confidence intervals for one proportion in group testing. Calculations
 are available for the confidence interval methods in \code{\link{propCI}}.
 }
 \details{
-The two-sided (\kbd{method="two.sided"}) option calculates the 
-expected width between the lower and upper bound of a two-sided 
-\eqn{conf.level*100} percent confidence interval. See Tebbs & Bilder (2004) 
-for expression. The one-sided (\kbd{method="less"} or 
-\kbd{method="greater"}) options calculate the expected distance between the 
-one-sided limit and the assumed true proportion \kbd{p} for a one-sided 
+The two-sided (\kbd{alternative="two.sided"}) option calculates the
+expected width between the lower and upper bound of a two-sided
+\eqn{conf.level*100} percent confidence interval. See Tebbs & Bilder (2004)
+for expression. The one-sided (\kbd{alternative="less"} or
+\kbd{alternative="greater"}) options calculate the expected distance between the
+one-sided limit and the assumed true proportion \kbd{p} for a one-sided
 \eqn{conf.level*100} percent confidence interval.
 }
 \examples{
-# Examine different group sizes to determine 
+# Examine different group sizes to determine
 #   the shortest expected width.
 gtWidth(n = 20, s = seq(from = 1, to = 200, by = 10),
         p = 0.01, alternative = "less", method = "CP")
 
-# Calculate the expected width of the confidence  
+# Calculate the expected width of the confidence
 #   interval with a group size of 1 (individual testing).
 gtWidth(n = 20, s = 1, p = 0.005, alternative = "less", method = "CP")
 }
@@ -62,7 +61,7 @@ gtWidth(n = 20, s = 1, p = 0.005, alternative = "less", method = "CP")
 \insertRef{Tebbs2004}{binGroup2}
 }
 \seealso{
-\code{\link{propCI}} for confidence intervals in 
+\code{\link{propCI}} for confidence intervals in
 group testing.
 
 Other estimation functions: 
@@ -74,8 +73,8 @@ Other estimation functions:
 \code{\link{propDiffCI}()}
 }
 \author{
-This function was originally written as \code{bgtWidth} by Frank 
-Schaarschmidt for the \code{binGroup} package. Minor modifications have 
+This function was originally written as \code{bgtWidth} by Frank
+Schaarschmidt for the \code{binGroup} package. Minor modifications have
 been made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{estimation functions}

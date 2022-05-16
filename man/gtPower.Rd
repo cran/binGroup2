@@ -15,25 +15,25 @@ gtPower(
 )
 }
 \arguments{
-\item{n}{integer specifying the number of groups. A vector of integers is 
+\item{n}{integer specifying the number of groups. A vector of integers is
 also allowed.}
 
-\item{s}{integer specifying the common group size. A vector of integers is 
+\item{s}{integer specifying the common group size. A vector of integers is
 also allowed.}
 
-\item{delta}{the absolute difference between the true proportion and the 
+\item{delta}{the absolute difference between the true proportion and the
 hypothesized proportion. A vector is also allowed.}
 
-\item{p.hyp}{the proportion in the hypotheses, specified as a value between 
+\item{p.hyp}{the proportion in the hypotheses, specified as a value between
 0 and 1.}
 
-\item{conf.level}{confidence level required for the decision on the 
+\item{conf.level}{confidence level required for the decision on the
 hypotheses.}
 
-\item{method}{character string specifying the confidence interval method 
+\item{method}{character string specifying the confidence interval method
 (see \code{\link{propCI}}) to be used.}
 
-\item{alternative}{character string defining the alternative hypothesis, 
+\item{alternative}{character string defining the alternative hypothesis,
 either \kbd{"two.sided"}, \kbd{"less"}, or \kbd{"greater"}.}
 }
 \value{
@@ -43,27 +43,27 @@ A matrix containing the following columns:
 \item{s}{a vector of the group sizes.}
 \item{delta}{a vector of the delta values.}
 \item{power}{the power to reject the given null hypothesis.}
-\item{bias}{the bias of the estimator for the specified 
+\item{bias}{the bias of the estimator for the specified
 \eqn{n}, \eqn{s}, and the true proportion.}
 }
 \description{
-This function calculates the power to reject a hypothesis 
-in a group testing experiment, using confidence intervals for the 
-decision. This function also calculates the bias of the point estimator 
+This function calculates the power to reject a hypothesis
+in a group testing experiment, using confidence intervals for the
+decision. This function also calculates the bias of the point estimator
 for a given \eqn{n}, \eqn{s}, and true, unknown proportion.
 }
 \details{
-The power of a hypothesis test performed by a confidence 
-interval is defined as the probability that a confidence interval 
-excludes the threshold parameter (\kbd{p.hyp}) of the null hypothesis, 
-as described in Schaarschmidt (2007). Due to discreteness, the power 
-does not increase monotonely for an increasing number of groups \eqn{n} 
-or group size \eqn{s}, but exhibits local maxima and minima, depending 
+The power of a hypothesis test performed by a confidence
+interval is defined as the probability that a confidence interval
+excludes the threshold parameter (\kbd{p.hyp}) of the null hypothesis,
+as described in Schaarschmidt (2007). Due to discreteness, the power
+does not increase monotonically for an increasing number of groups \eqn{n}
+or group size \eqn{s}, but exhibits local maxima and minima, depending
 on \eqn{n}, \eqn{s}, \kbd{p.hyp}, and \kbd{conf.level}.
 
-Additional to the power, the bias of the point estimator is calculated 
-according to Swallow (1985). If vectors are specified for \eqn{n}, 
-\eqn{s}, and (or) delta, a matrix will be constructed and power and 
+Additional to the power, the bias of the point estimator is calculated
+according to Swallow (1985). If vectors are specified for \eqn{n},
+\eqn{s}, and (or) delta, a matrix will be constructed and power and
 bias are calculated for each line in this matrix.
 }
 \examples{
@@ -76,24 +76,29 @@ bias are calculated for each line in this matrix.
 #   upper Clopper-Pearson ("CP") confidence interval
 #   is calculated with the following call:
 gtPower(n = 24, s = 7, delta = 0.06, p.hyp = 0.1,
-        conf.level = 0.95, alternative = "less", method = "CP")
+        conf.level = 0.95, alternative = "less",
+        method = "CP")
 
-# Explore development of power and bias for varying 
-#   n, s, delta. How much can we decrease the number of 
-#   groups (costly tests to be performed) by pooling the same 
-#   number of 320 individuals to groups of increasing size 
-#   without largely decreasing power?
-gtPower(n = c(320, 160, 80, 64, 40, 32, 20, 10, 5), 
-        s = c(1, 2, 4, 5, 8, 10, 16, 32, 64), 
+# Explore development of power and bias for varying n,
+#   s, and delta. How much can we decrease the number of
+#   groups (costly tests to be performed) by pooling the
+#   same number of 320 individuals to groups of
+#   increasing size without largely decreasing power?
+gtPower(n = c(320, 160, 80, 64, 40, 32, 20, 10, 5),
+        s = c(1, 2, 4, 5, 8, 10, 16, 32, 64),
         delta = 0.01,  p.hyp = 0.02)
-                  
+
 # What happens to the power for increasing differences
-#   between the true proportion and the threshold proportion?
-gtPower(n = 50, s = 10, delta = seq(from = 0, to = 0.01, by = 0.001),
+#   between the true proportion and the threshold
+#   proportion?
+gtPower(n = 50, s = 10,
+        delta = seq(from = 0, to = 0.01, by = 0.001),
         p.hyp = 0.01, method = "CP")
-         
-# Calculate power with a group size of 1 (individual testing).
-gtPower(n = 100, s = 1, delta = seq(from = 0, to = 0.01, by = 0.001),
+
+# Calculate power with a group size of 1 (individual
+#   testing).
+gtPower(n = 100, s = 1,
+        delta = seq(from = 0, to = 0.01, by = 0.001),
         p.hyp = 0.01, method = "CP")
 }
 \references{
@@ -102,8 +107,8 @@ gtPower(n = 100, s = 1, delta = seq(from = 0, to = 0.01, by = 0.001),
 \insertRef{Swallow1985}{binGroup2}
 }
 \seealso{
-\code{\link{propCI}} for confidence intervals and 
-\code{\link{gtTest}} for hypothesis tests for one proportion from a 
+\code{\link{propCI}} for confidence intervals and
+\code{\link{gtTest}} for hypothesis tests for one proportion from a
 group testing experiment.
 
 Other estimation functions: 
@@ -115,8 +120,8 @@ Other estimation functions:
 \code{\link{propDiffCI}()}
 }
 \author{
-This function was originally written as \code{bgtPower} by Frank 
-Schaarschmidt for the \code{binGroup} package. Minor modifications have 
+This function was originally written as \code{bgtPower} by Frank
+Schaarschmidt for the \code{binGroup} package. Minor modifications have
 been made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{estimation functions}

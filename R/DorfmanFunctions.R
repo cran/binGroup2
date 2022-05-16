@@ -134,7 +134,13 @@ opt.info.dorf <- function(prob, se = 1, sp = 1, method ="OD", max.pool = 15,
                                       "PSp", "PPV", "NPV")))
   
   prob <- prob[ind.order]
-  return(list("tv" = p.star, "e" = res.e, "v" = res.v, "summary" = res.mat))
+  # return(list("tv" = p.star, "e" = res.e, "v" = res.v, "summary" = res.mat))
+  
+  # Brianna Hitt - 06-30-2021
+  # Added pool sizes to returned list of output
+  list("tv" = p.star, "e" = res.e, "v" = res.v, "pools" = psz[psz != 0], 
+       "summary" = res.mat)
+  
 }
 
 
@@ -157,9 +163,11 @@ characteristics.pool <- function(p, se, sp) {
   if (n > 1) {
     # below is Chris McMahan's original code
     # prob <- se + (1 - se - sp) * prod(1 - p)
+    
     # Brianna Hitt - 01-03-20
     # below allows Se, Sp to vary across stages of testing
     prob <- se[1] + (1 - se[1] - sp[1]) * prod(1 - p)
+    
     res.e <- 1 + n * prob
     res.v <- n^2 * prob * (1 - prob)
   }
@@ -197,6 +205,7 @@ accuracy.dorf <- function(p, se, sp) {
     # below allows Se, Sp to vary across stages of testing
     se.vec <- se[2]
     sp.vec <- sp[2]
+    
     # Brianna Hitt - 01-30-20
     # revised code below to use se.vec and sp.vec for efficiency
     ppv.vec <- p * se.vec / (p * se.vec + (1 - p) * (1 - sp.vec))
@@ -300,13 +309,15 @@ opt.pool.size <- function(p, max.p, se = 1, sp = 1) {
   sub.ind <- c(0, cumsum(psz.vec))
   for (m in 1:L) {
     # below is Chris McMahan's original code
-    # e1 <- e1 + (1 + psz.vec[m] * (se + (1 - se - sp) * 
-    #                                 prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
+    # e1 <- e1 + (1 + psz.vec[m] * 
+    #               (se + (1 - se - sp) * 
+    #                  prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
     
     # Brianna Hitt - 01-03-20
     # below allows Se, Sp to vary across stages of testing
-    e1 <- e1 + (1 + psz.vec[m] * (se[1] + (1 - se[1] - sp[1]) * 
-                                    prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
+    e1 <- e1 + (1 + psz.vec[m] * 
+                  (se[1] + (1 - se[1] - sp[1]) * 
+                     prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
   }
   
   while (e1 < e0 & psz <= max.p) {
@@ -323,13 +334,15 @@ opt.pool.size <- function(p, max.p, se = 1, sp = 1) {
     sub.ind <- c(0, cumsum(psz.vec))
     for (m in 1:L) {
       # below is Chris McMahan's original code
-      # e1 <- e1 + (1 + psz.vec[m] * (se + (1 - se - sp) * 
-      #                                 prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
+      # e1 <- e1 + (1 + psz.vec[m] * 
+      #               (se + (1 - se - sp) *
+      #                  prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
       
       # Brianna Hitt - 01-03-20
       # below allows Se, Sp to vary across stages of testing
-      e1 <- e1 + (1 + psz.vec[m] * (se[1] + (1 - se[1] - sp[1]) *
-                                      prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
+      e1 <- e1 + (1 + psz.vec[m] * 
+                    (se[1] + (1 - se[1] - sp[1]) *
+                       prod(1 - p[(sub.ind[m] + 1):sub.ind[m + 1]])))
     }
   }
   
@@ -383,6 +396,114 @@ thresh.val.dorf <- function(p, psz, se = 1, sp = 1) {
   }
   return(p.star)
 }
+
+
+
+
+# Start  inf.dorf.measures() function
+###############################################################################
+#    Brianna Hitt - 4-18-17
+#    Purpose: calculates the testing expenditure and accuracy measures for 
+#             informative Dorfman testing, given a testing configuration; 
+#             Informative Dorfman testing is the same as pool-specific optimal 
+#             Dorfman testing, described by McMahan et al. (2012), except for 
+#             that it attempts to find the optimal testing configuration by 
+#             examining all possible configurations rather than using the 
+#             greedy algorithm proposed by McMahan et al. (2012)
+#      calls: characteristics.pool() - calculates the testing expenditure for a 
+#               given configuration
+#             accuracy.dorf() - calculates measures of testing accuracy for 
+#               informative Dorfman testing
+#      inputs: p = probability that an individual is infected, can be an 
+#                overall probability of disease or a vector of individual 
+#                probabilities
+#              Se = sensitivity of the diagnostic test
+#              Sp = specificity of the diagnostic test
+#              N = block size/initial group  size, up to 50
+#              pool.sizes = a configuration/set of pool sizes from a matrix of 
+#                all possible configurations, generated using the three-stage 
+#                hierarchical setup
+#      outputs: list of the testing expenditure (e), testing variance (v), and
+#               measures of testing accuracy (summary)
+#      notes: much of the code for this function, including the 
+#               characteristics.pool() and accuracy.dorf() functions are from 
+#               Chris McMahan's programs, provided with "Informative Dorfman 
+#               screening" by McMahan, Tebbs, and Bilder (2012)
+
+inf.dorf.measures <- function(prob, se, sp, N, pool.sizes) {
+  
+  # Saves original ordering
+  ind.order <- order(prob)
+  
+  # Orders subjects, required under all Informative algorithms
+  prob <- sort(prob)
+  
+  # Determines the number of subjects being screened and sets up vectors for 
+  #   storing summary measures
+  N <- length(prob)
+  pool.id <- rep(-1000, N)
+  PSe <- rep(-100, N)
+  PSp <- rep(-100, N)
+  PPV <- rep(-100, N)
+  NPV <- rep(-100, N)
+  
+  # pool.sizes is a single configuration/set of pool sizes from the matrix of 
+  #   all possible configurations from the three-stage hierarchical testing 
+  #   setup
+  psz <- pool.sizes
+  J <- length(psz)
+  
+  # Finds measures pool by pool
+  psz <- c(psz, 0)
+  lower <- 1
+  upper <- psz[1]
+  vec.e <- rep(-1000, J)
+  vec.v <- rep(-1000, J)
+  for (i in 1:J) {
+    p.pool <- prob[lower:upper]
+    pool.id[lower:upper] <- rep(i, length(p.pool))
+    
+    # calculates the testing expenditure and variance per individual
+    res <- characteristics.pool(p = p.pool, se = se, sp = sp)
+    vec.e[i] <- res$e
+    vec.v[i] <- res$v
+    
+    # calculates measures of testing accuracy per individual
+    res.acc <- accuracy.dorf(p = p.pool, se = se, sp = sp)
+    PSe[lower:upper] <- res.acc$PSe
+    PSp[lower:upper] <- res.acc$PSp
+    PPV[lower:upper] <- res.acc$PPV
+    NPV[lower:upper] <- res.acc$NPV
+    
+    lower <- 1 + upper
+    upper <- upper + psz[i + 1]
+  }
+  
+  # Finds total expectation and variation
+  res.e <- sum(vec.e)
+  res.v <- sum(vec.v)
+  
+  # Returns all subjects to original ordering, along with their corresponding 
+  #   measures
+  prob <- prob[order(ind.order)]
+  pool.id <- pool.id[order(ind.order)]
+  PSe <- PSe[order(ind.order)]
+  PSp <- PSp[order(ind.order)]
+  PPV <- PPV[order(ind.order)]
+  NPV <- NPV[order(ind.order)]
+  
+  res.mat <- matrix(c(pool.id, prob, PSe, PSp, PPV, NPV), nrow = N, ncol = 6, 
+                    byrow = FALSE, dimnames = list(as.character(1:N) , 
+                                                   c("pool", "probability", 
+                                                     "PSe", "PSp", "PPV", "NPV")))
+  
+  prob <- prob[ind.order]
+  
+  list("e" = res.e, "v" = res.v, "summary" = res.mat)
+}
+
+###############################################################################
+
 
 
 

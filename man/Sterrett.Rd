@@ -8,8 +8,8 @@ Sterrett(
   p,
   Sp,
   Se,
-  plot = TRUE,
-  plot.cut.dorf = TRUE,
+  plot = FALSE,
+  plot.cut.dorf = FALSE,
   cond.prob.plot = FALSE,
   font.name = "sans"
 )
@@ -57,8 +57,9 @@ Sterrett (1SIS), two-stage informative Sterrett (2SIS), and full
 informative Sterrett (FIS) testing.}
 \item{save.diff.CDF}{a data frame containing the sum of the differences
 in the cumulative distribution function for each pairwise comparison of
-one-stage informative Sterrett (1SIS), two-stage informative Sterrett 
+one-stage informative Sterrett (1SIS), two-stage informative Sterrett
 (2SIS), full informative Sterrett (FIS), and Dorfman testing.}
+\item{p}{a vector containing the probabilities of positivity for each individual.}
 }
 \description{
 Summary measures for Sterrett algorithms.
@@ -91,7 +92,7 @@ retest individuals in order of descending probabilities.
 When implementing the informative Sterrett algorithms with a large
 number of individuals, an algorithm is used to compute the PMF
 for the number of tests under FIS. This is done automatically
-by \kbd{Sterrett} for \eqn{I}>12. The algorithm is described in
+by \kbd{Sterrett} for \eqn{I>12}. The algorithm is described in
 detail in the Appendix of Bilder et al. (2010).
 }
 \examples{
@@ -105,7 +106,7 @@ detail in the Appendix of Bilder et al. (2010).
 set.seed(1231)
 p.vec1 <- rbeta(n = 8, shape1 = 1, shape2 = 10)
 save.it1 <- Sterrett(p = p.vec1, Sp = 0.90, Se = 0.95)
-save.it1$mean.sd
+save.it1
 
 # Example 2: One individual is "high risk" and
 #   the others are "low risk". Since there is
@@ -115,9 +116,8 @@ save.it1$mean.sd
 #   procedures offer large improvements over
 #   Dorfman testing.
 p.vec2 <- c(rep(x = 0.01, times = 9), 0.5)
-save.it2 <- Sterrett(p = p.vec2, Sp = 0.99, Se = 0.99,
-                     cond.prob.plot = TRUE)
-save.it2$mean.sd
+save.it2 <- Sterrett(p = p.vec2, Sp = 0.99, Se = 0.99)
+save.it2
 
 # Example 3: Two individuals are at higher
 #   risk than the others. All three informative
@@ -130,26 +130,27 @@ save.it2$mean.sd
 #   automatically for I>12.
 p.vec3 <- c(rep(x = 0.01, times = 98), 0.1, 0.1)
 save.it3 <- Sterrett(p = p.vec3, Sp = 0.99, Se = 0.99)
-save.it3$mean.sd
+save.it3
 }
 \references{
 \insertRef{Bilder2010a}{binGroup2}
 }
 \seealso{
-\code{\link{expectOrderBeta}} for generating a vector of individual risk 
-probabilities for informative group testing and \code{\link{opChar1}} for 
-calculating operating characteristics with hierarchical and array-based 
+\code{\link{expectOrderBeta}} for generating a vector of individual risk
+probabilities for informative group testing and \code{\link{opChar1}} for
+calculating operating characteristics with hierarchical and array-based
 group testing algorithms.
 
 Other operating characteristic functions: 
+\code{\link{TOD}()},
 \code{\link{halving}()},
 \code{\link{operatingCharacteristics1}()},
 \code{\link{operatingCharacteristics2}()}
 }
 \author{
 This function was originally written as \kbd{info.gt}
-by Christopher Bilder for Bilder et al. (2010). The function was obtained 
-from \url{http://chrisbilder.com/grouptesting/}. Minor modifications were 
+by Christopher Bilder for Bilder et al. (2010). The function was obtained
+from \url{http://chrisbilder.com/grouptesting/}. Minor modifications were
 made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{operating characteristic functions}

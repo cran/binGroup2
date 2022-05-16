@@ -12,32 +12,32 @@
 )
 }
 \arguments{
-\item{x}{An object of class "summary.gtReg" created by 
+\item{x}{An object of class "summary.gtReg" created by
 \code{\link{summary.gtReg}}.}
 
 \item{digits}{digits for rounding.}
 
-\item{signif.stars}{a logical value indicating whether significance 
+\item{signif.stars}{a logical value indicating whether significance
 stars should be shown.}
 
 \item{...}{Additional arguments to be passed to \code{printCoefmat}.}
 }
 \value{
-A print out of the function call, deviance residuals (for 
-simple pooling and halving only), coefficients, null and 
-residual deviance and degrees of freedom (for simple pooling only), 
-AIC (for simple pooling and halving only), number of 
-Gibbs samples (for array testing only), and the number of 
+A print out of the function call, deviance residuals (for
+simple pooling and halving only), coefficients, null and
+residual deviance and degrees of freedom (for simple pooling only),
+AIC (for simple pooling and halving only), number of
+Gibbs samples (for array testing only), and the number of
 iterations.
 }
 \description{
-Print method for objects obtained by 
+Print method for objects obtained by
 \code{\link{summary.gtReg}}.
 }
 \author{
-This function combines code from 
-\code{print.summary.gt} and 
-\code{print.summary.gt.mp}, written by Boan Zhang 
-for the \code{binGroup} package. Minor modifications were 
+This function combines code from
+\code{print.summary.gt} and
+\code{print.summary.gt.mp}, written by Boan Zhang
+for the \code{binGroup} package. Minor modifications were
 made for inclusion in the \code{binGroup2} package.
 }

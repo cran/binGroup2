@@ -20,136 +20,134 @@ gtSim(
 )
 }
 \arguments{
-\item{type}{\kbd{"sp"} for simple pooling, \kbd{"halving"} for 
-halving protocol, and \kbd{"array"} for array testing 
+\item{type}{\kbd{"sp"} for simple pooling (Dorfman testing with
+or without retests), \kbd{"halving"} for
+halving protocol, and \kbd{"array"} for array testing
 (also known as matrix pooling).}
 
-\item{x}{a matrix of user-submitted covariates with which to 
-simulate the data. Default is NULL, in which case a gamma 
+\item{x}{a matrix of user-submitted covariates with which to
+simulate the data. Default is \kbd{NULL}, in which case a gamma
 distribution is used to generate the covariates automatically.}
 
-\item{gshape}{shape parameter for the gamma distribution. The 
+\item{gshape}{shape parameter for the gamma distribution. The
 value must be non-negative. Default value is set to 20.}
 
-\item{gscale}{scale parameter for the gamma distribution. The 
+\item{gscale}{scale parameter for the gamma distribution. The
 value must be strictly positive. Default value is set to 2.}
 
 \item{par}{the true coefficients in the linear predictor.}
 
-\item{linkf}{a character string specifying one of the three 
-link functions to be used: \kbd{"logit"} (default), \kbd{"probit"}, or 
+\item{linkf}{a character string specifying one of the three
+link functions to be used: \kbd{"logit"} (default), \kbd{"probit"}, or
 \kbd{"cloglog"}.}
 
-\item{size1}{sample size of the simulated data (for use with 
-\kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies the 
-number of rows in each matrix (for use with \kbd{"array"} method). If 
+\item{size1}{sample size of the simulated data (for use with
+\kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies the
+number of rows in each matrix (for use with \kbd{"array"} method). If
 only one matrix is simulated, this value is a scalar.}
 
-\item{size2}{group size in pooling individual samples (for use 
-with \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies 
-the number of columns in each matrix (for use with \kbd{"array"} method). 
+\item{size2}{group size in pooling individual samples (for use
+with \kbd{"sp"} and \kbd{"halving"} methods) or a vector that specifies
+the number of columns in each matrix (for use with \kbd{"array"} method).
 If only one matrix is simulated, this value is a scalar.}
 
-\item{sens}{sensitivity of the group tests. Default value is 
+\item{sens}{sensitivity of the group tests. Default value is
 set to 1.}
 
-\item{spec}{specificity of the group tests. Default value is 
+\item{spec}{specificity of the group tests. Default value is
 set to 1.}
 
-\item{sens.ind}{sensitivity of the individual retests. If NULL, 
+\item{sens.ind}{sensitivity of the individual retests. If NULL,
 set to be equal to sens.}
 
-\item{spec.ind}{specificity of the individual retests. If NULL, 
+\item{spec.ind}{specificity of the individual retests. If NULL,
 set to be equal to spec.}
 }
 \value{
-For simple pooling (\kbd{type = "sp"}) and the halving 
-protocol (\kbd{type = "array"}), a data frame or for array 
+For simple pooling (\kbd{type = "sp"}) and the halving
+protocol (\kbd{type = "halving"}), a data frame or for array
 testing (\kbd{type = "array"}), a list, which may include the following:
-\item{gres}{the group response, for simple pooling and the halving 
+\item{gres}{the group response, for simple pooling and the halving
 protocol only.}
 \item{col.resp}{the column group response, for array testing only.}
 \item{row.resp}{the row group response, for array testing only.}
 \item{x}{the covariate.}
-\item{groupn}{the group number, for simple pooling and the halving 
+\item{groupn}{the group number, for simple pooling and the halving
 protocol only.}
 \item{arrayn}{the array number, for array testing only.}
 \item{coln}{the column group number, for array testing only.}
 \item{rown}{the row group number, for array testing only.}
-\item{ind}{the true individual responses. For simple pooling and the 
-halving protocol, these are included in the data frame of results. 
-For array testing, these are included in the list of results, with 
+\item{ind}{the true individual responses. For simple pooling and the
+halving protocol, these are included in the data frame of results.
+For array testing, these are included in the list of results, with
 individual responses presented in matrices.}
 \item{retest}{the results of individual retests.}
 \item{subgroup}{the subgroup number, for the halving protocol.}
 \item{prob}{the individual probabilities, for array testing only.}
 }
 \description{
-Simulates data in group testing form ready to be 
+Simulates data in group testing form ready to be
 fit by \code{\link{gtReg}}.
 }
 \details{
-Generates group testing data in simple pooling form 
-(\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}), 
-or in array testing form (\kbd{type = "array"}). 
-The covariates are either specified by the x argument or they 
-are generated from a gamma distribution with the given gshape 
-and gscale parameters. The individual probabilities are 
-calculated from the covariates, the coefficients given in par, 
-and the link function specified through linkf. The true binary
-individual responses are then simulated from the individual 
-probabilities. 
+Generates group testing data in simple pooling form
+(\kbd{type = "sp"}), for the halving protocol (\kbd{type = "halving"}),
+or in array testing form (\kbd{type = "array"}).
+The covariates are either specified by the \kbd{x} argument or they
+are generated from a gamma distribution with the given \kbd{gshape}
+and \kbd{gscale} parameters. The individual probabilities are
+calculated from the covariates, the coefficients given in \kbd{par},
+and the link function specified through \kbd{linkf}. The true binary
+individual responses are then simulated from the individual
+probabilities.
 
-The true group responses are found from the 
-individual responses within the groups (i.e., if at least one 
-response is positive, the group is positive; otherwise, the group 
-response is negative). Finally, the observed group responses
-are simulated using the ginve sens and spec. Individual retests
-are simulated from sens.ind and spec.ind for samples in 
-observed positive groups. Note that with a given group size 
-(specified by size2 with \kbd{method = "sp"} or \kbd{method = "halving"}), 
-the last group may have fewer individuals.
+Under the matrix pooling protocol (\kbd{type = "array"}),
+the individuals are first organized into (by column) one or more matrices
+specified by the number of rows (\kbd{size1}) and the number of columns
+(\kbd{size2}).
 
-The true binary individual responses are then 
-simulated from the individual probabilities. The group, subgroup, 
-and individual retests are simulated using the given sens 
-and spec under the halving protocol.
+Then, for all pooling protocols, the true group responses are found
+from the individual responses within groups or within rows/columns for
+matrix pooling (i.e., if at least one response is positive, the group is
+positive; otherwise, the group response is negative).
+Finally, the observed group (\kbd{method = "sp"}) and subgroup
+\kbd{method = "halving"} only), or row and column responses
+\kbd{method = "array"} are simulated using the given \kbd{sens} and
+\kbd{spec}.
 
-The true binary individual responses are then simulated from 
-the individual probabilites. The individuals are organized into
-(by column) one or more matrices specified by n.row and n.col, 
-and the true group responses are found (i.e., if at least one 
-response is positive, the group is positive; otherwise, the 
-group response is negative). The observed row and column group 
-responses are then simulated using the given sens and spec 
-values. Individual retests are simulated from sens.ind and 
-spec.ind for individuals that lie on the intersection of an 
-observed positive row and and observed positive column. In 
-the case where no column (row) tests positive in a matrix, 
-all the individuals in any observed positive rows (columns) 
-will be assigned a simulated retest result. If no column or 
-row is observed positive, NULL is returned.
+For the simple pooling and halving protocols, individual retests are
+simulated from \kbd{sens.ind} and \kbd{spec.ind} for samples in observed
+positive groups. Note that with a given group size (specified by \kbd{size2}
+with \kbd{method = "sp"} or \kbd{method = "halving"}), the last group may
+have fewer individuals.
+For the matrix pooling protocol, individual retests are simulated from
+\kbd{sens.ind} and \kbd{spec.ind} for individuals that lie on the
+intersection of an observed positive row and and observed positive column.
+In the case where no column (row) tests positive in a matrix, all the
+individuals in any observed positive rows (columns) will be assigned a
+simulated retest result. If no column or row is observed positive, NULL is
+returned.
 }
 \examples{
 set.seed(46)
-gt.data <- gtSim(type = "sp", par = c(-12, 0.2), 
+gt.data <- gtSim(type = "sp", par = c(-12, 0.2),
                  size1 = 700, size2 = 5)
 
 x1 <- sort(runif(100, 0, 30))
 x2 <- rgamma(100, shape = 17, scale = 1.5)
-gt.data <- gtSim(type = "sp", x = cbind(x1, x2), 
-                 par = c(-14, 0.2, 0.3), size2 = 4, 
+gt.data <- gtSim(type = "sp", x = cbind(x1, x2),
+                 par = c(-14, 0.2, 0.3), size2 = 4,
                  sens = 0.98, spec = 0.98)
-                   
+
 set.seed(46)
-gt.data <- gtSim(type = "halving", par = c(-6, 0.1), 
-                 gshape = 17, gscale = 1.4, size1 = 5000, 
+gt.data <- gtSim(type = "halving", par = c(-6, 0.1),
+                 gshape = 17, gscale = 1.4, size1 = 5000,
                  size2 = 5, sens = 0.95, spec = 0.95)
-                   
+
 # 5x6 and 4x5 matrix
 set.seed(9128)
-sa1a <- gtSim(type = "array", par = c(-7, 0.1), 
-              size1 = c(5, 4), size2 = c(6, 5), 
+sa1a <- gtSim(type = "array", par = c(-7, 0.1),
+              size1 = c(5, 4), size2 = c(6, 5),
               sens = 0.95, spec = 0.95)
 sa1a$dframe
 }
@@ -157,8 +155,8 @@ sa1a$dframe
 \code{\link{gtReg}} to fit simulated group testing data.
 }
 \author{
-This function is a combination of \kbd{sim.gt}, \kbd{sim.halving}, 
-and \kbd{sim.mp} written by Boan Zhang for the \code{binGroup} package. 
-Minor modifications have been made for inclusion of the functions in the 
+This function is a combination of \kbd{sim.gt}, \kbd{sim.halving},
+and \kbd{sim.mp} written by Boan Zhang for the \code{binGroup} package.
+Minor modifications have been made for inclusion of the functions in the
 \code{binGroup2} package.
 }

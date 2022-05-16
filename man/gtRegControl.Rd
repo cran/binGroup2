@@ -14,29 +14,29 @@ gtRegControl(
 )
 }
 \arguments{
-\item{tol}{convergence criterion}
+\item{tol}{convergence criterion.}
 
-\item{n.gibbs}{the Gibbs sample size to be used in each E step 
+\item{n.gibbs}{the Gibbs sample size to be used in each E step
 of the EM algorithm, for array testing. The default is 1000.}
 
-\item{n.burnin}{the number of samples in the burn-in period, 
+\item{n.burnin}{the number of samples in the burn-in period,
 for array testing. The default is 20.}
 
 \item{maxit}{maximum number of iterations in the EM algorithm.}
 
-\item{trace}{a logical value indicating whether the output should 
+\item{trace}{a logical value indicating whether the output should
 be printed for each iteration. The default is \kbd{FALSE}.}
 
-\item{time}{a logical value indicating whether the length of time 
+\item{time}{a logical value indicating whether the length of time
 for the model fitting should be printed. The default is \kbd{TRUE}.}
 }
 \value{
 A list with components named as the input arguments.
 }
 \description{
-Auxiliary function to control fitting parameters 
-of the EM algorithm used internally in \code{\link{gtReg}} 
-for simple pooling (\kbd{type = "sp"}) with \kbd{method = "Xie"} 
+Auxiliary function to control fitting parameters
+of the EM algorithm used internally in \code{\link{gtReg}}
+for simple pooling (\kbd{type = "sp"}) with \kbd{method = "Xie"}
 or for array testing (\kbd{type = "array"}).
 }
 \examples{
@@ -44,7 +44,7 @@ or for array testing (\kbd{type = "array"}).
 gtRegControl()
 }
 \author{
-This function was originally written as the \code{gt.control} 
-function for the binGroup package. Minor modifications have been 
+This function was originally written as the \code{gt.control}
+function for the binGroup package. Minor modifications have been
 made for inclusion in the binGroup2 package.
 }

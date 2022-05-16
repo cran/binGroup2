@@ -9,21 +9,21 @@
 \arguments{
 \item{x}{An object of class "gtTest" (\code{\link{gtTest}}).}
 
-\item{...}{Additional arguments to be passed to \code{print}. 
-Currently only \code{digits} to be passed to \code{signif} for 
+\item{...}{Additional arguments to be passed to \code{print}.
+Currently only \code{digits} to be passed to \code{signif} for
 appropriate rounding.}
 }
 \value{
-A print out of the p-value and point estimate resulting 
+A print out of the p-value and point estimate resulting
 from \code{\link{gtTest}}.
 }
 \description{
-Print method for objects of class "gtTest" created 
+Print method for objects of class "gtTest" created
 by the \code{\link{gtTest}} function.
 }
 \author{
-This function was originally written as \code{print.bgtTest} by 
-Brad Biggerstaff for the \code{binGroup} 
-package. Minor modifications were made for inclusion of the function in 
+This function was originally written as \code{print.bgtTest} by
+Brad Biggerstaff for the \code{binGroup}
+package. Minor modifications were made for inclusion of the function in
 the \code{binGroup2} package.
 }

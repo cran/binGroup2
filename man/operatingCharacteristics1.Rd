@@ -168,15 +168,6 @@ parameter \kbd{p} (overall disease prevalence) and a shape parameter
 generate the vector of individual probabilities. This is done using 
 \code{\link{expectOrderBeta}} and requires the user to set a seed to 
 reproduce results. 
- 
-Informative two-stage hierarchical (Dorfman) testing is implemented via 
-the pool-specific optimal Dorfman (PSOD) method described in McMahan et al. 
-(2012a), where the greedy algorithm proposed for PSOD is replaced by 
-considering all possible testing configurations. Informative array testing 
-is implemented via the gradient method (the most efficient array design), 
-where higher-risk individuals are grouped in the left-most columns of the 
-array. For additional details on the gradient arrangement method for 
-informative array testing, see McMahan et al. (2012b).
 
 The sensitivity/specificity values are allowed to vary across stages of 
 testing. For hierarchical testing, a different sensitivity/specificity value 
@@ -249,9 +240,7 @@ allowed). See Bilder et al. (2019) for additional information.
 config.mat <- matrix(data = c(rep(1, 10), 1:10), 
                      nrow = 2, ncol = 10, byrow = TRUE)
 opChar1(algorithm = "D2", p = 0.05, Se = 0.99, Sp = 0.99, 
-        hier.config = config.mat)
-opChar1(algorithm = "D2", p = 0.05, Se = 0.99, Sp = 0.99, 
-        hier.config = config.mat, a = c(1,4), print.time = FALSE)
+        hier.config = config.mat, print.time = FALSE)
 
 # Calculate the operating characteristics for informative
 #   two-stage hierarchical (Dorfman) testing.
@@ -354,6 +343,7 @@ opChar1(algorithm = "A2M", p = 0.02, Se = c(0.95,0.95,0.99),
 \seealso{
 Other operating characteristic functions: 
 \code{\link{Sterrett}()},
+\code{\link{TOD}()},
 \code{\link{halving}()},
 \code{\link{operatingCharacteristics2}()}
 }

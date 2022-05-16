@@ -13,18 +13,18 @@ gtTest(n, y, s, p.hyp, alternative = "two.sided", method = "exact")
 
 \item{s}{integer specifying the common size of groups.}
 
-\item{p.hyp}{the hypothetical threshold proportion against which to test, 
+\item{p.hyp}{the hypothetical threshold proportion against which to test,
 specified as a number between 0 and 1.}
 
-\item{alternative}{character string defining the alternative 
+\item{alternative}{character string defining the alternative
 hypothesis, either \kbd{"two.sided"}, \kbd{"less"}, or \kbd{"greater"}.}
 
-\item{method}{character string defining the test method to be 
-used. Options include "exact" for an exact test corresponding 
-to the Clopper-Pearson confidence interval, "score" for a score 
-test corresponding to the Wilson confidence interval, and "Wald" 
-for a Wald test corresponding to the Wald confidence interval. 
-The Wald method is not recommended. The "exact" method uses 
+\item{method}{character string defining the test method to be
+used. Options include "exact" for an exact test corresponding
+to the Clopper-Pearson confidence interval, "score" for a score
+test corresponding to the Wilson confidence interval, and "Wald"
+for a Wald test corresponding to the Wald confidence interval.
+The Wald method is not recommended. The "exact" method uses
 \code{binom.test{stats}}.}
 }
 \value{
@@ -36,51 +36,51 @@ A list containing:
 \item{method}{the test method provided by the user.}
 }
 \description{
-Calculates p-values for hypothesis tests of 
-single proportions estimated from group testing 
-experiments against a threshold proportion 
-in the hypotheses. Available methods include the exact test, 
+Calculates p-values for hypothesis tests of
+single proportions estimated from group testing
+experiments against a threshold proportion
+in the hypotheses. Available methods include the exact test,
 score test, and Wald test.
 }
 \details{
-This function assumes equal group sizes, no testing error 
-(i.e., 100 percent sensitivity and specificity) to test the groups, and 
-individual units randomly assigned to the groups with identical true 
+This function assumes equal group sizes, no testing error
+(i.e., 100 percent sensitivity and specificity) to test the groups, and
+individual units randomly assigned to the groups with identical true
 probability of success.
 }
 \examples{
-# Consider the following the experiment: Tests are 
+# Consider the following the experiment: Tests are
 #   performed on n=10 groups, each group has a size
-#   of s=100 individuals. The aim is to show that 
-#   less than 0.5 percent (\eqn{p < 0.005}) of the units
-#   in the population show a detrimental trait (positive test).
+#   of s=100 individuals. The aim is to show that less
+#   than 0.5 percent (\eqn{p < 0.005}) of the units in
+#   the population show a detrimental trait (positive test).
 #   y=1 positive test and 9 negative tests are observed.
-gtTest(n = 10, y = 1, s = 100, p.hyp = 0.005, 
+gtTest(n = 10, y = 1, s = 100, p.hyp = 0.005,
        alternative = "less", method = "exact")
 
-# The exact test corresponds to the 
+# The exact test corresponds to the
 #   limits of the Clopper-Pearson confidence interval
 #   in the example of Tebbs & Bilder (2004):
 gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
        method = "exact", p.hyp = 0.0543)
-        
+
 gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
        method = "exact", p.hyp = 0.0038)
-        
+
 # Hypothesis test with a group size of 1.
 gtTest(n = 24, y = 3, s = 1, alternative = "two.sided",
-       method = "exact", p.hyp = 0.1)         
-        
+       method = "exact", p.hyp = 0.1)
+
 # Further methods:
 gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
        method = "score", p.hyp = 0.0516)
-        
+
 gtTest(n = 24, y = 3, s = 7, alternative = "two.sided",
        method = "Wald", p.hyp = 0.0401)
 }
 \seealso{
-\code{\link{propCI}} for confidence intervals in 
-group testing and \code{binom.test(stats)} for the 
+\code{\link{propCI}} for confidence intervals in
+group testing and \code{binom.test(stats)} for the
 exact test and corresponding confidence interval.
 
 Other estimation functions: 
@@ -92,8 +92,8 @@ Other estimation functions:
 \code{\link{propDiffCI}()}
 }
 \author{
-This function was originally written as \code{bgtTest} by Frank 
-Schaarschmidt for the \code{binGroup} package. Minor modifications have 
+This function was originally written as \code{bgtTest} by Frank
+Schaarschmidt for the \code{binGroup} package. Minor modifications have
 been made for inclusion of the function in the \code{binGroup2} package.
 }
 \concept{estimation functions}

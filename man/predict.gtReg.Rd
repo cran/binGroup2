@@ -2,7 +2,7 @@
 % Please edit documentation in R/gtReg.R
 \name{predict.gtReg}
 \alias{predict.gtReg}
-\title{Predict method for group testing regression model fits}
+\title{Predict method for \kbd{gtReg}}
 \usage{
 \method{predict}{gtReg}(
   object,
@@ -17,64 +17,67 @@
 \arguments{
 \item{object}{a fitted object of class \kbd{"gtReg"}.}
 
-\item{newdata}{an optional data frame in which to look for 
-variables with which to predict. If omitted, the fitted linear 
+\item{newdata}{an optional data frame in which to look for
+variables with which to predict. If omitted, the fitted linear
 predictors are used.}
 
-\item{type}{the type of prediction required. The \kbd{"link"} 
-option is on the scale of the linear predictors. The \kbd{"response"} 
-option is on the scale of the response variable. Thus, for the 
-logit model, the \kbd{"link"} predictions are of log-odds 
-(probabilities on the logit scale) and  \kbd{type = "response"} 
+\item{type}{the type of prediction required. The \kbd{"link"}
+option is on the scale of the linear predictors. The \kbd{"response"}
+option is on the scale of the response variable. Thus, for the
+logit model, the \kbd{"link"} predictions are of log-odds
+(probabilities on the logit scale) and  \kbd{type = "response"}
 gives the predicted probabilities.}
 
-\item{se.fit}{a logical value indicating whether standard errors 
+\item{se.fit}{a logical value indicating whether standard errors
 are required.}
 
-\item{conf.level}{the confidence level of the interval for the 
+\item{conf.level}{the confidence level of the interval for the
 predicted values.}
 
-\item{na.action}{a function determining what should be done with 
+\item{na.action}{a function determining what should be done with
 missing values in \kbd{newdata}. The default is to predict \kbd{NA}.}
 
 \item{...}{currently not used.}
 }
 \value{
-If \kbd{se = FALSE}, a vector or matrix of predictions. If 
+If \kbd{se = FALSE}, a vector or matrix of predictions. If
 \kbd{se = TRUE}, a list containing:
 \item{fit}{predictions.}
 \item{se.fit}{estimated standard errors.}
-\item{lower}{the lower bound of the confidence interval, 
-if calculated.}
-\item{upper}{the upper bound of the confidence interval, 
-if calculated.}
+\item{lower}{the lower bound of the confidence interval,
+if calculated (i.e., \kbd{conf.level} is specified).}
+\item{upper}{the upper bound of the confidence interval,
+if calculated (i.e., \kbd{conf.level} is specified).}
 }
 \description{
-Obtains predictions for individual observations and 
-optionally estimates standard errors of those predictions from 
+Obtains predictions for individual observations and
+optionally computes the standard errors of those predictions from
 objects of class \kbd{"gtReg"} returned by \code{\link{gtReg}}.
 }
 \details{
-If \kbd{newdata} is omitted, the predictions are based 
-on the data used for the fit. When \kbd{newdata} is present and 
-contains missing values, how the missing values will be dealt with 
-is determined by the \kbd{na.action} argument. In this case, if 
-\kbd{na.action=na.omit}, omitted cases will not appear, whereas 
-if \kbd{na.action = na.exclude}, omitted cases will appear (in 
+If \kbd{newdata} is omitted, the predictions are based
+on the data used for the fit. When \kbd{newdata} is present and
+contains missing values, how the missing values will be dealt with
+is determined by the \kbd{na.action} argument. In this case, if
+\kbd{na.action = na.omit}, omitted cases will not appear, whereas
+if \kbd{na.action = na.exclude}, omitted cases will appear (in
 predictions and standard errors) with value \kbd{NA}.
 }
 \examples{
 data(hivsurv)
-fit1 <- gtReg(formula = groupres ~ AGE + EDUC., data = hivsurv,  
-              groupn = gnum, sens = 0.9, spec = 0.9, 
+fit1 <- gtReg(formula = groupres ~ AGE + EDUC.,
+              data = hivsurv, groupn = gnum,
+              sens = 0.9, spec = 0.9,
               linkf = "logit", method = "V")
-pred.data <- data.frame(AGE = c(15, 25, 30), EDUC. = c(1, 3, 2))
-predict(object = fit1, newdata = pred.data, type = "link", 
-        se.fit = TRUE)
-predict(object = fit1, newdata = pred.data, type = "response", 
-        se.fit = TRUE, conf.level = 0.9)
-predict(object = fit1, type = "response", se.fit = TRUE, 
+pred.data <- data.frame(AGE = c(15, 25, 30),
+                        EDUC. = c(1, 3, 2))
+predict(object = fit1, newdata = pred.data,
+        type = "link", se.fit = TRUE)
+predict(object = fit1, newdata = pred.data,
+        type = "response", se.fit = TRUE,
         conf.level = 0.9)
+predict(object = fit1, type = "response",
+        se.fit = TRUE, conf.level = 0.9)
 }
 \author{
 Boan Zhang

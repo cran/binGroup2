@@ -2,7 +2,7 @@
 % Please edit documentation in R/designFunctions.R
 \name{designEst}
 \alias{designEst}
-\title{Optimal group size determination based on minimal MSE 
+\title{Optimal group size determination based on minimal MSE
 when estimating an overall prevalence}
 \usage{
 designEst(n, smax, p.tr, biasrest = 0.05)
@@ -10,37 +10,44 @@ designEst(n, smax, p.tr, biasrest = 0.05)
 \arguments{
 \item{n}{integer specifying the fixed number of groups.}
 
-\item{smax}{integer specifying the maximum group size allowed in the 
+\item{smax}{integer specifying the maximum group size allowed in the
 planning of the design.}
 
-\item{p.tr}{assumed true proportion of the "positive" trait 
+\item{p.tr}{assumed true proportion of the "positive" trait
 in the population, specified as a value between 0 and 1.}
 
-\item{biasrest}{a value between 0 and 1 specifying the absolute 
+\item{biasrest}{a value between 0 and 1 specifying the absolute
 bias maximally allowed.}
 }
 \value{
 A list containing:
-\item{sout}{the group size \kbd{s} for which the MSE of the estimator is 
-minimal for the given \kbd{n} and \kbd{p.tr} and for which the bias 
-restriction \kbd{biasrest} is not violated. In the case that the minimum 
-MSE is achieved for a group size \eqn{s>=smax}, the value of \kbd{smax} 
+\item{call}{the function call}
+\item{result}{a data frame containing:
+\describe{
+\item{mse}{the mean squared error of the estimator.}
+\item{sout}{the group size \kbd{s} for which the MSE of the estimator is
+minimal for the given \kbd{n} and \kbd{p.tr} and for which the bias
+restriction \kbd{biasrest} is not violated. In the case that the minimum
+MSE is achieved for a group size \eqn{s>=smax}, the value of \kbd{smax}
 is returned.}
-\item{varp}{the variance of the estimator.}
-\item{mse}{the mean square error of the estimator.}
-\item{bias}{the bias of the estimator.}
 \item{exp}{the expected value of the estimator.}
+\item{varp}{the variance of the estimator.}
+\item{bias}{the bias of the estimator.}}}
+\item{bias.reached}{a logical value indicating whether the bias
+restriction \kbd{biasrest} was violated.}
+\item{smax.reached}{a logical value indicating whether the maximum group
+size allowed \kbd{smax} was reached.}
 }
 \description{
-Find the group size \kbd{s} for a fixed number of 
-groups \kbd{n} and an assumed true proportion \kbd{p.tr}, for 
-which the mean squared error (MSE) of the point estimator is 
+Find the group size \kbd{s} for a fixed number of
+groups \kbd{n} and an assumed true proportion \kbd{p.tr}, for
+which the mean squared error (MSE) of the point estimator is
 minimal and bias is within a restriction.
 }
 \details{
-Swallow (1985) recommends the use of the upper bound of 
-the expected range of the true proportion \kbd{p.tr} for optimization 
-of the design. For further details, see Swallow (1985). Note that the 
+Swallow (1985) recommends the use of the upper bound of
+the expected range of the true proportion \kbd{p.tr} for optimization
+of the design. For further details, see Swallow (1985). Note that the
 specified number of groups must be less than \eqn{n=1020}.
 }
 \examples{
@@ -55,7 +62,7 @@ designEst(n = 200, smax = 100, p.tr = 0.30)
 \insertRef{Swallow1985}{binGroup2}
 }
 \seealso{
-\code{\link{designPower}} for choice of the group testing 
+\code{\link{designPower}} for choice of the group testing
 design according to the power in a hypothesis test.
 
 Other estimation functions: 
@@ -67,7 +74,8 @@ Other estimation functions:
 \code{\link{propDiffCI}()}
 }
 \author{
-This function was originally written by Frank Schaarschmidt 
-as the \code{estDesign} function for the \code{binGroup} package.
+This function was originally written by Frank Schaarschmidt
+as the \code{estDesign} function for the \code{binGroup} package. Minor
+modifications were made for inclusion in the \code{binGroup2} package.
 }
 \concept{estimation functions}

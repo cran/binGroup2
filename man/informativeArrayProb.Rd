@@ -13,48 +13,48 @@ informativeArrayProb(prob.vec, nr, nc, method = "sd")
 
 \item{nc}{number of columns in the array.}
 
-\item{method}{character string defining the method to be used for matrix 
-arrangement. Options include spiral ("\kbd{sd}") and gradient ("\kbd{gd}") 
+\item{method}{character string defining the method to be used for matrix
+arrangement. Options include spiral ("\kbd{sd}") and gradient ("\kbd{gd}")
 arrangement. See McMahan et al. (2012) for additional details.}
 }
 \value{
-A matrix of probabilities arranged according to the specified 
+A matrix of probabilities arranged according to the specified
 method.
 }
 \description{
-Arrange a vector of individual risk probabilities in a matrix 
+Arrange a vector of individual risk probabilities in a matrix
 for informative array testing without master pooling.
 }
 \examples{
 # Use the gradient arrangement method to create a matrix
 #   of individual risk probabilities for a 10x10 array.
 # Depending on the specified probability, alpha level,
-#   and overall group size, simulation may be necessary 
-#   in order to generate the vector of individual 
-#   probabilities. This is done using the expectOrderBeta() 
-#   function and requires the user to set a seed in order 
+#   and overall group size, simulation may be necessary
+#   in order to generate the vector of individual
+#   probabilities. This is done using the expectOrderBeta()
+#   function and requires the user to set a seed in order
 #   to reproduce results.
 set.seed(1107)
 p.vec1 <- expectOrderBeta(p = 0.05, alpha = 2, size = 100)
-informativeArrayProb(prob.vec = p.vec1, nr = 10, nc = 10, 
+informativeArrayProb(prob.vec = p.vec1, nr = 10, nc = 10,
                      method = "gd")
 
 # Use the spiral arrangement method to create a matrix
 #   of individual risk probabilities for a 5x5 array.
 set.seed(8791)
 p.vec2 <- expectOrderBeta(p = 0.02, alpha = 0.5, size = 25)
-informativeArrayProb(prob.vec = p.vec2, nr = 5, nc = 5, 
+informativeArrayProb(prob.vec = p.vec2, nr = 5, nc = 5,
                      method = "sd")
 }
 \references{
 \insertRef{McMahan2012b}{binGroup2}
 }
 \seealso{
-\code{\link{expectOrderBeta}} for generating a vector of individual risk 
+\code{\link{expectOrderBeta}} for generating a vector of individual risk
 probabilities.
 }
 \author{
-This function was originally written by Christopher McMahan for 
-McMahan et al. (2012). The function was obtained from 
+This function was originally written by Christopher McMahan for
+McMahan et al. (2012). The function was obtained from
 \url{http://chrisbilder.com/grouptesting/}.
 }
