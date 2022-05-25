@@ -68,15 +68,15 @@
 #' #   informative three-stage hierarchical testing
 #' res2 <- OTC1(algorithm = "ID3", p = 0.025,
 #'              Se = c(0.95, 0.95, 0.99), Sp = c(0.96, 0.96, 0.98),
-#'              group.sz = 3:15, obj.fn = c("ET", "MAR"), alpha = 2)
+#'              group.sz = 3:10, obj.fn = c("ET", "MAR"), alpha = 2)
 #' summary(res2)
 #'
 #' # Find the optimal testing configuration for
 #' #   informative array testing without master pooling.
-#' res3 <- OTC1(algorithm = "IA2", p = 0.05, alpha = 2,
-#'              Se = 0.90, Sp = 0.90, group.sz = 2:10,
+#' \donttest{res3 <- OTC1(algorithm = "IA2", p = 0.05, alpha = 2,
+#'              Se = 0.90, Sp = 0.90, group.sz = 2:15,
 #'              obj.fn = "ET")
-#' summary(res3)
+#' summary(res3)}
 #'
 #' # Find the optimal testing configuraiton for
 #' #   informative two-stage hierarchical testing.
@@ -86,23 +86,23 @@
 #'              nrow = 2, ncol = 2, byrow = FALSE)
 #' res4 <- OTC2(algorithm = "ID2",
 #'              alpha = c(18.25, 0.75, 0.75, 0.25),
-#'              Se = Se, Sp = Sp, group.sz = 12)
+#'              Se = Se, Sp = Sp, group.sz = 8)
 #' summary(res4)
 #'
 #' # Find the optimal testing configuration for
 #' #   non-informative three-stage hierarchical testing.
-#' Se <- matrix(data = c(rep(0.95, 6)), nrow = 2, ncol = 3)
+#' \donttest{Se <- matrix(data = c(rep(0.95, 6)), nrow = 2, ncol = 3)
 #' Sp <- matrix(data = c(rep(0.99, 6)), nrow = 2, ncol = 3)
 #' res5 <- OTC2(algorithm = "D3",
 #'              p.vec = c(0.95, 0.0275, 0.0175, 0.005),
-#'              Se = Se, Sp = Sp, group.sz = 5:10)
-#' summary(res5)
+#'              Se = Se, Sp = Sp, group.sz = 5:12)
+#' summary(res5)}
 #'
 #' # Find the optimal testing configuration for
 #' #   non-informative array testing with master pooling.
-#' res6 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
-#'              Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 2:10)
-#' summary(res6)
+#' \donttest{res6 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
+#'              Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 2:12)
+#' summary(res6)}
 
 summary.OTC <- function(object, ...) {
 
@@ -417,26 +417,26 @@ summary.OTC <- function(object, ...) {
 #'
 #' # Find the optimal testing configuration for
 #' #   informative array testing without master pooling.
-#' res3 <- OTC1(algorithm = "IA2", p = 0.09, alpha = 2,
-#'              Se = 0.90, Sp = 0.90, group.sz = 3:9, obj.fn = "ET")
-#' plot(res3)
+#' \donttest{res3 <- OTC1(algorithm = "IA2", p = 0.09, alpha = 2,
+#'              Se = 0.90, Sp = 0.90, group.sz = 3:20, obj.fn = "ET")
+#' plot(res3)}
 #'
 #' # Find the optimal testing configuration for
 #' #   informative two-stage hierarchical testing.
-#' Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)),
+#' \donttest{Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)),
 #'              nrow = 2, ncol = 2, byrow = FALSE)
 #' Sp <- matrix(data = c(rep(0.96, 2), rep(0.98, 2)),
 #'              nrow = 2, ncol = 2, byrow = FALSE)
 #' res4 <- OTC2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25),
-#'                 Se = Se, Sp = Sp, group.sz = 5:10)
-#' plot(res4)
+#'                 Se = Se, Sp = Sp, group.sz = 12:20)
+#' plot(res4)}
 #'
 #'
 #' # Find the optimal testing configuration for
 #' #   non-informative array testing with master pooling.
-#' res5 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
-#'              Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 3:10)
-#' plot(res5)
+#' \donttest{res5 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
+#'              Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 3:20)
+#' plot(res5)}
 
 plot.OTC <- function(x, ...) {
 

@@ -271,7 +271,6 @@ The group testing function \kbd{predict} (i.e.,
 on \kbd{"gtReg"} objects.
 }
 \examples{
-
 data(hivsurv)
 fit1 <- gtReg(type = "sp", formula  =  groupres ~ AGE + EDUC.,
               data  =  hivsurv, groupn  =  gnum, sens  =  0.9,
@@ -306,11 +305,10 @@ fit4 <- gtReg(type = "halving", formula = gres ~ x,
 summary(fit4)
 
 # 5x6 and 4x5 array
-set.seed(9128)
+\donttest{set.seed(9128)
 sa1a <- gtSim(type = "array", par = c(-7, 0.1), size1 = c(5, 4),
               size2 = c(6, 5), sens = 0.95, spec = 0.95)
 sa1 <- sa1a$dframe
-\donttest{
 fit5 <- gtReg(type = "array",
               formula = cbind(col.resp, row.resp) ~ x,
               data = sa1, coln = coln, rown = rown,

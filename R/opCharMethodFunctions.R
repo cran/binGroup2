@@ -85,7 +85,7 @@
 #' # Calculate the operating characteristics for
 #' #   informative array testing without master pooling.
 #' calc2 <- opChar1(algorithm = "IA2", p = 0.025, alpha = 0.5,
-#'                  Se = 0.95, Sp = 0.99, rowcol.sz = 12)
+#'                  Se = 0.95, Sp = 0.99, rowcol.sz = 10)
 #' summary(calc2)
 #'
 #' # Calculate the operating characteristics for

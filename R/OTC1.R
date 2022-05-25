@@ -262,12 +262,12 @@
 #' #   the expected value of order statistics from a beta
 #' #   distribution with p = 0.01 and a heterogeneity level
 #' #   of alpha = 0.5.
-#' set.seed(52613)
+#' \donttest{set.seed(52613)
 #' OTC1(algorithm = "ID2", p = 0.01, Se = 0.95, Sp = 0.95,
-#'      group.sz = 20, obj.fn = c("ET", "MAR", "GR"),
+#'      group.sz = 50, obj.fn = c("ET", "MAR", "GR"),
 #'      weights = matrix(data = c(1, 1, 10, 10, 0.5, 0.5),
 #'      nrow = 3, ncol = 2, byrow = TRUE), alpha = 0.5,
-#'      trace = FALSE, print.time = TRUE, num.sim = 10000)
+#'      trace = FALSE, print.time = TRUE, num.sim = 10000)}
 #'
 #' # Find the OTC over all possible testing configurations
 #' #   for non-informative three-stage hierarchical testing
@@ -278,10 +278,10 @@
 #'
 #' # Find the OTC for non-informative three-stage
 #' #   hierarchical testing.
-#' OTC1(algorithm = "D3", p = 0.06, Se = 0.90, Sp = 0.90,
-#'      group.sz = 3:15, obj.fn = c("ET", "MAR", "GR"),
+#' \donttest{OTC1(algorithm = "D3", p = 0.06, Se = 0.90, Sp = 0.90,
+#'      group.sz = 3:30, obj.fn = c("ET", "MAR", "GR"),
 #'      weights = matrix(data = c(1, 1, 10, 10, 100, 100),
-#'      nrow = 3, ncol = 2, byrow = TRUE))
+#'      nrow = 3, ncol = 2, byrow = TRUE))}
 #'
 #' # Find the OTC over all possible configurations
 #' #   for informative three-stage hierarchical testing
@@ -308,18 +308,18 @@
 #' #   distribution with p = 0.03 and a heterogeneity level
 #' #   of alpha = 2. The probabilities are then arranged in
 #' #   a matrix using the gradient method.
-#' set.seed(1002)
+#' \donttest{set.seed(1002)
 #' OTC1(algorithm = "IA2", p = 0.03, Se = 0.95, Sp = 0.95,
-#'      group.sz = 3:10, obj.fn = c("ET", "MAR", "GR"),
+#'      group.sz = 2:20, obj.fn = c("ET", "MAR", "GR"),
 #'      weights = matrix(data = c(1, 1, 10, 10, 100, 100),
 #'                       nrow = 3, ncol = 2, byrow = TRUE),
-#'      alpha = 2)
+#'      alpha = 2)}
 #'
 #' # Find the OTC for non-informative array testing
 #' #   with master pooling. The calculations may not
 #' #   be completed instantaneously.
-#' OTC1(algorithm = "A2M", p = 0.04, Se = 0.90, Sp = 0.90,
-#'      group.sz = 3:10, obj.fn = "ET")
+#' \donttest{OTC1(algorithm = "A2M", p = 0.04, Se = 0.90, Sp = 0.90,
+#'      group.sz = 2:20, obj.fn = "ET")}
 
 # Brianna Hitt - 04.02.2020
 # Changed cat() to warning()

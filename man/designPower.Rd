@@ -153,9 +153,9 @@ designPower(n = 100, s = 20, delta = 0.002,
 designPower(n = 100, s = 20, delta = 0.004, p.hyp = 0.005, fixed = "s",
              alternative = "less", method = "CP", power = 0.8)
 
-# Power for a design with a fixed group size of s=1
+# Power for a design with a fixed group size of s = 1
 #   (individual testing).
-designPower(n = 500, s = 1, delta = 0.05, p.hyp = 0.10,
+designPower(n = 200, s = 1, delta = 0.05, p.hyp = 0.10,
             fixed = "s", method = "CP", power = 0.80)
 
 # Assume that objective is to show that a proportion

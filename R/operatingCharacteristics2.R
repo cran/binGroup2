@@ -457,7 +457,7 @@ operatingCharacteristics2 <-
         if (algorithm %in% c("ID2", "ID3", "ID4", "ID5", "IA2")) {
           stop("You have specified an overall joint probability vector for an informative algorithm. Please specify a matrix of joint probabilities for each individual using the 'probabilities' argument, or specify shape parameters for the Dirichlet distribution using the 'alpha' argument.\n")
         }
-        if (sum(p.vec) != 1.00) {
+        if (round(sum(p.vec), 6) != 1.000000) {
           stop("Please specify joint probabilities that sum to 1.")
         }
       } else if (!is.null(probabilities)) {

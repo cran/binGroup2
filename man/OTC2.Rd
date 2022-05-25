@@ -246,29 +246,29 @@ Se <- matrix(data = c(0.95, 0.95, 0.99, 0.99), nrow = 2, ncol = 2,
 Sp <- matrix(data = c(0.96, 0.96, 0.98, 0.98), nrow = 2, ncol = 2,
              dimnames = list(Infection = 1:2, Stage = 1:2))
 OTC2(algorithm = "D2", p.vec = c(0.90, 0.04, 0.04, 0.02),
-     Se = Se, Sp = Sp, group.sz = 2:30)
+     Se = Se, Sp = Sp, group.sz = 2:10)
 
 # Find the OTC over all possible testing configurations
 #   for informative two-stage hierarchical (Dorfman)
 #   testing with a specified group size.
 # A matrix of joint probabilities for each individual is
 #   generated using the Dirichlet distribution.
-Se <- matrix(data = rep(0.95, 4), nrow = 2, ncol = 2,
+\donttest{Se <- matrix(data = rep(0.95, 4), nrow = 2, ncol = 2,
              dimnames = list(Infection = 1:2, Stage = 1:2))
 Sp <- matrix(data = rep(0.99, 4), nrow = 2, ncol = 2,
              dimnames = list(Infection = 1:2, Stage = 1:2))
 set.seed(1002)
 OTC2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25),
-     Se = Se, Sp = Sp, group.sz = 3:10)
+     Se = Se, Sp = Sp, group.sz = 18:22)}
 
 # Find the OTC for non-informative three-stage
 #   hierarchical testing.
-Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
+\donttest{Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
              dimnames = list(Infection = 1:2, Stage = 1:3))
 Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
              dimnames = list(Infection = 1:2, Stage = 1:3))
 OTC2(algorithm = "D3", p.vec = c(0.91, 0.04, 0.04, 0.01),
-     Se = Se, Sp = Sp, group.sz = 3:10)
+     Se = Se, Sp = Sp, group.sz = 3:12)}
 
 # Find the OTC over all possible configurations
 #   for informative three-stage hierarchical
@@ -280,11 +280,11 @@ Se <- matrix(data = rep(0.95, 6), nrow = 2, ncol = 3,
              dimnames = list(Infection = 1:2, Stage = 1:3))
 Sp <- matrix(data = rep(0.99, 6), nrow = 2, ncol = 3,
              dimnames = list(Infection = 1:2, Stage = 1:3))
-p.unordered <- t(rBeta2009::rdirichlet(n = 12,
+p.unordered <- t(rBeta2009::rdirichlet(n = 8,
                             shape = c(18.25, 0.75, 0.75, 0.25)))
 p.ordered <- p.unordered[, order(1 - p.unordered[1,])]
 OTC2(algorithm = "ID3", probabilities = p.ordered,
-         Se = Se, Sp = Sp, group.sz = 12,
+         Se = Se, Sp = Sp, group.sz = 8,
          trace = FALSE, print.time = FALSE)
 
 # Find the OTC for non-informative array testing
@@ -294,7 +294,7 @@ Se <- matrix(data = rep(0.95, 4), nrow = 2, ncol = 2,
 Sp <- matrix(data = rep(0.99, 4), nrow = 2, ncol = 2,
              dimnames = list(Infection = 1:2, Stage = 1:2))
 OTC2(algorithm = "A2", p.vec = c(0.90, 0.04, 0.04, 0.02),
-     Se = Se, Sp = Sp, group.sz = 2:12)
+     Se = Se, Sp = Sp, group.sz = 2:10)
 
 # Find the OTC for non-informative array testing
 #   with master pooling.

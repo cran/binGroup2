@@ -110,11 +110,11 @@ pooling, halving, and array testing designs.}
 #   obj.fn specifies the objective functions for which
 #   to find results; and
 #   alpha is the heterogeneity level.
-set.seed(1002)
+\donttest{set.seed(1002)
 results1 <- OTC1(algorithm = "ID3", p = 0.025, Se = 0.95,
                  Sp = 0.95, group.sz = 3:20,
                  obj.fn = "ET", alpha = 2)
-summary(results1)
+summary(results1)}
 
 # 1.2) Find the optimal testing configuration using
 #   non-informative array testing without master pooling.
@@ -122,7 +122,7 @@ summary(results1)
 #   testing and individual testing.
 \donttest{results2 <- OTC1(algorithm = "A2", p = 0.05,
                  Se = c(0.95, 0.99), Sp = c(0.95, 0.98),
-                 group.sz = 3:12, obj.fn = "ET")
+                 group.sz = 3:15, obj.fn = "ET")
 summary(results2)}
 
 # 1.3) Calculate the operating characteristics using
@@ -173,7 +173,7 @@ summary(results4)
 results5 <- OTC2(algorithm = "D2",
                  p.vec = c(0.90, 0.04, 0.04, 0.02),
                  Se = c(0.99, 0.99), Sp = c(0.99, 0.99),
-                 group.sz = 3:50)
+                 group.sz = 3:20)
 summary(results5)
 
 # 2.2) Calculate the operating characteristics for
@@ -295,7 +295,7 @@ summary(fit2)
 \insertRef{Xie2001}{binGroup2}
 }
 \author{
-\strong{Maintainer}: Brianna Hitt \email{brianna.hitt@huskers.unl.edu} (\href{https://orcid.org/0000-0002-0645-0067}{ORCID})
+\strong{Maintainer}: Brianna Hitt \email{brianna.hitt@afacademy.af.edu} (\href{https://orcid.org/0000-0002-0645-0067}{ORCID})
 
 Authors:
 \itemize{

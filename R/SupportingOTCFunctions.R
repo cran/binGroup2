@@ -273,25 +273,25 @@ generate.acc <- function(algorithm, diseases, value, label) {
 # updated 04-08-18 to allow for two disease assays
 # function to convert the configurations to a single column
 
-convert.config <- function(algorithm, results, diseases  =  1,
-                           old.label  =  "pool.sz", new.label  =  "pool.szs",
-                           sep  =  ",") {
+convert.config <- function(algorithm, results, diseases = 1,
+                           old.label = "pool.sz", new.label = "pool.szs",
+                           sep = ",") {
   new.results <- cbind(results, NA)
   colnames(new.results)[dim(new.results)[2]] <- new.label
 
-  index.pools <- which(colnames(new.results)  ==  old.label)[1]
+  index.pools <- which(colnames(new.results) == old.label)[1]
 
   if (algorithm %in% c("D2")) {
-    if (diseases  ==  1) {
-      final <- data.frame(I  =  as.numeric(new.results[,which(colnames(new.results)  ==  "I")]),
-                          ET  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "ET")]), 4), nsmall  =  4)),
-                          value  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "value")]), 4), nsmall  =  4)),
-                          PSe  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "PSe")]), 4), nsmall  =  4)),
-                          PSp  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "PSp")]), 4), nsmall  =  4)),
-                          PPPV  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "PPPV")]), 4), nsmall  =  4)),
-                          PNPV  =  as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results)  ==  "PNPV")]), 4), nsmall  =  4)),
-                          row.names  =  NULL)
-    } else if (diseases  ==  2) {
+    if (diseases == 1) {
+      final <- data.frame(I = as.numeric(new.results[,which(colnames(new.results) == "I")]),
+                          ET = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "ET")]), 4), nsmall = 4)),
+                          value = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "value")]), 4), nsmall = 4)),
+                          PSe = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "PSe")]), 4), nsmall = 4)),
+                          PSp = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "PSp")]), 4), nsmall = 4)),
+                          PPPV = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "PPPV")]), 4), nsmall = 4)),
+                          PNPV = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "PNPV")]), 4), nsmall = 4)),
+                          row.names = NULL)
+    } else if (diseases == 2) {
       final <- data.frame(I = as.numeric(new.results[,which(colnames(new.results) == "I")]),
                           ET = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "ET")]), 4), nsmall = 4)),
                           value = as.numeric(format(round(as.numeric(new.results[,which(colnames(new.results) == "value")]), 4), nsmall = 4)),

@@ -70,26 +70,26 @@ plot(res2)
 
 # Find the optimal testing configuration for
 #   informative array testing without master pooling.
-res3 <- OTC1(algorithm = "IA2", p = 0.09, alpha = 2,
-             Se = 0.90, Sp = 0.90, group.sz = 3:9, obj.fn = "ET")
-plot(res3)
+\donttest{res3 <- OTC1(algorithm = "IA2", p = 0.09, alpha = 2,
+             Se = 0.90, Sp = 0.90, group.sz = 3:20, obj.fn = "ET")
+plot(res3)}
 
 # Find the optimal testing configuration for
 #   informative two-stage hierarchical testing.
-Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)),
+\donttest{Se <- matrix(data = c(rep(0.95, 2), rep(0.99, 2)),
              nrow = 2, ncol = 2, byrow = FALSE)
 Sp <- matrix(data = c(rep(0.96, 2), rep(0.98, 2)),
              nrow = 2, ncol = 2, byrow = FALSE)
 res4 <- OTC2(algorithm = "ID2", alpha = c(18.25, 0.75, 0.75, 0.25),
-                Se = Se, Sp = Sp, group.sz = 5:10)
-plot(res4)
+                Se = Se, Sp = Sp, group.sz = 12:20)
+plot(res4)}
 
 
 # Find the optimal testing configuration for
 #   non-informative array testing with master pooling.
-res5 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
-             Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 3:10)
-plot(res5)
+\donttest{res5 <- OTC2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
+             Se = rep(0.99, 2), Sp = rep(0.99, 2), group.sz = 3:20)
+plot(res5)}
 }
 \seealso{
 \code{\link{OTC1}} and \code{\link{OTC2}} for creating an object of class
