@@ -321,6 +321,10 @@
 #   to display at the function start rather than at its completion. The warning
 #   text was also edited.
 
+# Brianna Hitt - 10.18.2023
+# Added function security to ensure probabilities, Se, and Sp
+#   are all between 0 and 1
+
 OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
                  alpha = NULL, Se, Sp,
                  ordering = matrix(data = c(0,1,0,1,0,0,1,1),
@@ -351,7 +355,10 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
         stop("You have specified an overall joint probability vector for an informative algorithm. Please specify a matrix of joint probabilities for each individual using the 'probabilities' argument, or specify shape parameters for the Dirichlet distribution using the 'alpha' argument.\n")
       }
       if (round(sum(p.vec), 6) != 1.000000) {
-        stop("Please specify joint probabilities that sum to 1.")
+        stop("Please specify joint probabilities that sum to 1.\n")
+      }
+      if (any(p.vec < 0) | any(p.vec > 1)) {
+        stop("Please specify overall joint probabilities between 0 and 1.\n")
       }
     } else if (!is.null(probabilities)) {
       if (length(group.sz) == 1) {
@@ -374,6 +381,15 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
                                               dim(probabilities)[2])) != TRUE)) {
           stop("You have specified a heterogeneous matrix of joint probabilities for a non-informative algorithm. Please specify a homogeneous matrix of joint probabilities using the 'probabilities' argument or specify an overall joint probability vector using the 'p.vec' argument.\n")
         }
+
+        if (any(round(colSums(probabilities), 6) != 1.000000)) {
+          stop("Please specify a matrix of joint probabilities where the probabilities for each individual (column) sum to 1.\n")
+        }
+
+        if (any(as.vector(probabilities) < 0) | any(as.vector(probabilities) > 1)) {
+          stop("Please specify joint probabilities between 0 and 1.\n")
+        }
+
       } else {
         stop("You have specified a matrix of joint probabilities along with a range of group sizes. Please specify a single group size.\n")
       }
@@ -384,6 +400,50 @@ OTC2 <- function(algorithm, p.vec = NULL, probabilities = NULL,
       if (algorithm %in% c("D2", "D3", "A2", "A2M")) {
         stop("You have specified a vector of shape parameters for the Dirichlet distribution using a non-informative algorithm. Please specify an overall vector of joint probabilities using the 'p.vec' argument, or specify a matrix of joint probabilities for each individual using the 'probabilities' argument.\n")
       }
+    }
+  }
+
+  if (is.null(dim(Se))) {
+    if (length(Se) != 2) {
+      stop("The sensitivity values are not the correct size. Please specify a matrix of sensitivity values (with rows corresponding to each disease and columns corresponding to each stage of testing), or a vector of sensitivity values corresponding to each disease (assumed to be the same for all stages of testing).\n")
+    }
+
+    if (any(Se < 0) | any(Se > 1)) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  } else {
+    if (dim(Se)[1] != 2 |
+        (algorithm %in% c("D2", "ID2", "A2") & dim(Se)[2] != 2) |
+        (algorithm %in% c("D3", "ID3", "A2M") & dim(Se)[2] != 3) |
+        (algorithm %in% c("D4", "ID4") & dim(Se)[2] != 4) |
+        (algorithm %in% c("D5", "ID5") & dim(Se)[2] != 5)) {
+      stop("The sensitivity values are not the correct size. Please specify a matrix of sensitivity values (with rows corresponding to each disease and columns corresponding to each stage of testing), or a vector of sensitivity values corresponding to each disease (assumed to be the same for all stages of testing).\n")
+    }
+
+    if (dim(Se)[1] == 2 & (any(as.vector(Se) < 0) | any(as.vector(Se) > 1))) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  }
+
+  if (is.null(dim(Sp))) {
+    if (length(Sp) != 2) {
+      stop("The sensitivity values are not the correct size. Please specify a matrix of sensitivity values (with rows corresponding to each disease and columns corresponding to each stage of testing), or a vector of sensitivity values corresponding to each disease (assumed to be the same for all stages of testing).\n")
+    }
+
+    if (any(Sp < 0) | any(Sp > 1)) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  } else {
+    if (dim(Sp)[1] != 2 |
+        (algorithm %in% c("D2", "ID2", "A2") & dim(Sp)[2] != 2) |
+        (algorithm %in% c("D3", "ID3", "A2M") & dim(Sp)[2] != 3) |
+        (algorithm %in% c("D4", "ID4") & dim(Sp)[2] != 4) |
+        (algorithm %in% c("D5", "ID5") & dim(Sp)[2] != 5)) {
+      stop("The sensitivity values are not the correct size. Please specify a matrix of sensitivity values (with rows corresponding to each disease and columns corresponding to each stage of testing), or a vector of sensitivity values corresponding to each disease (assumed to be the same for all stages of testing).\n")
+    }
+
+    if (dim(Sp)[1] == 2 & (any(as.vector(Sp) < 0) | any(as.vector(Sp) > 1))) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
     }
   }
 

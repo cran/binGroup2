@@ -117,6 +117,7 @@ TOD(p = p.vec, Se = 0.95, Sp = 0.95, max = 5,
 probabilities.
 
 Other operating characteristic functions: 
+\code{\link{GroupMembershipMatrix}()},
 \code{\link{Sterrett}()},
 \code{\link{halving}()},
 \code{\link{operatingCharacteristics1}()},

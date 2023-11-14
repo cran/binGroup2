@@ -833,8 +833,8 @@ CompareConfig <- function(object1, object2) {
      2), nsmall = 2)
 
    cat("Percent reduction in tests when using the second testing
-     configuration rather than the first:", PercentReductionTests, "\n")
-   cat("\n Percent increase in testing capacity when using the second testing
+     configuration rather than the first:", PercentReductionTests, "\n \n")
+   cat("Percent increase in testing capacity when using the second testing
      configuration rather than the first:", PercentIncreaseTestCap)
 
    save.res <- data.frame(PercentReductionTests, PercentIncreaseTestCap)

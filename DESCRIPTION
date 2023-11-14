@@ -1,8 +1,8 @@
 Package: binGroup2
 Type: Package
 Title: Identification and Estimation using Group Testing
-Version: 1.2.4
-Date: 2022-05-23
+Version: 1.3.1
+Date: 2023-11-13
 Authors@R: c(person("Brianna", "Hitt", role=c("aut", "cre"), email="brianna.hitt@afacademy.af.edu", comment=c(ORCID="0000-0002-0645-0067")), 
              person("Christopher", "Bilder",  role="aut", comment=c(ORCID="0000-0002-2848-8576")), 
              person("Frank", "Schaarschmidt", role="aut", comment=c(ORCID="0000-0002-6599-3803")),
@@ -12,7 +12,8 @@ Authors@R: c(person("Brianna", "Hitt", role=c("aut", "cre"), email="brianna.hitt
              person("Boan", "Zhang", role="ctb"), 
              person("Michael", "Black", role="ctb"),
              person("Peijie", "Hou", role="ctb"),
-             person("Peng", "Chen", role="ctb"))
+             person("Peng", "Chen", role="ctb"), 
+             person("Minh", "Nguyen", role="ctb"))
 Maintainer: Brianna Hitt <brianna.hitt@afacademy.af.edu>
 Description: Methods for the group testing identification problem: 1) Operating 
     characteristics (e.g., expected number of tests) for commonly used 
@@ -28,9 +29,6 @@ LinkingTo: Rcpp, RcppArmadillo
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
-NeedsCompilation: yes
-Packaged: 2022-05-23 22:02:14 UTC; Brianna.Hitt
 Author: Brianna Hitt [aut, cre] (<https://orcid.org/0000-0002-0645-0067>),
   Christopher Bilder [aut] (<https://orcid.org/0000-0002-2848-8576>),
   Frank Schaarschmidt [aut] (<https://orcid.org/0000-0002-6599-3803>),
@@ -40,6 +38,12 @@ Author: Brianna Hitt [aut, cre] (<https://orcid.org/0000-0002-0645-0067>),
   Boan Zhang [ctb],
   Michael Black [ctb],
   Peijie Hou [ctb],
-  Peng Chen [ctb]
+  Peng Chen [ctb],
+  Minh Nguyen [ctb]
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.2.3
+NeedsCompilation: yes
+Packaged: 2023-11-13 23:51:30 UTC; Brianna.Hitt
 Repository: CRAN
-Date/Publication: 2022-05-25 11:00:16 UTC
+Date/Publication: 2023-11-14 01:43:21 UTC

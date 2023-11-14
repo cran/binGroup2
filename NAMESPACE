@@ -9,7 +9,8 @@ export(expectOrderBeta, informativeArrayProb,
        pmf, pmf.halving, pmf.Sterrett,
        gtSim, gtReg, gtRegControl,
        propCI, propDiffCI, gtPower, gtTest, gtWidth,
-       designEst, designPower
+       designEst, designPower,
+       GroupMembershipMatrix
 )
 
 import(ggplot2)

@@ -312,7 +312,19 @@ rc.pos <- function(n, p, id) {
 #' informativeArrayProb(prob.vec = p.vec2, nr = 5, nc = 5,
 #'                      method = "sd")
 
+# Brianna Hitt - 3 November 2023
+#   Added checks to ensure prob.vec is all between 0 and 1
+#   and length of prob.vec matches dimensions of matrix
+
 informativeArrayProb <- function(prob.vec, nr, nc, method = "sd") {
+
+  if (length(prob.vec) != nr*nc) {
+    stop("The number of individual risk probabilities in prob.vec does not match the size of the array. Please provide a vector of individual risk probabilities of length nr*nc.\n")
+  }
+
+  if (any(prob.vec < 0) | any(prob.vec > 1)) {
+    stop("Please provide individual risk probabilities between 0 and 1.\n")
+  }
 
   prob.vec <- sort(prob.vec, decreasing = TRUE)
   if (method == "sd") {

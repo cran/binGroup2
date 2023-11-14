@@ -139,8 +139,23 @@
 # Brianna Hitt - 04.02.2020
 # Changed cat() to warning()
 
+# Brianna Hitt - 3 November 2023
+#   Added checks to ensure p.vec, Se, Sp are all between 0 and 1
+
 Sterrett <- function(p, Sp, Se, plot = FALSE, plot.cut.dorf = FALSE,
                      cond.prob.plot = FALSE, font.name = "sans") {
+
+  if (Se < 0 | Se > 1) {
+    stop("Please provide a sensitivity value between 0 and 1.\n")
+  }
+
+  if (Sp < 0 | Sp > 1) {
+    stop("Please provide a specificity value between 0 and 1.\n")
+  }
+
+  if (any(p < 0) | any(p > 1)) {
+    stop("Please provide individual risk probabilities between 0 and 1.\n")
+  }
 
   #####################################################################
   # Initial calculations

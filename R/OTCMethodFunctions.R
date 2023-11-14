@@ -707,7 +707,7 @@ ExpTests.OTC <- function(object, ...) {
                  opt.GR5, opt.GR6)
     res <- na.omit(as.data.frame(all))
     colnames(res) <- c("ExpTests", "ExpTestsPerInd")
-    } else if (dim(object$opt.ET$Accuracy)[2] == 2) {
+    } else if (dim(object$opt.ET$Accuracy)[1] == 2) {
     res <- data.frame(ExpTests = object$opt.ET$ET,
                       ExpTestsPerInd = object$opt.ET$value,
                       row.names = "opt.ET")

@@ -312,6 +312,7 @@ Other contributors:
   \item Michael Black [contributor]
   \item Peijie Hou [contributor]
   \item Peng Chen [contributor]
+  \item Minh Nguyen [contributor]
 }
 
 }

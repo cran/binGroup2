@@ -351,10 +351,33 @@ sim.mp <- function(x = NULL, gshape = 20, gscale = 2, par,
 
 # Brianna Hitt - 01-06-2020
 
+# Brianna Hitt - 3 November 2023
+#   Added checks to ensure sensitivity and specificity values are between 0 and 1
+
 gtSim <- function(type = "sp", x = NULL, gshape = 20, gscale = 2, par,
                   linkf = c("logit", "probit", "cloglog"),
                   size1, size2, sens = 1, spec = 1,
                   sens.ind = NULL, spec.ind = NULL) {
+
+  if (sens < 0 | sens > 1) {
+    stop("Please provide sensitivity values between 0 and 1.\n")
+  }
+
+  if (!is.null(sens.ind)) {
+    if (sens.ind < 0 | sens.ind > 1) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  }
+
+  if (spec < 0 | spec > 1) {
+    stop("Please provide specificity values between 0 and 1.\n")
+  }
+
+  if (!is.null(spec.ind)) {
+    if (spec.ind < 0 | spec.ind > 1) {
+      stop("Please provide specificity values between 0 and 1.\n")
+    }
+  }
 
   if (type == "sp") {
     # for use with gtreg

@@ -396,6 +396,7 @@ opChar2(algorithm = "A2M", p.vec = c(0.90, 0.04, 0.04, 0.02),
 }
 \seealso{
 Other operating characteristic functions: 
+\code{\link{GroupMembershipMatrix}()},
 \code{\link{Sterrett}()},
 \code{\link{TOD}()},
 \code{\link{halving}()},

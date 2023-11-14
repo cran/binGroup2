@@ -142,6 +142,7 @@ calculating operating characteristics with hierarchical and array-based
 group testing algorithms.
 
 Other operating characteristic functions: 
+\code{\link{GroupMembershipMatrix}()},
 \code{\link{TOD}()},
 \code{\link{halving}()},
 \code{\link{operatingCharacteristics1}()},

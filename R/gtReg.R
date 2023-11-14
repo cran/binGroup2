@@ -1461,6 +1461,9 @@ EM.halving <- function(Y, X, groupn, subg, ret, sens, spec, linkf,
 # Brianna Hitt - 06-30-2012
 # Changed class of all results to "gtReg" (instead of "gt" or "gt.mp")
 
+# Brianna Hitt - 3 November 2023
+#   Added checks to ensure sensitivity and specificity values are between 0 and 1
+
 gtReg <- function(type = "sp", formula, data, groupn = NULL,
                   subg = NULL, coln = NULL, rown = NULL, arrayn = NULL,
                   retest = NULL, sens = 1, spec = 1,
@@ -1468,6 +1471,27 @@ gtReg <- function(type = "sp", formula, data, groupn = NULL,
                   method = c("Vansteelandt", "Xie"),
                   sens.ind = NULL, spec.ind = NULL, start = NULL,
                   control = gtRegControl(...), ...) {
+
+  if (sens < 0 | sens > 1) {
+    stop("Please provide sensitivity values between 0 and 1.\n")
+  }
+
+  if (!is.null(sens.ind)) {
+    if (sens.ind < 0 | sens.ind > 1) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  }
+
+  if (spec < 0 | spec > 1) {
+    stop("Please provide specificity values between 0 and 1.\n")
+  }
+
+  if (!is.null(spec.ind)) {
+    if (spec.ind < 0 | spec.ind > 1) {
+      stop("Please provide specificity values between 0 and 1.\n")
+    }
+  }
+
 
   call <- match.call()
   mf <- match.call(expand.dots = FALSE)

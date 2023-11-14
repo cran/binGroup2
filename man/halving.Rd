@@ -71,6 +71,7 @@ halving(p = p.vec, Se = 0.95, Sp = 0.95, stages = 3,
 probabilities for informative group testing.
 
 Other operating characteristic functions: 
+\code{\link{GroupMembershipMatrix}()},
 \code{\link{Sterrett}()},
 \code{\link{TOD}()},
 \code{\link{operatingCharacteristics1}()},

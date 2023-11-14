@@ -334,6 +334,10 @@
 #   to display at the function start rather than at its completion. The warning
 #   text was also edited.
 
+# Brianna Hitt - 10.18.2023
+# Added function security to ensure probabilities, Se, and Sp
+#   are all between 0 and 1
+
 OTC1 <- function(algorithm, p = NULL, probabilities = NULL,
                  Se = 0.99, Sp = 0.99, group.sz, obj.fn = "ET",
                  weights = NULL, alpha = 2,
@@ -349,10 +353,20 @@ OTC1 <- function(algorithm, p = NULL, probabilities = NULL,
   } else if (!is.null(p) & !is.null(probabilities)) {
     stop("You have specified both an overall probability of disease AND a vector of individual probabilities. Please specify only one option.")
   } else {
-    if (!is.null(p) & length(p) > 1) {
-      stop("You have specified a probability vector instead of an overall probability of disease. Please specify an overall probability of disease, and the probability vector will be generated based on the algorithm specified for each group size included in the range.\n")
+    if (!is.null(p)) {
+      if (length(p) > 1) {
+        stop("You have specified a probability vector instead of an overall probability of disease. Please specify an overall probability of disease, and the probability vector will be generated based on the algorithm specified for each group size included in the range.\n")
+      }
+
+      if (p > 1 | p < 0) {
+        stop("Please specify an overall probability of disease between 0 and 1.\n")
+      }
     }
+
     if (!is.null(probabilities)) {
+      if(any(probabilities > 1) | any(probabilities < 0)) {
+        stop("Please specify individual probabilities between 0 and 1.\n")
+      }
       if (length(group.sz) == 1) {
         if ((algorithm %in% c("D2", "D3", "ID2", "ID3")) &
             length(probabilities) != group.sz) {
@@ -369,6 +383,40 @@ OTC1 <- function(algorithm, p = NULL, probabilities = NULL,
       } else if (length(group.sz) > 1) {
         stop("You have specified a probability vector along with a range of group sizes. Please specify a single group size.\n")
       }
+    }
+  }
+
+  if (length(Se) == 1) {
+    if (Se < 0 | Se > 1) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+  }
+  else if (length(Se) > 1) {
+    if (any(Se < 0) | any(Se > 1)) {
+      stop("Please provide sensitivity values between 0 and 1.\n")
+    }
+
+    if ((algorithm %in% c("D2", "ID2", "A2", "IA2") & length(Se) != 2) |
+        (algorithm %in% c("D3", "ID3", "A2M") & length(Se) != 3) |
+        (algorithm %in% c("D4", "ID4") & length(Se) != 4)) {
+      stop("The vector of sensitivity values is not the correct length. Please specify a vector of sensitivity values (one for each stage of testing, in order), or a single value for all stages of testing.\n")
+    }
+  }
+
+  if (length(Sp) == 1) {
+    if (Sp < 0 | Sp > 1) {
+      stop("Please provide specificity values between 0 and 1.\n")
+    }
+  }
+  else if (length(Sp) > 1) {
+    if (any(Sp < 0) | any(Sp > 1)) {
+      stop("Please provide specificity values between 0 and 1.\n")
+    }
+
+    if ((algorithm %in% c("D2", "ID2", "A2", "IA2") & length(Sp) != 2) |
+        (algorithm %in% c("D3", "ID3", "A2M") & length(Sp) != 3) |
+        (algorithm %in% c("D4", "ID4") & length(Sp) != 4)) {
+      stop("The vector of specificity values is not the correct length. Please specify a vector of specificity values (one for each stage of testing, in order), or a single value for all stages of testing.\n")
     }
   }
 

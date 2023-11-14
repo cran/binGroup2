@@ -113,7 +113,22 @@ sub.grp.size <- function(I.0, stages) {
 #' halving(p = p.vec, Se = 0.95, Sp = 0.95, stages = 3,
 #'         order.p = TRUE)
 
+# Brianna Hitt - 3 November 2023
+#   Added checks to ensure p, Se, Sp are all between 0 and 1
+
 halving <- function(p, Se = 1, Sp = 1, stages = 2, order.p = TRUE) {
+
+  if (Se < 0 | Se > 1) {
+    stop("Please provide a sensitivity value between 0 and 1.\n")
+  }
+
+  if (Sp < 0 | Sp > 1) {
+    stop("Please provide a specificity value between 0 and 1.\n")
+  }
+
+  if (any(p < 0) | any(p > 1)) {
+    stop("Please provide individual risk probabilities between 0 and 1.\n")
+  }
 
   # Sensitivity and specificity re-defined to match how the
   #   function was originally coded
